@@ -210,7 +210,7 @@ body.night-theme .empty{color:#a8b8ce}
 }
 
 
-/* TEST 19: recurring PDF cover page and prepared-by / city health officer sign-off page */
+/* TEST 20: compact PDF sign-off and export action in admin navigation */
 .print-cover-page,.print-signature-page{display:none}
 @media print{
  @page{size:A4 portrait;margin:12mm}
@@ -226,15 +226,15 @@ body.night-theme .empty{color:#a8b8ce}
  .print-workflow ul li{margin-bottom:1px}
  .print-cover-page .workflow-heading{margin-top:8px}
  .print-cover-footer{margin-top:auto;padding-top:8px;border-top:1px solid #cbd8e5;text-align:center;color:#69809a;font-size:7px;font-weight:700;letter-spacing:1px}
- .print-signature-page{display:flex!important;visibility:visible!important;box-sizing:border-box;min-height:273mm;page-break-before:always;break-before:page;flex-direction:column;padding:12mm 4mm 15mm;color:#24364b}
- .print-signature-note{font-size:10px;color:#52647b;margin-top:8mm}
- .print-signature-row{display:grid;grid-template-columns:1fr 1fr;gap:28mm;margin-top:auto;margin-bottom:34mm;align-items:end}
+ .print-signature-page{display:flex!important;visibility:visible!important;box-sizing:border-box;min-height:0;page-break-before:auto;break-before:auto;flex-direction:column;padding:5mm 4mm 0;color:#24364b;margin-top:4mm;break-inside:avoid}
+ .print-signature-note{font-size:8px;color:#52647b;margin:0}
+ .print-signature-row{display:grid;grid-template-columns:1fr 1fr;gap:28mm;margin-top:10mm;margin-bottom:3mm;align-items:end}
  .print-signatory{min-width:0}
  .print-signatory-right{text-align:center}
- .print-sign-label{font-size:10px;margin-bottom:19mm}
- .print-sign-name{font-size:11px;font-weight:800;text-decoration:underline;text-underline-offset:3px;white-space:nowrap}
+ .print-sign-label{font-size:9px;margin-bottom:9mm}
+ .print-sign-name{font-size:10px;font-weight:800;text-decoration:underline;text-underline-offset:3px;white-space:nowrap}
  .print-signatory-right .print-sign-name{white-space:normal}
- .print-sign-role{font-size:10px;margin-top:4px}
+ .print-sign-role{font-size:9px;margin-top:3px}
  #adminDashboardMount #publicView>.print-cover-page,#adminDashboardMount #publicView>.print-signature-page{display:flex!important}
 }
 
@@ -263,7 +263,6 @@ body.night-theme .empty{color:#a8b8ce}
 <main class="wrap">
   <div id="publicViewHome"></div>
   <section id="publicView">
-    <div class="admin-report-toolbar"><button class="btn btn-primary" type="button" onclick="printAdminDashboard()">⇩ Save / Export Dashboard to PDF</button><span>Print the current dashboard totals and charts for reporting</span></div>
     <section class="print-cover-page" aria-label="Patient Navigation and Referral Unit introduction">
       <div class="print-cover-brand">ANTIPOLO CITY HEALTH OFFICE</div>
       <h1>Patient Navigation<br>&amp; Referral Unit</h1>
@@ -369,6 +368,7 @@ body.night-theme .empty{color:#a8b8ce}
       <aside class="admin-sidebar" id="adminSidebar" aria-label="Admin navigation">
         <div class="sidebar-heading">ADMIN MENU</div>
         <button class="sidebar-link active" id="sidebarDashboardLink" type="button" onclick="showAdminPanel('admin-dashboard-content',this)"><span>▦</span> Dashboard</button>
+        <button class="sidebar-link sidebar-export-pdf" id="sidebarExportPdfLink" type="button" onclick="printAdminDashboard()"><span>⇩</span> Save / Export Dashboard to PDF</button>
         <button class="sidebar-link" id="sidebarHospitalLink" type="button" onclick="showAdminPanel('hospital-directory',this)"><span>🏥</span> Hospital Directory</button>
         <button class="sidebar-link" id="sidebarPatientEntryLink" type="button" onclick="showAdminPanel('patient-assistance-entry',this)"><span>📝</span> Patient/Client Assistance</button>
         <button class="sidebar-link" id="sidebarPatientRecordsLink" type="button" onclick="showAdminPanel('patient-records',this)"><span>📁</span> Patient Records</button>

@@ -771,10 +771,13 @@ function changePassword(e){
   if(res&&res.success){$("currentPassword").value="";$("newPassword").value="";$("confirmPassword").value="";}
  },err=>{$("changePasswordBtn").disabled=false;$("passwordMessage").textContent=err;});
 }
+let dashboardHasConnected=false;
+let dashboardRequestInFlight=false;
 function setConnectionStatus(message,state){$("dataStatus").textContent=message;const line=$("dataStatus").closest(".statusline");line.classList.remove("online","connecting","error");line.classList.add(state);$("statusDot").classList.toggle("off",state!=="online");}
 function applyData(data){
  if(!data||!data.success)throw new Error((data&&data.message)||"Apps Script returned an invalid data response.");
  rawPatients=data.patientAssistance||[];rawHospitals=data.hospitalTally||[];rawInquiries=data.inquiries||[];hospitalDirectory=data.hospitalDirectory||[];homevisitDoneTotal=Number(data.homevisitDoneTotal)||0;fillMonths();renderDashboard();renderHospitalDirectory();
+ dashboardHasConnected=true;
  setConnectionStatus("System Online","online");$("lastUpdated").textContent="Updated "+new Date().toLocaleTimeString("en-PH");
 }
 
@@ -785,16 +788,20 @@ function renderHospitalDirectory(){
 }
 
 function loadDashboard(){
- setConnectionStatus("Connecting…","connecting");
+ // Show Connecting only before the first successful connection. Scheduled refreshes
+ // run silently so the Online indicator does not flicker every 30 seconds.
+ if(dashboardRequestInFlight)return;
+ if(!dashboardHasConnected)setConnectionStatus("Connecting…","connecting");
+ dashboardRequestInFlight=true;
  if(window.google&&google.script&&google.script.run){
-  google.script.run.withSuccessHandler(data=>{try{applyData(data);}catch(e){setConnectionStatus("Data error: "+e.message,"error");}}).withFailureHandler(err=>setConnectionStatus("Connection error: "+(err.message||err),"error")).getDashboardData();
+  google.script.run.withSuccessHandler(data=>{try{applyData(data);}catch(e){setConnectionStatus("Data error: "+e.message,"error");}finally{dashboardRequestInFlight=false;}}).withFailureHandler(err=>{dashboardRequestInFlight=false;setConnectionStatus("Connection error: "+(err.message||err),"error");}).getDashboardData();
   return;
  }
- if(!GAS_WEB_APP_URL){setConnectionStatus("Connecting…","connecting");return;}
+ if(!GAS_WEB_APP_URL){dashboardRequestInFlight=false;setConnectionStatus("Connection error: Apps Script URL is not configured.","error");return;}
  const cb="gasCallback_"+Date.now(),script=document.createElement("script");
- window[cb]=data=>{try{applyData(data);}catch(e){setConnectionStatus("Data error: "+e.message,"error");}finally{delete window[cb];script.remove();}};
+ window[cb]=data=>{try{applyData(data);}catch(e){setConnectionStatus("Data error: "+e.message,"error");}finally{dashboardRequestInFlight=false;delete window[cb];script.remove();}};
  script.src=GAS_WEB_APP_URL+(GAS_WEB_APP_URL.includes("?")?"&":"?")+"callback="+cb+"&t="+Date.now();
- script.onerror=()=>{setConnectionStatus("Connection failed. Check Apps Script deployment and permissions.","error");delete window[cb];};document.body.appendChild(script);
+ script.onerror=()=>{dashboardRequestInFlight=false;setConnectionStatus("Connection failed. Check Apps Script deployment and permissions.","error");delete window[cb];script.remove();};document.body.appendChild(script);
 }
 window.addEventListener("keydown",e=>{if(e.key==="Escape")closeHospitalModal();});
 window.addEventListener("resize",()=>{if($("publicView").style.display!=="none"&&rawPatients.length)renderDashboard();});

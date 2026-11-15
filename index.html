@@ -173,7 +173,7 @@ footer{text-align:center;color:#8b99ab;font-size:11px;padding:22px 10px 8px}.emp
  #adminDashboardMount .card{box-shadow:none!important;break-inside:avoid;border:1px solid #d8e0e9!important}
  #adminDashboardMount .kpis{grid-template-columns:repeat(2,minmax(0,1fr))!important}
  #adminDashboardMount .dashboard-overview-grid{grid-template-columns:1fr 1fr!important}
- #adminDashboardMount #nav-ambulance,#adminDashboardMount #nav-hospital-tally{break-inside:avoid}
+ #adminDashboardMount #nav-ambulance,#adminDashboardMount #printHospitalTally{break-inside:auto;page-break-inside:auto}
  #adminDashboardMount .chart-wrap{break-inside:avoid}
  #adminDashboardMount canvas{max-width:100%!important}
 }
@@ -213,11 +213,24 @@ body.night-theme .empty{color:#a8b8ce}
 /* TEST 20: compact PDF sign-off and export action in admin navigation */
 .print-cover-page,.print-signature-page{display:none}
 @media print{
- @page{size:A4 portrait;margin:12mm}
- .print-cover-page{display:flex!important;visibility:visible!important;flex-direction:column;box-sizing:border-box;min-height:273mm;page-break-after:always;break-after:page;padding:3mm 1mm 0;color:#24364b;font-family:Arial,sans-serif}
- @page{size:A4 portrait;margin:0}
- #adminDashboardMount #publicView{padding:12mm!important}
- .print-cover-page{min-height:273mm;padding:3mm 1mm 0}
+ /* TEST 22: one consistent A4 printable area and aligned report tables */
+ @page{size:A4 portrait;margin:10mm}
+ html,body{width:auto!important;min-width:0!important;margin:0!important;padding:0!important}
+ #adminView,#adminDashboardMount,#adminDashboardMount #publicView{width:100%!important;max-width:none!important;min-width:0!important;box-sizing:border-box!important;margin:0!important;padding:0!important;overflow:visible!important}
+ #adminDashboardMount #publicView{padding:0!important}
+ #adminDashboardMount .card,#adminDashboardMount .panel{width:100%!important;max-width:100%!important;box-sizing:border-box!important;margin-left:0!important;margin-right:0!important}
+ #adminDashboardMount .table-wrap{width:100%!important;max-width:100%!important;overflow:visible!important;margin:0!important}
+ #adminDashboardMount table{width:100%!important;max-width:100%!important;border-collapse:collapse!important;table-layout:fixed!important}
+ #adminDashboardMount th,#adminDashboardMount td{box-sizing:border-box!important;overflow-wrap:anywhere;word-break:normal}
+ #adminDashboardMount thead{display:table-header-group!important}
+ #adminDashboardMount tr{break-inside:avoid;page-break-inside:avoid}
+ #printHospitalTally .hospital-table th:nth-child(1),#printHospitalTally .hospital-table td:nth-child(1){width:43%}
+ #printHospitalTally .hospital-table th:nth-child(2),#printHospitalTally .hospital-table td:nth-child(2){width:29%}
+ #printHospitalTally .hospital-table th:nth-child(3),#printHospitalTally .hospital-table td:nth-child(3),#printHospitalTally .hospital-table th:nth-child(4),#printHospitalTally .hospital-table td:nth-child(4),#printHospitalTally .hospital-table th:nth-child(5),#printHospitalTally .hospital-table td:nth-child(5){width:9.33%}
+ #nav-ambulance .transport-table th:nth-child(1),#nav-ambulance .transport-table td:nth-child(1){width:38%}
+ #nav-ambulance .transport-table th:nth-child(2),#nav-ambulance .transport-table td:nth-child(2){width:42%}
+ #nav-ambulance .transport-table th:nth-child(3),#nav-ambulance .transport-table td:nth-child(3){width:20%}
+ .print-cover-page{display:flex!important;visibility:visible!important;flex-direction:column;box-sizing:border-box;min-height:277mm;page-break-after:always;break-after:page;padding:0;color:#24364b;font-family:Arial,sans-serif}
  .print-cover-brand{font-size:10px;font-weight:800;letter-spacing:2px;color:#28639a;text-align:center;margin:0 0 8px}
  .print-cover-page h1{text-align:center;font-size:25px;line-height:1.15;color:#123c68;margin:0 0 5px}
  .print-cover-hotline{text-align:center;font-size:10px;line-height:1.4;color:#164f83;font-weight:700;margin:0 0 10px}
@@ -230,9 +243,9 @@ body.night-theme .empty{color:#a8b8ce}
  .print-workflow ul li{margin-bottom:1px}
  .print-cover-page .workflow-heading{margin-top:8px}
  .print-cover-footer{margin-top:auto;padding-top:8px;border-top:1px solid #cbd8e5;text-align:center;color:#69809a;font-size:7px;font-weight:700;letter-spacing:1px}
- .print-signature-page{display:flex!important;visibility:visible!important;box-sizing:border-box;min-height:0;page-break-before:auto;break-before:auto;flex-direction:column;padding:5mm 4mm 0;color:#24364b;margin-top:4mm;break-inside:avoid}
+ .print-signature-page{display:flex!important;visibility:visible!important;box-sizing:border-box;min-height:0;page-break-before:auto;break-before:auto;flex-direction:column;padding:3mm 0 0;color:#24364b;margin:3mm 0 0;break-inside:avoid}
  .print-signature-note{font-size:8px;color:#52647b;margin:0}
- .print-signature-row{display:grid;grid-template-columns:1fr 1fr;gap:28mm;margin-top:10mm;margin-bottom:3mm;align-items:end}
+ .print-signature-row{display:grid;grid-template-columns:1fr 1fr;gap:20mm;margin-top:8mm;margin-bottom:2mm;align-items:end;width:100%;box-sizing:border-box}
  .print-signatory{min-width:0}
  .print-signatory-right{text-align:center}
  .print-sign-label{font-size:9px;margin-bottom:9mm}

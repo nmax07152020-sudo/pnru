@@ -101,6 +101,12 @@ footer{text-align:center;color:#8b99ab;font-size:11px;padding:22px 10px 8px}.emp
 @media(max-width:760px){.admin-shell{grid-template-columns:1fr;gap:14px}.admin-sidebar{position:relative;top:auto;min-height:0;display:flex;flex-wrap:wrap;gap:6px;padding:10px}.sidebar-heading{width:100%;padding:4px 8px}.sidebar-link{width:auto;flex:1 1 190px;margin:0}.admin-main>.welcome{align-items:flex-start}.kpis{grid-template-columns:1fr 1fr}}
 @media(max-width:440px){.sidebar-link{flex-basis:100%}.kpis{grid-template-columns:1fr}.inquiry-kpi .kpi-label{max-width:85%}}
 
+/* TEST 7: hide the public overview title/filter strip only inside Admin; keep logout at upper-right */
+.admin-mode #adminDashboardMount #publicView>.welcome{display:none!important}
+.admin-main>.welcome{align-items:flex-start;position:relative}
+.admin-main>.welcome>button{margin-left:auto;align-self:flex-start;flex:0 0 auto}
+@media(max-width:520px){.admin-main>.welcome>button{margin-left:auto}}
+
 </style>
 </head>
 <body>
@@ -338,6 +344,7 @@ function resetFilter(){selectedMonth="all";$("monthFilter").value="all";renderDa
 function openLogin(){$("loginOverlay").style.display="flex";$("loginMessage").textContent="";$("adminLoginPassword").focus();}
 function closeLogin(){$("loginOverlay").style.display="none";}
 function showAdmin(){
+ document.body.classList.add("admin-mode");
  const dashboard=$("publicView");
  if(dashboard.parentElement!==$("adminDashboardMount"))$("adminDashboardMount").appendChild(dashboard);
  dashboard.style.display="block";
@@ -357,6 +364,7 @@ function showAdminPanel(id,button){
 }
 function logoutAdmin(){showPublic();window.scrollTo({top:0,behavior:"smooth"});}
 function showPublic(){
+ document.body.classList.remove("admin-mode");
  if(adminToken){gasCall("logoutAdmin",[adminToken],()=>{},()=>{});adminToken="";}try{sessionStorage.removeItem(ADMIN_SESSION_KEY);}catch(e){}
  const dashboard=$("publicView");
  if(dashboard.parentElement!==$("publicViewHome"))$("publicViewHome").appendChild(dashboard);

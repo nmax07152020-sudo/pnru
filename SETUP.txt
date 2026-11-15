@@ -1,0 +1,48 @@
+ANTIPOLO PATIENT NAVIGATION DASHBOARD — SECURE ADMIN V4
+
+FILES
+- index.html: replace the existing GitHub/Vercel dashboard page.
+- api/admin.js: add this file at the Vercel project path /api/admin.js.
+- Code.gs: replace the Apps Script Code.gs with this version.
+
+SECURITY CONFIGURATION
+Set this SAME secret in two places. Never put it in index.html or commit it to GitHub.
+
+Secret value:
+Use the secret provided separately in the ChatGPT response. Do not put it in this file or commit it to GitHub.
+
+1) Google Apps Script:
+   - Open the bound Apps Script project.
+   - Project Settings > Script properties > Add script property.
+   - Property: VERCEL_API_SECRET
+   - Value: paste the secret above.
+   - Save.
+
+2) Vercel:
+   - Project > Settings > Environment Variables.
+   - Add GAS_WEB_APP_URL = your current deployed Apps Script /exec URL.
+   - Add GAS_API_SECRET = the same secret above.
+   - Apply to Production (and Preview if testing previews).
+   - Redeploy the Vercel project after saving.
+
+APPS SCRIPT DEPLOYMENT
+- Save Code.gs.
+- Deploy > Manage deployments > Edit existing Web App > New version.
+- Execute as: Me.
+- Who has access: Anyone.
+- Deploy. Keep the existing /exec URL if editing the current deployment.
+
+ADMIN INITIALIZATION
+- If admin was already initialized, existing username/password remain unchanged.
+- If not initialized, run initializeAdmin() once from Apps Script editor and authorize.
+- Default initial credentials only when initializeAdmin() first runs:
+  username: admin
+  temporary password: CHO@2026Admin!
+- Sign in and immediately change the password in Admin Dashboard.
+- initializeAdmin() does not reset an existing password.
+
+IMPORTANT
+- Do not add the shared secret to index.html or any public JavaScript.
+- Public Google Sheets dashboard data continues to use the existing JSONP GET route.
+- Admin login/password changes use same-origin /api/admin through Vercel.
+- The Vercel API route keeps the shared secret on the server.

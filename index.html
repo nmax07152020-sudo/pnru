@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0b3974">
+<title>Antipolo City Health Office | Patient Navigation and Referral Unit</title>
+<style>
+:root{--navy:#0b3974;--blue:#1264b0;--sky:#eaf4ff;--ink:#172b4d;--muted:#718096;--line:#e5edf6;--bg:#f4f7fb;--white:#fff;--green:#15966b;--orange:#e58b24;--red:#d84d5b;--shadow:0 12px 34px rgba(24,57,99,.08)}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Arial,sans-serif;color:var(--ink)}
+.topbar{background:linear-gradient(115deg,#082d60,#1056a0);color:#fff;padding:18px clamp(16px,4vw,48px);display:flex;align-items:center;justify-content:space-between;gap:18px;box-shadow:0 5px 22px #082d6030}
+.brand{display:flex;align-items:center;gap:14px;min-width:0}.seal{width:48px;height:48px;border:1px solid #ffffff75;border-radius:14px;display:grid;place-items:center;background:#ffffff18;font-size:23px;flex:none}.brand h1{font-size:clamp(15px,2vw,21px);margin:0;line-height:1.25;font-weight:750}.brand p{margin:4px 0 0;color:#c9ddf5;font-size:12px;letter-spacing:.08em;text-transform:uppercase}.top-actions{display:flex;gap:10px;align-items:center}.btn{border:0;border-radius:10px;padding:10px 15px;font-weight:650;cursor:pointer;font-size:13px;transition:.2s}.btn-light{background:#ffffff18;color:white;border:1px solid #ffffff55}.btn-light:hover{background:#ffffff30}.btn-primary{background:var(--blue);color:#fff}.btn-primary:hover{background:#0b4c91}.btn-muted{background:#edf2f8;color:#31445e}.btn:disabled{opacity:.55;cursor:not-allowed}
+.wrap{max-width:1440px;margin:auto;padding:24px clamp(14px,3vw,38px) 40px}.welcome{display:flex;justify-content:space-between;align-items:flex-end;gap:18px;margin:5px 0 22px;flex-wrap:wrap}.eyebrow{font-size:11px;text-transform:uppercase;letter-spacing:.13em;color:var(--blue);font-weight:800}.welcome h2{margin:6px 0 5px;font-size:clamp(23px,3vw,31px);letter-spacing:-.04em}.welcome p{margin:0;color:var(--muted);font-size:13px}.filters{display:flex;gap:9px;align-items:center;flex-wrap:wrap}.select,.date-input{background:white;border:1px solid var(--line);border-radius:10px;padding:10px 12px;color:var(--ink);font:inherit;font-size:13px;min-height:40px}
+.statusline{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:12px;margin:-7px 0 17px}.dot{width:8px;height:8px;border-radius:50%;background:var(--green);display:inline-block}.dot.off{background:var(--orange)}
+.kpis{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-bottom:16px}.card{background:#fff;border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow)}.kpi{padding:17px 18px;position:relative;overflow:hidden}.kpi:after{content:"";position:absolute;width:80px;height:80px;border-radius:50%;right:-24px;top:-25px;background:var(--tint,#eaf4ff)}.kpi-label{color:var(--muted);font-size:12px;font-weight:650;position:relative;z-index:1}.kpi-value{font-size:clamp(25px,3vw,34px);font-weight:800;letter-spacing:-.04em;margin:9px 0 3px;position:relative;z-index:1}.kpi-note{font-size:11px;color:var(--muted);position:relative;z-index:1}.kpi-icon{position:absolute;right:15px;bottom:15px;font-size:22px;z-index:1}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:15px;margin-bottom:15px}.panel{padding:19px 20px;min-width:0}.panel-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:16px}.panel h3{margin:0;font-size:15px}.sub{color:var(--muted);font-size:11px;margin-top:5px}.chart-wrap{height:230px;position:relative}.chart-wrap canvas{width:100%;height:100%}.legend{display:flex;gap:15px;flex-wrap:wrap;margin-top:8px;color:var(--muted);font-size:11px}.key{display:inline-flex;align-items:center;gap:6px}.swatch{width:9px;height:9px;border-radius:3px;display:inline-block}
+.age-list{display:grid;gap:13px;margin-top:8px}.age-row{display:grid;grid-template-columns:78px 1fr 42px;align-items:center;gap:10px;font-size:12px}.track{height:9px;border-radius:20px;background:#edf2f8;overflow:hidden}.fill{height:100%;border-radius:20px;background:linear-gradient(90deg,#2b83d4,#6bb6f1);width:0}.age-num{text-align:right;font-weight:750}
+.table-wrap{overflow:auto}.mini-table{width:100%;border-collapse:collapse;font-size:12px}.mini-table th{text-align:left;color:var(--muted);font-weight:700;background:#f8fafd;padding:10px}.mini-table td{padding:11px 10px;border-top:1px solid var(--line)}.pill{padding:4px 8px;border-radius:20px;background:#eaf4ff;color:#1762a9;font-size:10px;font-weight:750}
+.admin-view{display:none}.admin-card{max-width:580px;padding:24px}.field{display:grid;gap:7px;margin:15px 0}.field label{font-size:12px;font-weight:700;color:#40536d}.field input{width:100%;padding:12px;border:1px solid #dce5ef;border-radius:10px;font:inherit;font-size:14px}.help{font-size:11px;color:var(--muted);line-height:1.5}.alert{padding:11px 13px;border-radius:10px;background:#fff7e8;color:#875a15;font-size:12px;line-height:1.5;margin:12px 0}
+footer{text-align:center;color:#8b99ab;font-size:11px;padding:22px 10px 8px}.empty{padding:30px;text-align:center;color:var(--muted);font-size:13px}
+@media(max-width:900px){.kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.grid2{grid-template-columns:1fr}}
+@media(max-width:520px){.topbar{align-items:flex-start;padding:14px}.seal{width:40px;height:40px}.brand p{font-size:9px}.top-actions .btn{padding:9px 10px;font-size:11px}.wrap{padding-top:18px}.kpis{gap:9px}.kpi{padding:14px}.kpi-value{font-size:26px}.panel{padding:15px}.filters{width:100%}.filters>*{flex:1}.welcome{align-items:flex-start}}
+
+/* Compact combined profile panel and hospital details modal */
+.profile-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px;align-items:start}
+.profile-section{min-width:0}
+.profile-section h4{margin:0 0 12px;font-size:13px;color:#31445e}
+.profile-section .chart-wrap{height:190px;min-height:190px;display:block}.profile-section canvas{display:block;width:100%;height:100%}
+.hospital-shortcut{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.hospital-shortcut p{margin:5px 0 0;color:var(--muted);font-size:12px}
+.modal-overlay{display:none;position:fixed;inset:0;background:#071d3dcc;z-index:60;align-items:center;justify-content:center;padding:16px}
+.modal-card{width:min(1100px,100%);max-height:92vh;overflow:auto;padding:20px}
+.modal-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:14px}
+.modal-chart{height:330px;overflow-x:auto;overflow-y:hidden}
+.modal-chart canvas{min-width:700px;width:100%;height:100%}
+.status-badge{display:inline-block;border-radius:20px;padding:3px 8px;font-size:10px;font-weight:750}
+.status-coord{background:#e8f7f0;color:#13744f}
+.status-refused{background:#fff0f1;color:#b43c4a}
+@media(max-width:720px){.profile-grid{grid-template-columns:1fr}.modal-card{padding:14px}.modal-chart{height:230px}}
+
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="brand"><div class="seal" aria-label="City Health Office logo"><svg viewBox="0 0 64 64" width="42" height="42" role="img" aria-hidden="true"><circle cx="32" cy="32" r="29" fill="#fff" opacity=".13" stroke="#fff" stroke-width="1.5"/><circle cx="32" cy="32" r="22" fill="none" stroke="#fff" stroke-width="1"/><path d="M27 15h10v12h12v10H37v12H27V37H15V27h12z" fill="#fff"/><path d="M12 53h40" stroke="#fff" stroke-width="2" stroke-linecap="round"/><path d="M19 50V43m26 7V43" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg></div><div><h1>Antipolo City Health Office</h1><p>Patient Navigation and Referral Unit</p></div></div>
+  <div class="top-actions"><button class="btn btn-light" id="refreshBtn" onclick="loadDashboard()">↻ Refresh</button><button class="btn btn-light" id="adminBtn" onclick="openLogin()">Admin Login</button></div>
+</header>
+<div id="loginOverlay" style="display:none;position:fixed;inset:0;background:#071d3dcc;z-index:50;align-items:center;justify-content:center;padding:18px">
+  <div class="card" style="width:min(420px,100%);padding:24px">
+    <div style="display:flex;justify-content:space-between;align-items:center"><h3 style="margin:0">Administrator Login</h3><button class="btn btn-muted" onclick="closeLogin()">✕</button></div>
+    <p class="sub">Sign in to manage administrator password settings.</p>
+    <form onsubmit="loginAdmin(event)">
+      <div class="field"><label>Username</label><input id="adminUsername" value="admin" autocomplete="username" required></div>
+      <div class="field"><label>Password</label><input id="adminLoginPassword" type="password" autocomplete="current-password" required></div>
+      <button class="btn btn-primary" type="submit" id="loginSubmit">Sign In</button>
+      <p class="help" id="loginMessage" role="status"></p>
+    </form>
+  </div>
+</div>
+<main class="wrap">
+  <section id="publicView">
+    <div class="welcome"><div><h2>Patient Navigation Overview</h2><p>Referral assistance and hospital coordination statistics</p></div>
+      <div class="filters"><select id="monthFilter" class="select" onchange="renderDashboard()"><option value="all">All months · Jan 2026 onwards</option></select><button class="btn btn-muted" onclick="resetFilter()">Reset Filter</button></div>
+    </div>
+    <div class="statusline"><span class="dot off" id="statusDot"></span><span id="dataStatus">Waiting for Google Sheets connection</span><span id="lastUpdated" style="margin-left:auto"></span></div>
+    <div class="kpis">
+      <article class="card kpi" style="--tint:#eaf4ff"><div class="kpi-label">Total Hospital Entries</div><div class="kpi-value" id="hospitalTotalTop">—</div><div class="kpi-note">All receiving hospitals</div><span class="kpi-icon">🏥</span></article>
+      <article class="card kpi" style="--tint:#e9f8f2"><div class="kpi-label">Coordinated</div><div class="kpi-value" id="coordTotal">—</div><div class="kpi-note">Successful coordination</div><span class="kpi-icon">✓</span></article>
+      <article class="card kpi" style="--tint:#fff0f3"><div class="kpi-label">Refused</div><div class="kpi-value" id="refusedTotal">—</div><div class="kpi-note">Referral declined</div><span class="kpi-icon">↩</span></article>
+    </div>
+    <div class="grid2">
+      <section class="card panel"><div class="panel-head"><div><h3>Gender Distribution</h3><div class="sub">Client distribution</div></div><span class="pill">Male / Female</span></div><div class="chart-wrap"><canvas id="genderChart"></canvas></div><div class="legend"><span class="key"><i class="swatch" style="background:#2677c9"></i>Male: <strong id="maleLegend">—</strong></span><span class="key"><i class="swatch" style="background:#e4779b"></i>Female: <strong id="femaleLegend">—</strong></span></div></section>
+    </div>
+    <section class="card panel" style="margin-bottom:15px">
+      <div class="panel-head"><div><h3>Client Profile Overview</h3><div class="sub">Classification and age distribution</div></div><span class="pill">Pedia / Adult · Age Groups</span></div>
+      <div class="profile-grid">
+        <div class="profile-section">
+          <h4>Client Classification</h4>
+          <div class="chart-wrap"><canvas id="classChart"></canvas></div>
+          <div class="legend"><span class="key"><i class="swatch" style="background:#23a58a"></i>Pedia</span><span class="key"><i class="swatch" style="background:#e5a13a"></i>Adult</span></div>
+        </div>
+        <div class="profile-section">
+          <h4>Age Group Distribution</h4>
+          <div class="age-list" id="ageGroups"><div class="empty">No data loaded</div></div>
+        </div>
+      </div>
+    </section>
+    <section class="card panel" style="margin-bottom:15px">
+      <div class="hospital-shortcut">
+        <div><h3>Hospital Referral Tally Board</h3><p>View referral totals and coordinated / refused outcomes for each receiving hospital</p></div>
+        <button class="btn btn-primary" type="button" onclick="openHospitalModal()">View Hospital Summary</button>
+      </div>
+    </section>
+    <section class="card panel" style="margin-bottom:15px"><div class="panel-head"><div><h3>Ambulance Transport / Transfer by Dispatching Unit / Barangay</h3><div class="sub">Transport and transfer records</div></div><span class="pill" id="transportTotal">Overall: —</span></div><div class="sub" style="margin:0 0 12px">Total records grouped by dispatching unit or barangay.</div><div class="chart-wrap" style="height:310px;min-height:310px;overflow-x:auto"><canvas id="transportChart"></canvas></div><div class="table-wrap"><table class="mini-table"><thead><tr><th>Dispatching Unit / Barangay</th><th style="text-align:right">Total Entries</th></tr></thead><tbody id="transportBreakdown"><tr><td colspan="2" class="empty">No dispatching unit / barangay records for this period</td></tr></tbody></table></div></section>
+  </section>
+  <section id="adminView" class="admin-view">
+    <div class="welcome"><div><div class="eyebrow">Administration</div><h2>Admin Dashboard</h2><p>Account security settings</p></div><button class="btn btn-muted" onclick="showPublic()">← Back to Public Dashboard</button></div>
+    <div class="card admin-card"><h3 style="margin:0">Change Password</h3><p class="sub">Update the administrator password.</p>
+      <div class="alert">For first-time setup, use the temporary admin password provided with the Code.gs instructions. Change it immediately after signing in.</div>
+      <form onsubmit="changePassword(event)"><div class="field"><label>Current Password</label><input id="currentPassword" type="password" autocomplete="current-password" required></div><div class="field"><label>New Password</label><input id="newPassword" type="password" minlength="8" autocomplete="new-password" required></div><div class="field"><label>Confirm New Password</label><input id="confirmPassword" type="password" minlength="8" autocomplete="new-password" required></div><button class="btn btn-primary" type="submit" id="changePasswordBtn">Update Password</button></form><p class="help" id="passwordMessage" role="status"></p>
+    </div>
+  </section>
+  <footer>Antipolo City Health Office · Patient Navigation and Referral Unit</footer>
+</main>
+<div id="hospitalModal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="hospitalModalTitle" onclick="if(event.target===this)closeHospitalModal()">
+  <div class="card modal-card">
+    <div class="modal-head">
+      <div><h3 id="hospitalModalTitle" style="margin:0">Hospital Referral Tally Board</h3><p class="sub">Per-hospital totals with Column G remarks: Coordinated and Refused</p></div>
+      <button class="btn btn-muted" type="button" onclick="closeHospitalModal()">Close ✕</button>
+    </div>
+    <div class="modal-chart"><canvas id="hospitalChart"></canvas></div>
+    <div class="table-wrap">
+      <table class="mini-table">
+        <thead><tr><th>Receiving Hospital</th><th style="text-align:right">Coordinated</th><th style="text-align:right">Refused</th><th style="text-align:right">Total Referrals</th></tr></thead>
+        <tbody id="hospitalBreakdown"><tr><td colspan="4" class="empty">No hospital records for this period</td></tr></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<script>
+/*
+  Apps Script deployment:
+  - Add this file to the Apps Script project as index.html.
+  - Code.gs doGet() serves this page.
+  - If hosted elsewhere, set GAS_WEB_APP_URL to the deployed /exec URL.
+*/
+const GAS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxTs7_jSzhArOe1HnW8C6jlT0Fgbx-kHOipb-dzmxwu1yR8ALVEy1ZDlNtNuAY6CNc/exec";
+const START_DATE = new Date(2026,0,1);
+let rawPatients=[], rawHospitals=[], selectedMonth="all", adminToken="";
+const $=id=>document.getElementById(id);
+const number=n=>(Number(n)||0).toLocaleString("en-PH");
+function escapeHtml(v){return String(v).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
+function parseDate(v){
+ if(v instanceof Date)return v;
+ if(typeof v==="number")return new Date(Math.round((v-25569)*86400*1000));
+ if(!v)return null;
+ let s=String(v).trim(),d=new Date(s);
+ if(!isNaN(d))return d;
+ let m=s.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{2,4})$/);
+ if(m){let y=+m[3];if(y<100)y+=2000;return new Date(y,+m[1]-1,+m[2]);}
+ return null;
+}
+function inRange(row){const d=parseDate(row.date);return d&&d>=START_DATE&&!isNaN(d);}
+function monthKey(v){let d=parseDate(v);return d?`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}`:"";}
+function monthLabel(key){let [y,m]=key.split("-").map(Number);return new Date(y,m-1,1).toLocaleDateString("en-PH",{month:"long",year:"numeric"});}
+function filtered(){
+ return {
+  p:rawPatients.filter(inRange).filter(x=>selectedMonth==="all"||monthKey(x.date)===selectedMonth),
+  h:rawHospitals.filter(inRange).filter(x=>selectedMonth==="all"||monthKey(x.date)===selectedMonth)
+ };
+}
+function fillMonths(){
+ const keys=[...new Set([...rawPatients,...rawHospitals].filter(inRange).map(x=>monthKey(x.date)).filter(Boolean))].sort();
+ $("monthFilter").innerHTML='<option value="all">All months · Jan 2026 onwards</option>'+keys.map(k=>`<option value="${k}">${monthLabel(k)}</option>`).join("");
+ $("monthFilter").value=selectedMonth;
+}
+function ageYears(v){
+ if(v===null||v===undefined||v==="")return null;
+ if(typeof v==="number")return v;
+ let s=String(v).toLowerCase().trim(),m=s.match(/(\d+(?:\.\d+)?)\s*(years?|yrs?|y\b|months?|mos?|weeks?|days?)/i);
+ if(m){let n=+m[1],u=m[2];if(/^m/.test(u))return n/12;if(/^w/.test(u))return n/52;if(/^d/.test(u))return n/365;return n;}
+ let n=parseFloat(s);return Number.isFinite(n)?n:null;
+}
+function countAgeGroups(rows){
+ const labels=["0–5","6–12","13–17","18–59","60+"],counts=[0,0,0,0,0];
+ rows.forEach(r=>{let a=ageYears(r.age);if(a===null)return;if(a<=5)counts[0]++;else if(a<=12)counts[1]++;else if(a<=17)counts[2]++;else if(a<=59)counts[3]++;else counts[4]++;});
+ return labels.map((label,i)=>({label,count:counts[i]}));
+}
+function drawDonut(id,values,colors){
+ const c=$(id),ctx=c.getContext("2d"),w=c.clientWidth,h=c.clientHeight,dpr=window.devicePixelRatio||1;c.width=w*dpr;c.height=h*dpr;ctx.scale(dpr,dpr);
+ const total=values.reduce((a,b)=>a+b,0),cx=w/2,cy=h/2-5,r=Math.min(w,h)*.34,inner=r*.64;let a=-Math.PI/2;
+ values.forEach((v,i)=>{let end=a+(total?v/total:0)*Math.PI*2;ctx.beginPath();ctx.arc(cx,cy,r,a,end);ctx.arc(cx,cy,inner,end,a,true);ctx.closePath();ctx.fillStyle=colors[i];ctx.fill();a=end;});
+ ctx.textAlign="center";ctx.fillStyle="#172b4d";ctx.font="800 25px system-ui";ctx.fillText(number(total),cx,cy+4);ctx.fillStyle="#718096";ctx.font="11px system-ui";ctx.fillText("TOTAL",cx,cy+22);
+}
+function drawBars(id,labels,values,color){
+ const c=$(id),ctx=c.getContext("2d"),w=c.clientWidth,h=c.clientHeight,dpr=window.devicePixelRatio||1;c.width=w*dpr;c.height=h*dpr;ctx.scale(dpr,dpr);ctx.clearRect(0,0,w,h);
+ const max=Math.max(1,...values),left=28,bottom=28,top=10,plotH=h-top-bottom,plotW=w-left-8,step=plotW/Math.max(1,labels.length),barW=Math.max(5,step*.48);
+ ctx.font="10px system-ui";ctx.textAlign="center";
+ values.forEach((v,i)=>{let bh=v/max*(plotH-12),x=left+i*step+(step-barW)/2,y=top+plotH-bh;ctx.fillStyle=color;ctx.beginPath();if(ctx.roundRect)ctx.roundRect(x,y,barW,bh,4);else ctx.rect(x,y,barW,bh);ctx.fill();ctx.fillStyle="#6e7d91";ctx.fillText(labels[i],x+barW/2,h-8);});
+}
+
+function drawMultiColorBars(id,labels,values){
+ const c=$(id);if(!c)return;
+ const ctx=c.getContext("2d"),w=Math.max(c.clientWidth,Math.min(2200,labels.length*62+60),700),h=c.clientHeight||300,dpr=window.devicePixelRatio||1;
+ c.width=w*dpr;c.height=h*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,w,h);
+ const palette=["#2677c9","#e4779b","#23a58a","#e5a13a","#8064c8","#16a6b6","#d45d79","#7b9b35","#e07a35","#5470c6"];
+ if(!labels.length)return;
+ const left=34,bottom=105,top=18,plotH=h-top-bottom,plotW=w-left-12,step=plotW/labels.length,barW=Math.max(8,Math.min(36,step*.58)),max=Math.max(1,...values);
+ ctx.font="10px system-ui";ctx.textAlign="center";
+ values.forEach((v,i)=>{
+  const bh=v?Math.max(2,(v/max)*(plotH-20)):0,x=left+i*step+(step-barW)/2,y=top+plotH-bh;
+  ctx.fillStyle=palette[i%palette.length];ctx.beginPath();if(ctx.roundRect)ctx.roundRect(x,y,barW,bh,4);else ctx.rect(x,y,barW,bh);ctx.fill();
+  ctx.fillStyle="#52647b";ctx.fillText(number(v),x+barW/2,Math.max(11,y-6));
+  ctx.save();ctx.translate(x+barW/2,h-12);ctx.rotate(-Math.PI/4);ctx.textAlign="right";
+  let label=String(labels[i]);if(label.length>26)label=label.slice(0,24)+"…";
+  ctx.fillText(label,0,0);ctx.restore();
+ });
+}
+
+
+function renderDashboard(){
+ const {p,h}=filtered();
+ const male=p.filter(x=>/^m/i.test(String(x.gender||"").trim())).length;
+ const female=p.filter(x=>/^f/i.test(String(x.gender||"").trim())).length;
+ const pedia=p.filter(x=>/pedia/i.test(String(x.classification||""))).length;
+ const adult=p.filter(x=>/adult/i.test(String(x.classification||""))).length;
+ const coordinated=h.filter(x=>/coordinated/i.test(String(x.remarks||""))).length;
+ const refused=h.filter(x=>/refused/i.test(String(x.remarks||""))).length;
+ $("hospitalTotalTop").textContent=number(h.filter(x=>String(x.hospital||"").trim()).length);
+ $("coordTotal").textContent=number(coordinated);$("refusedTotal").textContent=number(refused);
+ $("maleLegend").textContent=number(male);$("femaleLegend").textContent=number(female);
+ drawDonut("genderChart",[male,female],["#2677c9","#e4779b"]);
+ drawDonut("classChart",[pedia,adult],["#23a58a","#e5a13a"]);
+ const ages=countAgeGroups(p),maxAge=Math.max(1,...ages.map(x=>x.count));
+ $("ageGroups").innerHTML=ages.map(x=>`<div class="age-row"><strong>${x.label} yrs</strong><div class="track"><div class="fill" style="width:${x.count/maxAge*100}%"></div></div><span class="age-num">${number(x.count)}</span></div>`).join("");
+
+ const hospitals={};
+ h.forEach(x=>{
+  const n=String(x.hospital||"").trim();if(!n)return;
+  if(!hospitals[n])hospitals[n]={total:0,coordinated:0,refused:0};
+  hospitals[n].total++;
+  const remark=String(x.remarks||"");
+  if(/coordinated/i.test(remark))hospitals[n].coordinated++;
+  if(/refused/i.test(remark))hospitals[n].refused++;
+ });
+ const hospitalRows=Object.entries(hospitals).sort((a,b)=>b[1].total-a[1].total||a[0].localeCompare(b[0]));
+ $("hospitalBreakdown").innerHTML=hospitalRows.map(([n,v])=>`<tr><td>${escapeHtml(n)}</td><td style="text-align:right"><span class="status-badge status-coord">${number(v.coordinated)}</span></td><td style="text-align:right"><span class="status-badge status-refused">${number(v.refused)}</span></td><td style="text-align:right;font-weight:750">${number(v.total)}</td></tr>`).join("")||'<tr><td colspan="4" class="empty">No hospital records for this period</td></tr>';
+ if($("hospitalModal").style.display==="flex")drawMultiColorBars("hospitalChart",hospitalRows.map(x=>x[0]),hospitalRows.map(x=>x[1].total));
+
+ const units={};p.forEach(x=>{const n=String(x.dispatchUnit||"").trim();if(n)units[n]=(units[n]||0)+1;});
+ const unitRows=Object.entries(units).sort((a,b)=>b[1]-a[1]||a[0].localeCompare(b[0]));
+ $("transportBreakdown").innerHTML=unitRows.map(([n,c])=>`<tr><td>${escapeHtml(n)}</td><td style="text-align:right;font-weight:750">${number(c)}</td></tr>`).join("")||'<tr><td colspan="2" class="empty">No dispatching unit / barangay records for this period</td></tr>';
+ $("transportTotal").textContent="Overall: "+number(unitRows.reduce((s,x)=>s+x[1],0));
+ drawMultiColorBars("transportChart",unitRows.map(x=>x[0]),unitRows.map(x=>x[1]));
+}
+function openHospitalModal(){
+ $("hospitalModal").style.display="flex";
+ const {h}=filtered(), hospitals={};
+ h.forEach(x=>{
+  const n=String(x.hospital||"").trim();if(!n)return;
+  if(!hospitals[n])hospitals[n]={total:0,coordinated:0,refused:0};
+  hospitals[n].total++;
+  const remark=String(x.remarks||"");
+  if(/coordinated/i.test(remark))hospitals[n].coordinated++;
+  if(/refused/i.test(remark))hospitals[n].refused++;
+ });
+ const rows=Object.entries(hospitals).sort((a,b)=>b[1].total-a[1].total||a[0].localeCompare(b[0]));
+ drawMultiColorBars("hospitalChart",rows.map(x=>x[0]),rows.map(x=>x[1].total));
+}
+function closeHospitalModal(){$("hospitalModal").style.display="none";}
+
+function resetFilter(){selectedMonth="all";$("monthFilter").value="all";renderDashboard();}
+function openLogin(){$("loginOverlay").style.display="flex";$("loginMessage").textContent="";$("adminLoginPassword").focus();}
+function closeLogin(){$("loginOverlay").style.display="none";}
+function showAdmin(){$("publicView").style.display="none";$("adminView").style.display="block";$("adminBtn").textContent="Public Dashboard";$("adminBtn").onclick=showPublic;}
+function showPublic(){
+ if(adminToken){gasCall("logoutAdmin",[adminToken],()=>{},()=>{});adminToken="";}
+ $("adminView").style.display="none";$("publicView").style.display="block";$("adminBtn").textContent="Admin Login";$("adminBtn").onclick=openLogin;
+}
+async function gasCall(method,args,onSuccess,onFailure){
+ const actionMap={adminLogin:"login",changeAdminPassword:"changePassword",logoutAdmin:"logout"};
+ const action=actionMap[method];
+ if(!action){onFailure("Unsupported admin action.");return;}
+ const body={action};
+ if(method==="adminLogin"){body.username=args[0];body.password=args[1];}
+ if(method==="changeAdminPassword"){body.token=args[0];body.currentPassword=args[1];body.newPassword=args[2];}
+ if(method==="logoutAdmin"){body.token=args[0];}
+ try{
+  const response=await fetch("/api/admin",{method:"POST",headers:{"Content-Type":"application/json"},credentials:"same-origin",body:JSON.stringify(body)});
+  const result=await response.json();
+  if(!response.ok&&!result.message)throw new Error("Admin API request failed ("+response.status+").");
+  onSuccess(result);
+ }catch(err){onFailure(err&&err.message?err.message:"Unable to connect to the secure Admin API.");}
+}
+function loginAdmin(e){
+ e.preventDefault();$("loginSubmit").disabled=true;$("loginMessage").textContent="Signing in…";
+ gasCall("adminLogin",[$("adminUsername").value.trim(),$("adminLoginPassword").value],res=>{
+  $("loginSubmit").disabled=false;
+  if(!res||!res.success){$("loginMessage").textContent=(res&&res.message)||"Login failed.";return;}
+  adminToken=res.token||"";closeLogin();showAdmin();$("adminLoginPassword").value="";
+ },err=>{$("loginSubmit").disabled=false;$("loginMessage").textContent=err;});
+}
+function changePassword(e){
+ e.preventDefault();const n=$("newPassword").value;
+ if(n!==$("confirmPassword").value){$("passwordMessage").textContent="New password and confirmation do not match.";return;}
+ if(n.length<8){$("passwordMessage").textContent="Use at least 8 characters.";return;}
+ $("changePasswordBtn").disabled=true;$("passwordMessage").textContent="Updating password…";
+ gasCall("changeAdminPassword",[adminToken,$("currentPassword").value,n],res=>{
+  $("changePasswordBtn").disabled=false;
+  $("passwordMessage").textContent=res&&res.success?"Password updated successfully. Please use your new password next time.":((res&&res.message)||"Password update failed.");
+  if(res&&res.success){$("currentPassword").value="";$("newPassword").value="";$("confirmPassword").value="";}
+ },err=>{$("changePasswordBtn").disabled=false;$("passwordMessage").textContent=err;});
+}
+function applyData(data){
+ if(!data||!data.success)throw new Error((data&&data.message)||"Apps Script returned an invalid data response.");
+ rawPatients=data.patientAssistance||[];rawHospitals=data.hospitalTally||[];fillMonths();renderDashboard();
+ $("dataStatus").textContent="Live data · Google Sheets connected";$("statusDot").classList.remove("off");$("lastUpdated").textContent="Updated "+new Date().toLocaleTimeString("en-PH");
+}
+function loadDashboard(){
+ $("dataStatus").textContent="Connecting to Google Sheets…";$("statusDot").classList.add("off");
+ if(window.google&&google.script&&google.script.run){
+  google.script.run.withSuccessHandler(data=>{try{applyData(data);}catch(e){$("dataStatus").textContent="Data error: "+e.message;}}).withFailureHandler(err=>$("dataStatus").textContent="Apps Script error: "+(err.message||err)).getDashboardData();
+  return;
+ }
+ if(!GAS_WEB_APP_URL){$("dataStatus").textContent="Preview mode · Add this HTML file to the Apps Script project to connect";return;}
+ const cb="gasCallback_"+Date.now(),script=document.createElement("script");
+ window[cb]=data=>{try{applyData(data);}catch(e){$("dataStatus").textContent="Data error: "+e.message;}finally{delete window[cb];script.remove();}};
+ script.src=GAS_WEB_APP_URL+(GAS_WEB_APP_URL.includes("?")?"&":"?")+"callback="+cb+"&t="+Date.now();
+ script.onerror=()=>{$("dataStatus").textContent="Connection failed. Check Apps Script deployment and permissions.";delete window[cb];};document.body.appendChild(script);
+}
+window.addEventListener("keydown",e=>{if(e.key==="Escape")closeHospitalModal();});
+window.addEventListener("resize",()=>{if($("publicView").style.display!=="none"&&rawPatients.length)renderDashboard();});
+renderDashboard();loadDashboard();setInterval(()=>loadDashboard(),300000);
+</script>
+</body></html>

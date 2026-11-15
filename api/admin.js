@@ -17,7 +17,7 @@ module.exports = async function handler(req, res) {
   try {
     const body = req.body && typeof req.body === "object" ? req.body : {};
     const action = String(body.action || "");
-    if (!["login", "changePassword", "logout", "savePatientAssistance", "saveHospitalTally"].includes(action)) {
+    if (!["login", "changePassword", "logout", "savePatientAssistance", "saveHospitalTally", "saveHomevisit", "saveHomeVisit"].includes(action)) {
       return res.status(400).json({ success: false, message: "Unsupported admin action." });
     }
 

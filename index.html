@@ -353,14 +353,14 @@ const HOMEVISIT_ENTRY_FIELDS=[
  {col:"C",label:"Age",type:"number",min:0},
  {col:"D",label:"Gender",type:"select",options:["Male","Female"]},
  {col:"E",label:"Address",type:"text",full:true},
- {col:"F",label:"Barangay",type:"text"},
+ {col:"F",label:"Barangay",type:"select",options:["Bagong Nayon","Beverly Hills","Calawis","Cupang","Dalig","Dela Paz","Inarawan","Mambugan","Mayamot","Muntindilaw","San Isidro","San Jose","San Juan","San Luis","San Roque","Santa Cruz"]},
  {col:"G",label:"Contact Number",type:"tel"},
  {col:"H",label:"Contact Person",type:"text"},
  {col:"I",label:"Medical Diagnosis",type:"textarea",full:true},
  {col:"J",label:"Chief Complain",type:"textarea",full:true},
- {col:"K",label:"LastCheckup",type:"date"},
  {col:"L",label:"Status",type:"select",options:["Bedridden","Ambulatory"],required:true},
- {col:"M",label:"Remarks",type:"select",options:["Done Visit","New"],required:true}
+ {col:"M",label:"Remarks",type:"select",options:["Done Visit","New"],required:true},
+ {col:"N",label:"Type of Assistance",type:"select",options:["Medical Certificate","Financial Assistance","Certification of Disability","Yakap Medicine","Consultation"],required:true,full:true}
 ];
 const HOSPITAL_OPTIONS=["RPHS Annex 1 Padilla","RPHS Annex 2 Dalig","ACHS Cabading","ACHS Annex 4 Mambugan","Assumption Specialty Hospital & Medical Center Inc.","Clinica Antipolo Hospital & Wellness Center, Inc.","Antipolo Doctors Hospital","Soriano-Leyble Medical and Maternity Hospital","Fatima Medical Center Antipolo","Cornel Medical Center, Antipolo","Metro Antipolo Hospital and Medical Center","Amang Rodriguez Memorial Medical Center","Quirino Memorial Medical Center","Rizal Medical Center - DOH","Lung Center of the Philippines","Philippine Heart Center","The National Kidney and Transplant Institute","East Avenue Medical Center","Philippine Children's Medical Center","National Children's Hospital","National Center For Mental Health","Jose R. Reyes Memorial Medical Center","San Lazaro Hospital","Dr. Jose Fabella Memorial Hospital","Philippine General Hospital","Jose N. Rodriguez Memorial Hospital and Sanitarium (DJNRMHS)","DOH Calabarzon","GAT Andres Bonifacio Medical Center","RPHS MORONG","Pasig City General Hospital","Tondo Medical Center","Quezon City General Hospital","Marikina Valley","Manila East Medical Center","Ospital ng Makati","Rizal Provincial Hospital System - Taytay","Rizal Provincial Hospital System - Morong","Rizal Provincial Hospital - Binangonan"];
 const HOSPITAL_ENTRY_FIELDS=[
@@ -387,7 +387,7 @@ function clearEntryMessage(id){const el=$(id);if(el){el.textContent="";el.classN
 function collectEntryValues(prefix,fields){const out={};fields.forEach(f=>{if(f.type==="vitals"){out[f.col]=["BP","T","HR","RR","O2SAT","GCS"].map(v=>{const value=String($(prefix+f.col+"-"+v)?.value||"").trim();return value?`${v} - ${value}`:v;}).join("\n");}else{const el=$(prefix+f.col);out[f.col]=el?String(el.value||"").trim():"";}});return out;}
 async function submitSheetEntry(event,kind){
  event.preventDefault();if(!adminToken){alert("Admin session expired. Please sign in again.");openLogin();return;}
- const configs={patient:{fields:PATIENT_ENTRY_FIELDS,prefix:"patient-",form:"patientEntryForm",button:"savePatientEntryBtn",message:"patientEntryMessage",action:"savePatientAssistance",title:"Patient/Client Assistance",success:"Patient assistance record added successfully.",buttonText:"Save Patient Entry"},hospital:{fields:HOSPITAL_ENTRY_FIELDS,prefix:"hospital-",form:"hospitalTallyForm",button:"saveHospitalEntryBtn",message:"hospitalEntryMessage",action:"saveHospitalTally",title:"Hospital Referral Tally Board",success:"Referral tally record added successfully.",buttonText:"Save Hospital Referral Entry"},homevisit:{fields:HOMEVISIT_ENTRY_FIELDS,prefix:"homevisit-",form:"homevisitForm",button:"saveHomevisitEntryBtn",message:"homevisitEntryMessage",action:"saveHomevisit",title:"Home Visit",success:"Home visit record added successfully.",buttonText:"Save Home Visit"}};
+ const configs={patient:{fields:PATIENT_ENTRY_FIELDS,prefix:"patient-",form:"patientEntryForm",button:"savePatientEntryBtn",message:"patientEntryMessage",action:"savePatientAssistance",title:"Patient/Client Assistance",success:"Patient assistance record added successfully.",buttonText:"Save Patient Entry"},hospital:{fields:HOSPITAL_ENTRY_FIELDS,prefix:"hospital-",form:"hospitalTallyForm",button:"saveHospitalEntryBtn",message:"hospitalEntryMessage",action:"saveHospitalTally",title:"Hospital Referral Tally Board",success:"Referral tally record added successfully.",buttonText:"Save Hospital Referral Entry"},homevisit:{fields:HOMEVISIT_ENTRY_FIELDS,prefix:"homevisit-",form:"homevisitForm",button:"saveHomevisitEntryBtn",message:"homevisitEntryMessage",action:"saveHomeVisit",title:"Home Visit",success:"Home visit record added successfully.",buttonText:"Save Home Visit"}};
  const cfg=configs[kind];if(!cfg)return;const form=$(cfg.form),button=$(cfg.button),message=$(cfg.message);
  if(!form.checkValidity()){form.reportValidity();return;}
  const values=collectEntryValues(cfg.prefix,cfg.fields);button.disabled=true;button.textContent="Saving…";message.className="entry-message";message.textContent="Saving to Google Sheets…";

@@ -81,8 +81,9 @@ footer{text-align:center;color:#8b99ab;font-size:11px;padding:22px 10px 8px}.emp
 @media(max-width:620px){.kpis{grid-template-columns:1fr 1fr}.outcome-values{gap:16px}.outcome-values .kpi-value{font-size:22px}.kpi-icon{width:34px;height:34px}.hospital-modal-compact{padding:13px}}
 
 
-.admin-view{display:none}.admin-nav{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 18px;padding:10px;background:#eaf1f9;border:1px solid #dce7f3;border-radius:13px;position:sticky;top:8px;z-index:10}.admin-nav-link{border:1px solid transparent;background:transparent;color:#34516f;border-radius:9px;padding:9px 12px;font-size:12px;font-weight:700;cursor:pointer}.admin-nav-link:hover,.admin-nav-link.active{background:#fff;border-color:#d6e2ef;color:#0b4c91;box-shadow:0 3px 10px #173c6410}.admin-card{margin-bottom:20px}.admin-card .alert{display:none}html{scroll-behavior:smooth}section[id^="nav-"]{scroll-margin-top:82px}#admin-password-settings{scroll-margin-top:82px}
-@media(max-width:600px){.admin-nav{position:static;gap:5px}.admin-nav-link{flex:1 1 auto;padding:9px 8px}.brand-logo{width:42px;height:42px}}
+.admin-view{display:none}.admin-menu-wrap{margin:0 0 18px;position:relative;z-index:20}.admin-menu-toggle{display:inline-flex;align-items:center;gap:9px;border:1px solid #d6e2ef;background:#eaf1f9;color:#123c68;border-radius:11px;padding:11px 15px;font-size:13px;font-weight:800;cursor:pointer}.hamburger-icon{font-size:18px;line-height:1}.admin-nav{display:none;gap:8px;flex-wrap:wrap;margin:9px 0 0;padding:10px;background:#eaf1f9;border:1px solid #dce7f3;border-radius:13px;box-shadow:0 12px 30px #173c6410}.admin-nav.open{display:flex}.admin-nav-link{border:1px solid transparent;background:transparent;color:#34516f;border-radius:9px;padding:9px 12px;font-size:12px;font-weight:700;cursor:pointer}.admin-nav-link:hover,.admin-nav-link.active{background:#fff;border-color:#d6e2ef;color:#0b4c91;box-shadow:0 3px 10px #173c6410}.admin-nav-divider{width:1px;background:#cad8e8;margin:3px 4px}.password-nav-link{color:#0b4c91}.admin-card{margin-bottom:20px}.admin-card .alert{display:none}#admin-password-settings{display:none}#admin-password-settings.visible{display:block}html{scroll-behavior:smooth}section[id^="nav-"]{scroll-margin-top:82px}#admin-password-settings{scroll-margin-top:82px}.dot.off{background:#dc3545!important}.statusline.connecting,.statusline.error{color:#c62828}.statusline.connecting .dot,.statusline.error .dot{background:#dc3545!important}.statusline.online{color:#16804a}.statusline.online .dot{background:#18a558!important}
+@media(min-width:900px){.admin-nav.open{align-items:center}}
+@media(max-width:600px){.admin-nav.open{display:grid;grid-template-columns:1fr 1fr;gap:6px}.admin-nav-link{padding:10px 8px;text-align:left}.admin-nav-divider{display:none}.admin-menu-toggle{width:100%;justify-content:center}.brand-logo{width:42px;height:42px}}
 
 </style>
 </head>
@@ -154,14 +155,18 @@ footer{text-align:center;color:#8b99ab;font-size:11px;padding:22px 10px 8px}.emp
   </section>
   <section id="adminView" class="admin-view">
     <div class="welcome"><div><div class="eyebrow">Administration</div><h2>Admin Dashboard</h2><p>Public dashboard sections are available below for quick navigation.</p></div><button class="btn btn-muted" onclick="logoutAdmin()">↪ Logout</button></div>
-    <nav class="admin-nav" aria-label="Admin dashboard navigation">
-      <button class="admin-nav-link active" onclick="adminGo('nav-overview',this)">Overview</button>
-      <button class="admin-nav-link" onclick="adminGo('nav-referral-kpis',this)">Referral Summary</button>
-      <button class="admin-nav-link" onclick="adminGo('nav-client-profile',this)">Client Profile</button>
-      <button class="admin-nav-link" onclick="adminGo('nav-hospital-tally',this)">Hospital Referral Tally</button>
-      <button class="admin-nav-link" onclick="adminGo('nav-ambulance',this)">Ambulance Transport / Transfer</button>
-      <button class="admin-nav-link" onclick="adminGo('admin-password-settings',this)">Change Password</button>
-    </nav>
+    <div class="admin-menu-wrap">
+      <button class="admin-menu-toggle" id="adminMenuToggle" type="button" aria-expanded="false" aria-controls="adminNavigation" onclick="toggleAdminMenu()"><span class="hamburger-icon">☰</span><span>Navigation</span></button>
+      <nav class="admin-nav" id="adminNavigation" aria-label="Admin dashboard navigation">
+        <button class="admin-nav-link active" onclick="adminGo('nav-overview',this)">Overview</button>
+        <button class="admin-nav-link" onclick="adminGo('nav-referral-kpis',this)">Referral Summary</button>
+        <button class="admin-nav-link" onclick="adminGo('nav-client-profile',this)">Client Profile</button>
+        <button class="admin-nav-link" onclick="adminGo('nav-hospital-tally',this)">Hospital Referral Tally</button>
+        <button class="admin-nav-link" onclick="adminGo('nav-ambulance',this)">Ambulance Transport / Transfer</button>
+        <span class="admin-nav-divider"></span>
+        <button class="admin-nav-link password-nav-link" onclick="adminGo('admin-password-settings',this)">⚙ Change Password</button>
+      </nav>
+    </div>
     <div class="card admin-card" id="admin-password-settings"><h3 style="margin:0">Change Password</h3><p class="sub">Update the administrator password.</p>
       <div class="alert">For first-time setup, use the temporary admin password provided with the Code.gs instructions. Change it immediately after signing in.</div>
       <form onsubmit="changePassword(event)"><div class="field"><label>Current Password</label><input id="currentPassword" type="password" autocomplete="current-password" required></div><div class="field"><label>New Password</label><input id="newPassword" type="password" minlength="8" autocomplete="new-password" required></div><div class="field"><label>Confirm New Password</label><input id="confirmPassword" type="password" minlength="8" autocomplete="new-password" required></div><button class="btn btn-primary" type="submit" id="changePasswordBtn">Update Password</button></form><p class="help" id="passwordMessage" role="status"></p>
@@ -309,7 +314,8 @@ function resetFilter(){selectedMonth="all";$("monthFilter").value="all";renderDa
 function openLogin(){$("loginOverlay").style.display="flex";$("loginMessage").textContent="";$("adminLoginPassword").focus();}
 function closeLogin(){$("loginOverlay").style.display="none";}
 function showAdmin(){$("publicView").style.display="block";$("adminView").style.display="block";$("adminBtn").textContent="Admin Mode";$("adminBtn").onclick=()=>window.scrollTo({top:0,behavior:"smooth"});}
-function adminGo(id,button){const target=$(id);if(!target)return;target.scrollIntoView({behavior:"smooth",block:"start"});document.querySelectorAll(".admin-nav-link").forEach(b=>b.classList.toggle("active",b===button));}
+function toggleAdminMenu(){const nav=$("adminNavigation"),btn=$("adminMenuToggle");const open=!nav.classList.contains("open");nav.classList.toggle("open",open);btn.setAttribute("aria-expanded",String(open));}
+function adminGo(id,button){const target=$(id);if(!target)return;const password=id==="admin-password-settings";$("admin-password-settings").classList.toggle("visible",password);if(password){target.scrollIntoView({behavior:"smooth",block:"start"});}else{target.scrollIntoView({behavior:"smooth",block:"start"});}document.querySelectorAll(".admin-nav-link").forEach(b=>b.classList.toggle("active",b===button));$("adminNavigation").classList.remove("open");$("adminMenuToggle").setAttribute("aria-expanded","false");}
 function logoutAdmin(){showPublic();window.scrollTo({top:0,behavior:"smooth"});}
 function showPublic(){
  if(adminToken){gasCall("logoutAdmin",[adminToken],()=>{},()=>{});adminToken="";}
@@ -349,22 +355,23 @@ function changePassword(e){
   if(res&&res.success){$("currentPassword").value="";$("newPassword").value="";$("confirmPassword").value="";}
  },err=>{$("changePasswordBtn").disabled=false;$("passwordMessage").textContent=err;});
 }
+function setConnectionStatus(message,state){$("dataStatus").textContent=message;const line=$("dataStatus").closest(".statusline");line.classList.remove("online","connecting","error");line.classList.add(state);$("statusDot").classList.toggle("off",state!=="online");}
 function applyData(data){
  if(!data||!data.success)throw new Error((data&&data.message)||"Apps Script returned an invalid data response.");
  rawPatients=data.patientAssistance||[];rawHospitals=data.hospitalTally||[];fillMonths();renderDashboard();
- $("dataStatus").textContent="Live data · Google Sheets connected";$("statusDot").classList.remove("off");$("lastUpdated").textContent="Updated "+new Date().toLocaleTimeString("en-PH");
+ setConnectionStatus("System Online","online");$("lastUpdated").textContent="Updated "+new Date().toLocaleTimeString("en-PH");
 }
 function loadDashboard(){
- $("dataStatus").textContent="Connecting to Google Sheets…";$("statusDot").classList.add("off");
+ setConnectionStatus("Connecting…","connecting");
  if(window.google&&google.script&&google.script.run){
-  google.script.run.withSuccessHandler(data=>{try{applyData(data);}catch(e){$("dataStatus").textContent="Data error: "+e.message;}}).withFailureHandler(err=>$("dataStatus").textContent="Apps Script error: "+(err.message||err)).getDashboardData();
+  google.script.run.withSuccessHandler(data=>{try{applyData(data);}catch(e){setConnectionStatus("Data error: "+e.message,"error");}}).withFailureHandler(err=>setConnectionStatus("Connection error: "+(err.message||err),"error")).getDashboardData();
   return;
  }
- if(!GAS_WEB_APP_URL){$("dataStatus").textContent="Preview mode · Add this HTML file to the Apps Script project to connect";return;}
+ if(!GAS_WEB_APP_URL){setConnectionStatus("Connecting…","connecting");return;}
  const cb="gasCallback_"+Date.now(),script=document.createElement("script");
- window[cb]=data=>{try{applyData(data);}catch(e){$("dataStatus").textContent="Data error: "+e.message;}finally{delete window[cb];script.remove();}};
+ window[cb]=data=>{try{applyData(data);}catch(e){setConnectionStatus("Data error: "+e.message,"error");}finally{delete window[cb];script.remove();}};
  script.src=GAS_WEB_APP_URL+(GAS_WEB_APP_URL.includes("?")?"&":"?")+"callback="+cb+"&t="+Date.now();
- script.onerror=()=>{$("dataStatus").textContent="Connection failed. Check Apps Script deployment and permissions.";delete window[cb];};document.body.appendChild(script);
+ script.onerror=()=>{setConnectionStatus("Connection failed. Check Apps Script deployment and permissions.","error");delete window[cb];};document.body.appendChild(script);
 }
 window.addEventListener("keydown",e=>{if(e.key==="Escape")closeHospitalModal();});
 window.addEventListener("resize",()=>{if($("publicView").style.display!=="none"&&rawPatients.length)renderDashboard();});

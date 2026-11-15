@@ -209,6 +209,35 @@ body.night-theme .empty{color:#a8b8ce}
  #printHospitalTally .hospital-bar-track{min-width:80px}
 }
 
+
+/* TEST 19: recurring PDF cover page and prepared-by / city health officer sign-off page */
+.print-cover-page,.print-signature-page{display:none}
+@media print{
+ @page{size:A4 portrait;margin:12mm}
+ .print-cover-page{display:flex!important;visibility:visible!important;flex-direction:column;box-sizing:border-box;min-height:273mm;page-break-after:always;break-after:page;padding:3mm 1mm 0;color:#24364b;font-family:Arial,sans-serif}
+ .print-cover-brand{font-size:10px;font-weight:800;letter-spacing:2px;color:#28639a;text-align:center;margin:0 0 8px}
+ .print-cover-page h1{text-align:center;font-size:25px;line-height:1.15;color:#123c68;margin:0 0 12px}
+ .print-cover-rule{height:3px;background:#2d75b7;width:78px;margin:0 auto 13px;border-radius:3px}
+ .print-cover-page h2{font-size:12px;color:#164f83;margin:9px 0 3px;border-left:3px solid #4b91ca;padding-left:7px}
+ .print-cover-page p{font-size:9.4px;line-height:1.38;margin:0 0 2px;text-align:justify}
+ .print-services,.print-workflow{font-size:9px;line-height:1.32;margin:2px 0 0;padding-left:19px}
+ .print-services li,.print-workflow li{margin:0 0 4px;padding-left:2px}
+ .print-workflow ul{margin:2px 0 0;padding-left:17px}
+ .print-workflow ul li{margin-bottom:1px}
+ .print-cover-page .workflow-heading{margin-top:8px}
+ .print-cover-footer{margin-top:auto;padding-top:8px;border-top:1px solid #cbd8e5;text-align:center;color:#69809a;font-size:7px;font-weight:700;letter-spacing:1px}
+ .print-signature-page{display:flex!important;visibility:visible!important;box-sizing:border-box;min-height:273mm;page-break-before:always;break-before:page;flex-direction:column;padding:12mm 4mm 15mm;color:#24364b}
+ .print-signature-note{font-size:10px;color:#52647b;margin-top:8mm}
+ .print-signature-row{display:grid;grid-template-columns:1fr 1fr;gap:28mm;margin-top:auto;margin-bottom:34mm;align-items:end}
+ .print-signatory{min-width:0}
+ .print-signatory-right{text-align:center}
+ .print-sign-label{font-size:10px;margin-bottom:19mm}
+ .print-sign-name{font-size:11px;font-weight:800;text-decoration:underline;text-underline-offset:3px;white-space:nowrap}
+ .print-signatory-right .print-sign-name{white-space:normal}
+ .print-sign-role{font-size:10px;margin-top:4px}
+ #adminDashboardMount #publicView>.print-cover-page,#adminDashboardMount #publicView>.print-signature-page{display:flex!important}
+}
+
 </style>
 </head>
 <body>
@@ -235,6 +264,33 @@ body.night-theme .empty{color:#a8b8ce}
   <div id="publicViewHome"></div>
   <section id="publicView">
     <div class="admin-report-toolbar"><button class="btn btn-primary" type="button" onclick="printAdminDashboard()">⇩ Save / Export Dashboard to PDF</button><span>Print the current dashboard totals and charts for reporting</span></div>
+    <section class="print-cover-page" aria-label="Patient Navigation and Referral Unit introduction">
+      <div class="print-cover-brand">ANTIPOLO CITY HEALTH OFFICE</div>
+      <h1>Patient Navigation<br>&amp; Referral Unit</h1>
+      <div class="print-cover-rule"></div>
+      <h2>Mission</h2>
+      <p>Providing individualized assistance so that they may have access to timely and appropriate interventions without unnecessary delays or duplication of services.</p>
+      <h2>Vision</h2>
+      <p>Effective and efficient means of managing the client’s transitions through medical and social services. Clients are assigned to a Patient Navigator to assisting them in the process of entering into medical care and helping to clarify both medical concerns/issues and providing of referrals.</p>
+      <h2>Services</h2>
+      <ul class="print-services">
+        <li><strong>Patient transfer assistance</strong> – Assist Patient that needs to be transferred whether from hospital to another hospital or from house to hospital transfer.</li>
+        <li><strong>Coordinating with the Department of Health (DOH) Calabarzon</strong> for a <strong>Patient Navigation and Referral System (PNRS)</strong> is a crucial step in enhancing the healthcare services in the region, ensuring seamless care for patients, especially in cases that require specialized treatment, emergency care, or follow-up services.</li>
+        <li><strong>Ambulance Services:</strong> Offering emergency transport for patients requiring urgent medical attention to hospitals or health facilities.</li>
+        <li><strong>Answering</strong> phone calls regarding question and queries about different services of the City Health Office. (Animal Bite, TB Dots, Sanitation Division, Dental, OPD-Related, Hospital Schedules, Social Hygiene Clinic, Vaccine Availability, Etc.).</li>
+      </ul>
+      <h2 class="workflow-heading">The Antipolo Patient Navigation and Referral Unit Workflow</h2>
+      <ol class="print-workflow">
+        <li><strong>Entry Point:</strong> Patient arrives via the Outpatient Department (OPD), Emergency Room (ER), or is referred from an external primary care clinic.</li>
+        <li><strong>Screening &amp; Intake:</strong> The Navigator assesses the patient's clinical needs, insurance status, and social barriers (transportation, language, etc.).</li>
+        <li><strong>Internal/External Triage:</strong>
+          <ul><li><strong>Internal:</strong> Directing the patient to a specialist within the same hospital.</li><li><strong>External:</strong> Coordinating a transfer to a higher-level facility or a specialized diagnostic center.</li></ul>
+        </li>
+        <li><strong>Coordination:</strong> The PNRU staff handles the "paperwork"—booking appointments, sending medical records, arranges transportation and securing prior authorizations.</li>
+        <li><strong>Follow-Up:</strong> Ensures patient completes referrals and receives ongoing support.</li>
+      </ol>
+      <div class="print-cover-footer">ANTIPOLO CITY HEALTH OFFICE <span>•</span> PATIENT NAVIGATION AND REFERRAL UNIT</div>
+    </section>
     <div class="print-report-title"><h1>Antipolo City Health Office</h1><h2>Patient Navigation and Referral Unit</h2><p>Dashboard Report</p><div class="print-report-date" id="printReportDate"></div></div>
     <div class="welcome" id="nav-overview"><div><h2>Patient Navigation Overview</h2><p>Referral assistance and hospital coordination statistics</p></div>
 
@@ -298,6 +354,13 @@ body.night-theme .empty{color:#a8b8ce}
     <section class="card panel" id="publicBarangayRankingPanel" style="margin-bottom:15px">
       <div class="panel-head"><div><h3>Barangay Patient Ranking</h3></div><span class="pill" id="publicBarangayRankingTotal">0 patients</span></div>
       <div class="barangay-ranking-chart" id="publicBarangayRankingBody"><div class="empty">Loading barangay ranking…</div></div>
+    </section>
+    <section class="print-signature-page" aria-label="Report preparation and approval">
+      <div class="print-signature-note">This dashboard report is respectfully submitted for reference and official reporting.</div>
+      <div class="print-signature-row">
+        <div class="print-signatory"><div class="print-sign-label">Prepared By:</div><div class="print-sign-name">Erwin R. Alincastre, RN</div></div>
+        <div class="print-signatory print-signatory-right"><div class="print-sign-label"> </div><div class="print-sign-name">Concepcion Garcia Lat, MD, MHM</div><div class="print-sign-role">City Health Officer</div></div>
+      </div>
     </section>
   </section>
   <section id="adminView" class="admin-view">

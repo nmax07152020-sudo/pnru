@@ -23,21 +23,40 @@ module.exports = async function handler(req, res) {
     }
 
     const payload = { ...body, apiSecret };
-    const upstream = await fetch(gasUrl, {
+    let upstream = await fetch(gasUrl, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload),
-      redirect: "follow"
+      redirect: "manual"
     });
+
+    // Apps Script ContentService commonly responds with a 302 redirect to
+    // a one-time script.googleusercontent.com URL containing the JSON body.
+    if ([301, 302, 303, 307, 308].includes(upstream.status)) {
+      const location = upstream.headers.get("location");
+      if (!location) {
+        return res.status(502).json({
+          success: false,
+          message: "Apps Script redirected the admin request without a response URL. Check the Web App deployment."
+        });
+      }
+      upstream = await fetch(new URL(location, gasUrl).toString(), {
+        method: "GET",
+        redirect: "follow"
+      });
+    }
 
     const text = await upstream.text();
     let result;
     try {
       result = JSON.parse(text);
     } catch {
+      const looksLikeHtml = /<\\s*!doctype|<\\s*html|accounts\\.google\\.com|ServiceLogin/i.test(text);
       return res.status(502).json({
         success: false,
-        message: "Apps Script returned a non-JSON response. Check the Web App deployment."
+        message: looksLikeHtml
+          ? "Apps Script returned an HTML page instead of JSON. Confirm the Web App is deployed as Execute as: Me and Who has access: Anyone, then deploy a New version."
+          : "Apps Script returned a non-JSON response (HTTP " + upstream.status + "). Check the latest Web App deployment and doPost()."
       });
     }
     return res.status(upstream.ok ? 200 : 502).json(result);

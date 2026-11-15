@@ -38,6 +38,25 @@ footer{text-align:center;color:#8b99ab;font-size:11px;padding:22px 10px 8px}.emp
 .status-refused{background:#fff0f1;color:#b43c4a}
 @media(max-width:720px){.profile-grid{grid-template-columns:1fr}.modal-card{padding:14px}.modal-chart{height:230px}}
 
+
+/* V5 compact dashboard layout */
+.dashboard-overview-grid{grid-template-columns:minmax(280px,.78fr) minmax(520px,1.45fr);align-items:stretch;margin-bottom:15px}
+.compact-panel{margin-bottom:0;min-width:0}
+.gender-chart-compact{height:190px;min-height:190px}
+.profile-panel .profile-grid{grid-template-columns:minmax(160px,.78fr) minmax(220px,1.22fr);gap:14px}
+.profile-panel .profile-section .chart-wrap{height:155px;min-height:155px}
+.profile-panel .profile-section h4{font-size:12px}
+.profile-panel .age-row{gap:8px;font-size:11px}
+.profile-panel .age-row strong{min-width:58px}
+.profile-panel .age-num{min-width:25px}
+.transport-table td:nth-child(2){width:45%}
+.transport-bar-track{height:10px;border-radius:20px;background:#edf2f8;overflow:hidden;min-width:100px}
+.transport-bar-fill{height:100%;border-radius:20px;background:linear-gradient(90deg,#2677c9,#62b4ee)}
+.transport-table tbody tr td{padding-top:9px;padding-bottom:9px}
+@media(max-width:1050px){.dashboard-overview-grid{grid-template-columns:1fr 1.35fr}.profile-panel .profile-grid{grid-template-columns:1fr 1.15fr}}
+@media(max-width:780px){.dashboard-overview-grid{grid-template-columns:1fr}.profile-panel .profile-grid{grid-template-columns:1fr 1fr}.gender-chart-compact{height:160px;min-height:160px}}
+@media(max-width:520px){.profile-panel .profile-grid{grid-template-columns:1fr}.profile-panel .profile-section .chart-wrap{height:145px;min-height:145px}}
+
 </style>
 </head>
 <body>
@@ -68,8 +87,26 @@ footer{text-align:center;color:#8b99ab;font-size:11px;padding:22px 10px 8px}.emp
       <article class="card kpi" style="--tint:#e9f8f2"><div class="kpi-label">Coordinated</div><div class="kpi-value" id="coordTotal">—</div><div class="kpi-note">Successful coordination</div><span class="kpi-icon">✓</span></article>
       <article class="card kpi" style="--tint:#fff0f3"><div class="kpi-label">Refused</div><div class="kpi-value" id="refusedTotal">—</div><div class="kpi-note">Referral declined</div><span class="kpi-icon">↩</span></article>
     </div>
-    <div class="grid2">
-      <section class="card panel"><div class="panel-head"><div><h3>Gender Distribution</h3><div class="sub">Client distribution</div></div><span class="pill">Male / Female</span></div><div class="chart-wrap"><canvas id="genderChart"></canvas></div><div class="legend"><span class="key"><i class="swatch" style="background:#2677c9"></i>Male: <strong id="maleLegend">—</strong></span><span class="key"><i class="swatch" style="background:#e4779b"></i>Female: <strong id="femaleLegend">—</strong></span></div></section>
+    <div class="grid2 dashboard-overview-grid">
+      <section class="card panel compact-panel">
+        <div class="panel-head"><div><h3>Gender Distribution</h3><div class="sub">Client distribution</div></div><span class="pill">Male / Female</span></div>
+        <div class="chart-wrap gender-chart-compact"><canvas id="genderChart"></canvas></div>
+        <div class="legend"><span class="key"><i class="swatch" style="background:#2677c9"></i>Male: <strong id="maleLegend">—</strong></span><span class="key"><i class="swatch" style="background:#e4779b"></i>Female: <strong id="femaleLegend">—</strong></span></div>
+      </section>
+      <section class="card panel compact-panel profile-panel">
+        <div class="panel-head"><div><h3>Client Profile Overview</h3><div class="sub">Classification and age distribution</div></div><span class="pill">Pedia / Adult · Age Groups</span></div>
+        <div class="profile-grid">
+          <div class="profile-section">
+            <h4>Client Classification</h4>
+            <div class="chart-wrap"><canvas id="classChart"></canvas></div>
+            <div class="legend"><span class="key"><i class="swatch" style="background:#23a58a"></i>Pedia</span><span class="key"><i class="swatch" style="background:#e5a13a"></i>Adult</span></div>
+          </div>
+          <div class="profile-section">
+            <h4>Age Group Distribution</h4>
+            <div class="age-list" id="ageGroups"><div class="empty">No data loaded</div></div>
+          </div>
+        </div>
+      </section>
     </div>
     <section class="card panel" style="margin-bottom:15px">
       <div class="panel-head"><div><h3>Client Profile Overview</h3><div class="sub">Classification and age distribution</div></div><span class="pill">Pedia / Adult · Age Groups</span></div>
@@ -91,7 +128,10 @@ footer{text-align:center;color:#8b99ab;font-size:11px;padding:22px 10px 8px}.emp
         <button class="btn btn-primary" type="button" onclick="openHospitalModal()">View Hospital Summary</button>
       </div>
     </section>
-    <section class="card panel" style="margin-bottom:15px"><div class="panel-head"><div><h3>Ambulance Transport / Transfer by Dispatching Unit / Barangay</h3><div class="sub">Transport and transfer records</div></div><span class="pill" id="transportTotal">Overall: —</span></div><div class="sub" style="margin:0 0 12px">Total records grouped by dispatching unit or barangay.</div><div class="chart-wrap" style="height:310px;min-height:310px;overflow-x:auto"><canvas id="transportChart"></canvas></div><div class="table-wrap"><table class="mini-table"><thead><tr><th>Dispatching Unit / Barangay</th><th style="text-align:right">Total Entries</th></tr></thead><tbody id="transportBreakdown"><tr><td colspan="2" class="empty">No dispatching unit / barangay records for this period</td></tr></tbody></table></div></section>
+    <section class="card panel compact-transport" style="margin-bottom:15px">
+      <div class="panel-head"><div><h3>Ambulance Transport / Transfer by Dispatching Unit / Barangay</h3><div class="sub">Compact table with proportional bar graph</div></div><span class="pill" id="transportTotal">Overall: —</span></div>
+      <div class="table-wrap"><table class="mini-table transport-table"><thead><tr><th>Dispatching Unit / Barangay</th><th>Distribution</th><th style="text-align:right">Total Entries</th></tr></thead><tbody id="transportBreakdown"><tr><td colspan="3" class="empty">No dispatching unit / barangay records for this period</td></tr></tbody></table></div>
+    </section>
   </section>
   <section id="adminView" class="admin-view">
     <div class="welcome"><div><div class="eyebrow">Administration</div><h2>Admin Dashboard</h2><p>Account security settings</p></div><button class="btn btn-muted" onclick="showPublic()">← Back to Public Dashboard</button></div>
@@ -229,9 +269,9 @@ function renderDashboard(){
 
  const units={};p.forEach(x=>{const n=String(x.dispatchUnit||"").trim();if(n)units[n]=(units[n]||0)+1;});
  const unitRows=Object.entries(units).sort((a,b)=>b[1]-a[1]||a[0].localeCompare(b[0]));
- $("transportBreakdown").innerHTML=unitRows.map(([n,c])=>`<tr><td>${escapeHtml(n)}</td><td style="text-align:right;font-weight:750">${number(c)}</td></tr>`).join("")||'<tr><td colspan="2" class="empty">No dispatching unit / barangay records for this period</td></tr>';
+ const unitMax=Math.max(1,...unitRows.map(x=>x[1]));
+ $("transportBreakdown").innerHTML=unitRows.map(([n,c])=>`<tr><td>${escapeHtml(n)}</td><td><div class="transport-bar-track" role="img" aria-label="${number(c)} entries"><div class="transport-bar-fill" style="width:${(c/unitMax*100).toFixed(1)}%"></div></div></td><td style="text-align:right;font-weight:750">${number(c)}</td></tr>`).join("")||'<tr><td colspan="3" class="empty">No dispatching unit / barangay records for this period</td></tr>';
  $("transportTotal").textContent="Overall: "+number(unitRows.reduce((s,x)=>s+x[1],0));
- drawMultiColorBars("transportChart",unitRows.map(x=>x[0]),unitRows.map(x=>x[1]));
 }
 function openHospitalModal(){
  $("hospitalModal").style.display="flex";

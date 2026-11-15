@@ -215,6 +215,10 @@ footer{text-align:center;color:#8b99ab;font-size:11px;padding:22px 10px 8px}.emp
       <div class="panel-head"><div><h3>Ambulance Transport / Transfer by Dispatching Unit / Barangay</h3><div class="sub">Compact table with proportional bar graph</div></div><span class="pill" id="transportTotal">Overall: —</span></div>
       <div class="table-wrap"><table class="mini-table transport-table"><thead><tr><th>Dispatching Unit / Barangay</th><th>Distribution</th><th style="text-align:right">Total Entries</th></tr></thead><tbody id="transportBreakdown"><tr><td colspan="3" class="empty">No dispatching unit / barangay records for this period</td></tr></tbody></table></div>
     </section>
+    <section class="card panel" id="publicBarangayRankingPanel" style="margin-bottom:15px">
+      <div class="panel-head"><div><h3>Barangay Patient Ranking</h3></div><span class="pill" id="publicBarangayRankingTotal">0 patients</span></div>
+      <div class="barangay-ranking-chart" id="publicBarangayRankingBody"><div class="empty">Loading barangay ranking…</div></div>
+    </section>
   </section>
   <section id="adminView" class="admin-view">
     <div class="admin-shell">
@@ -483,8 +487,10 @@ function renderDashboard(){
  const barangayRows=Object.entries(barangays).sort((a,b)=>b[1]-a[1]||a[0].localeCompare(b[0]));
  const barangayMax=Math.max(1,...barangayRows.map(x=>x[1]));
  const barangayColors=["#16a085","#e67e22","#8e5bb7","#d65f83","#b08b2e","#438f83","#c45d3d","#64748b"];
- $("barangayRankingTotal").textContent=number(barangayRows.reduce((sum,x)=>sum+x[1],0))+" patients";
- $("barangayRankingBody").innerHTML=barangayRows.map(([name,count],i)=>`<div class="barangay-rank-row"><div class="barangay-rank-label"><span class="barangay-rank-number">${i+1}</span><strong>${escapeHtml(name)}</strong><span class="barangay-rank-count">${number(count)}</span></div><div class="barangay-rank-track"><div class="barangay-rank-fill" style="width:${(count/barangayMax*100).toFixed(1)}%;background:${barangayColors[i%barangayColors.length]}"></div></div></div>`).join("")||'<div class="empty">No barangay records in Column L from January 2026 onwards</div>';
+ const rankingHtml=barangayRows.map(([name,count],i)=>`<div class="barangay-rank-row"><div class="barangay-rank-label"><span class="barangay-rank-number">${i+1}</span><strong>${escapeHtml(name)}</strong><span class="barangay-rank-count">${number(count)}</span></div><div class="barangay-rank-track"><div class="barangay-rank-fill" style="width:${(count/barangayMax*100).toFixed(1)}%;background:${barangayColors[i%barangayColors.length]}"></div></div></div>`).join("")||'<div class="empty">No barangay records in Column L from January 2026 onwards</div>';
+ const rankingTotal=number(barangayRows.reduce((sum,x)=>sum+x[1],0))+" patients";
+ ["barangayRankingTotal","publicBarangayRankingTotal"].forEach(id=>{const el=$(id);if(el)el.textContent=rankingTotal;});
+ ["barangayRankingBody","publicBarangayRankingBody"].forEach(id=>{const el=$(id);if(el)el.innerHTML=rankingHtml;});
 }
 async function loadPatientRecords(){
  if(!adminToken)return;

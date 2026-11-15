@@ -109,7 +109,7 @@ footer{text-align:center;color:#8b99ab;font-size:11px;padding:22px 10px 8px}.emp
 
 
 /* TEST 8: admin data-entry workspaces */
-.entry-card{max-width:none;padding:22px;margin:0 0 18px}.entry-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 16px}.homevisit-entry-grid{grid-template-columns:repeat(6,minmax(0,1fr))}.homevisit-entry-grid .entry-field.span-2{grid-column:span 2}.homevisit-entry-grid .entry-field.span-3{grid-column:span 3}.entry-field{display:grid;gap:7px;margin:10px 0;min-width:0}.entry-field label{font-size:12px;font-weight:750;color:#40536d}.entry-field input,.entry-field select,.entry-field textarea{width:100%;min-width:0;padding:11px 12px;border:1px solid #dce5ef;border-radius:10px;background:#fff;color:var(--ink);font:inherit;font-size:13px}.entry-field textarea{min-height:82px;resize:vertical}.entry-field.full{grid-column:1/-1}.entry-actions{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:16px}.entry-message{font-size:12px;color:var(--muted);min-height:18px}.entry-message.success{color:#16804a}.entry-message.error{color:#c62828}.entry-note{padding:11px 13px;background:#f2f7fd;border:1px solid #e1ebf6;border-radius:10px;color:#52647b;font-size:11px;line-height:1.5;margin:12px 0}.sidebar-link{width:100%;display:flex;align-items:center;gap:10px;text-align:left;border:1px solid transparent;background:transparent;color:#34516f;border-radius:9px;padding:11px 12px;font-size:13px;font-weight:750;cursor:pointer;margin:4px 0}.sidebar-link:hover,.sidebar-link.active{background:#eaf3fc;border-color:#d6e2ef;color:#0b4c91}.admin-panel{display:none}.admin-panel.visible{display:block}.sidebar-menu-divider{height:1px;background:#e7edf5;margin:12px 4px}.sidebar-logout{color:#a3313b;margin-top:8px}.sidebar-logout:hover{background:#fff1f2;border-color:#f2d5d8;color:#a3313b}@media(max-width:760px){.entry-grid{grid-template-columns:1fr}.homevisit-entry-grid .entry-field.span-2,.homevisit-entry-grid .entry-field.span-3{grid-column:1/-1}.entry-field.full{grid-column:auto}.admin-sidebar{display:flex;flex-wrap:wrap}.sidebar-heading{width:100%}.sidebar-link{flex:1 1 190px;width:auto}}
+.entry-card{max-width:none;padding:22px;margin:0 0 18px}.entry-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 16px}.homevisit-entry-grid{grid-template-columns:repeat(6,minmax(0,1fr))}.patient-entry-grid{grid-template-columns:repeat(12,minmax(0,1fr))}.patient-entry-grid .entry-field.span-2{grid-column:span 2}.patient-entry-grid .entry-field.span-3{grid-column:span 3}.patient-entry-grid .entry-field.span-4{grid-column:span 4}.patient-entry-grid .entry-field.span-5{grid-column:span 5}.patient-entry-grid .entry-field.span-6{grid-column:span 6}.patient-entry-grid .entry-field.span-12{grid-column:span 12}.homevisit-entry-grid .entry-field.span-2{grid-column:span 2}.homevisit-entry-grid .entry-field.span-3{grid-column:span 3}.entry-field{display:grid;gap:7px;margin:10px 0;min-width:0}.entry-field label{font-size:12px;font-weight:750;color:#40536d}.entry-field input,.entry-field select,.entry-field textarea{width:100%;min-width:0;padding:11px 12px;border:1px solid #dce5ef;border-radius:10px;background:#fff;color:var(--ink);font:inherit;font-size:13px}.entry-field textarea{min-height:82px;resize:vertical}.entry-field.full{grid-column:1/-1}.entry-actions{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:16px}.entry-message{font-size:12px;color:var(--muted);min-height:18px}.entry-message.success{color:#16804a}.entry-message.error{color:#c62828}.entry-note{padding:11px 13px;background:#f2f7fd;border:1px solid #e1ebf6;border-radius:10px;color:#52647b;font-size:11px;line-height:1.5;margin:12px 0}.sidebar-link{width:100%;display:flex;align-items:center;gap:10px;text-align:left;border:1px solid transparent;background:transparent;color:#34516f;border-radius:9px;padding:11px 12px;font-size:13px;font-weight:750;cursor:pointer;margin:4px 0}.sidebar-link:hover,.sidebar-link.active{background:#eaf3fc;border-color:#d6e2ef;color:#0b4c91}.admin-panel{display:none}.admin-panel.visible{display:block}.sidebar-menu-divider{height:1px;background:#e7edf5;margin:12px 4px}.sidebar-logout{color:#a3313b;margin-top:8px}.sidebar-logout:hover{background:#fff1f2;border-color:#f2d5d8;color:#a3313b}@media(max-width:760px){.entry-grid{grid-template-columns:1fr}.homevisit-entry-grid .entry-field.span-2,.homevisit-entry-grid .entry-field.span-3,.patient-entry-grid .entry-field[class*="span-"]{grid-column:1/-1}.entry-field.full{grid-column:auto}.admin-sidebar{display:flex;flex-wrap:wrap}.sidebar-heading{width:100%}.sidebar-link{flex:1 1 190px;width:auto}}
 
 /* TEST 9: hotline contacts, clean admin workspace, vital-sign inputs and toast feedback */
 .brand-copy{min-width:0}.hotline-row{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:8px;color:#e4efff;font-size:11px}.hotline-row strong{font-size:11px;color:#fff}.hotline-row span{display:inline-flex;align-items:center;gap:5px;white-space:nowrap}.hotline-row svg{width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
@@ -410,7 +410,7 @@ body.night-theme .empty{color:#a8b8ce}
         </section>
         <section class="card entry-card admin-panel" id="patient-assistance-entry">
           <div class="panel-head"><div><h3>Patient / Client Assistance Entry Form</h3><div class="sub">Encode a new patient assistance record.</div></div></div>
-          <form id="patientEntryForm" onsubmit="submitSheetEntry(event,'patient')"><div class="entry-grid" id="patientEntryFields"></div><div class="entry-actions"><button class="btn btn-primary" type="submit" id="savePatientEntryBtn">Save Patient Entry</button><button class="btn btn-muted" type="reset" onclick="resetPatientEntryMode()">Clear Form</button><button class="btn btn-muted" type="button" id="cancelPatientEditBtn" onclick="resetPatientEntryMode();showAdminPanel('patient-records',$('sidebarPatientRecordsLink'))" style="display:none">Cancel Edit</button><span class="entry-message" id="patientEntryMessage" role="status"></span></div></form>
+          <form id="patientEntryForm" onsubmit="submitSheetEntry(event,'patient')"><div class="entry-grid patient-entry-grid" id="patientEntryFields"></div><div class="entry-actions"><button class="btn btn-primary" type="submit" id="savePatientEntryBtn">Save Patient Entry</button><button class="btn btn-muted" type="reset" onclick="resetPatientEntryMode()">Clear Form</button><button class="btn btn-muted" type="button" id="cancelPatientEditBtn" onclick="resetPatientEntryMode();showAdminPanel('patient-records',$('sidebarPatientRecordsLink'))" style="display:none">Cancel Edit</button><span class="entry-message" id="patientEntryMessage" role="status"></span></div></form>
         </section>
         <section class="card entry-card admin-panel" id="hospital-tally-entry">
           <div class="panel-head"><div><h3>Hospital Referral Tally Board Entry Form</h3><div class="sub">Encode a new hospital referral tally record.</div></div></div>
@@ -535,24 +535,24 @@ function drawMultiColorBars(id,labels,values){
 
 
 const PATIENT_ENTRY_FIELDS=[
- {col:"A",label:"ON DUTY",type:"select",options:["E. Alincastre","R. Orlain","A. Ortega","J. Mislang","R. Ledesma","P. Oliveros"]},
- {col:"B",label:"DATE",type:"date",required:true},
- {col:"C",label:"TIME OF REFERRAL",type:"time"},
- {col:"D",label:"INFORMANT / REFERRING UNIT",type:"text"},
- {col:"E",label:"TYPE OF ASSISTANCE",type:"select",options:["Hospital Referral","Transfer of Hospital","Ambulance Assistance","Hospital Refferal & Ambu Assistance"]},
- {col:"F",label:"PATIENT'S NAME (Surname, First Name, Middle Name, Suffix)",type:"text",required:true,full:true},
- {col:"G",label:"AGE",type:"number",min:0},
- {col:"H",label:"GENDER",type:"select",options:["Male","Female"]},
- {col:"I",label:"CLASSIFICATION",type:"select",options:["Pedia","Adult"]},
- {col:"J",label:"ADDRESS: House/Lot and Blk No.",type:"text",full:true},
- {col:"L",label:"BARANGAY",type:"select",options:["Bagong Nayon","Beverly Hills","Calawis","Cupang","Dalig","Dela Paz (Pob.)","Inarawan","Mambugan","Mayamot","Muntindilaw","San Isidro (Pob.)","San Jose (Pob.)","San Juan","San Luis","San Roque (Pob.)","Santa Cruz"]},
- {col:"M",label:"CONTACT NUMBER",type:"tel"},
- {col:"N",label:"CHIEF COMPLAIN",type:"textarea",full:true},
- {col:"P",label:"DIAGNOSIS",type:"textarea",full:true},
- {col:"S",label:"VITAL SIGNS",type:"vitals",full:true},
- {col:"T",label:"STATUS",type:"select",options:["On - Going","Done"]},
- {col:"U",label:"STATUS CHART / ACTIONS TAKEN",type:"textarea",full:true},
- {col:"V",label:"DISPATCHING UNIT / BRGY",type:"select",options:["City Health Office","CDRRMO","Bagong Nayon","Beverly Hills","Calawis","Cupang","Dalig","Dela Paz","Inarawan","Mambugan","Mayamot","Muntindilaw","San Isidro","San Jose","San Juan","San Luis","San Roque","Santa Cruz","Self Conduct"]}
+ {col:"A",label:"ON DUTY",type:"select",options:["E. Alincastre","R. Orlain","A. Ortega","J. Mislang","R. Ledesma","P. Oliveros"],layout:"span-2"},
+ {col:"B",label:"DATE",type:"date",required:true,layout:"span-2"},
+ {col:"C",label:"TIME OF REFERRAL",type:"time",layout:"span-2"},
+ {col:"D",label:"INFORMANT / REFERRING UNIT",type:"text",layout:"span-3"},
+ {col:"E",label:"TYPE OF ASSISTANCE",type:"select",options:["Hospital Referral","Transfer of Hospital","Ambulance Assistance","Hospital Refferal & Ambu Assistance"],layout:"span-3"},
+ {col:"F",label:"PATIENT'S NAME (Surname, First Name, Middle Name, Suffix)",type:"text",required:true,layout:"span-6"},
+ {col:"G",label:"AGE",type:"number",min:0,layout:"span-2"},
+ {col:"H",label:"GENDER",type:"select",options:["Male","Female"],layout:"span-2"},
+ {col:"I",label:"CLASSIFICATION",type:"select",options:["Pedia","Adult"],layout:"span-2"},
+ {col:"J",label:"ADDRESS: House/Lot and Blk No.",type:"text",layout:"span-5"},
+ {col:"L",label:"BARANGAY",type:"select",options:["Bagong Nayon","Beverly Hills","Calawis","Cupang","Dalig","Dela Paz (Pob.)","Inarawan","Mambugan","Mayamot","Muntindilaw","San Isidro (Pob.)","San Jose (Pob.)","San Juan","San Luis","San Roque (Pob.)","Santa Cruz"],layout:"span-3"},
+ {col:"M",label:"CONTACT NUMBER",type:"tel",layout:"span-4"},
+ {col:"N",label:"CHIEF COMPLAINT",type:"textarea",layout:"span-6"},
+ {col:"P",label:"DIAGNOSIS",type:"textarea",layout:"span-6"},
+ {col:"S",label:"VITAL SIGNS",type:"vitals",layout:"span-12"},
+ {col:"U",label:"STATUS CHART / ACTIONS TAKEN",type:"textarea",layout:"span-12"},
+ {col:"T",label:"STATUS",type:"select",options:["On - Going","Done"],layout:"span-6"},
+ {col:"V",label:"DISPATCHING UNIT / BRGY",type:"select",options:["City Health Office","CDRRMO","Bagong Nayon","Beverly Hills","Calawis","Cupang","Dalig","Dela Paz","Inarawan","Mambugan","Mayamot","Muntindilaw","San Isidro","San Jose","San Juan","San Luis","San Roque","Santa Cruz","Self Conduct"],layout:"span-6"}
 ];
 const HOMEVISIT_ENTRY_FIELDS=[
  {col:"A",label:"Date & Time",type:"datetime-local",required:true,layout:"span-3"},

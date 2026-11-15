@@ -256,14 +256,6 @@ body.night-theme .empty{color:#a8b8ce}
  #adminDashboardMount #publicView>.print-cover-page,#adminDashboardMount #publicView>.print-signature-page{display:flex!important}
 }
 
-
-@media print{
- body.monthly-report-print *{visibility:hidden!important}
- body.monthly-report-print #monthlyAccompPrint,body.monthly-report-print #monthlyAccompPrint *{visibility:visible!important}
- body.monthly-report-print #monthlyAccompPrint{display:block!important;position:absolute!important;left:0!important;top:0!important;width:100%!important;padding:0!important;background:#fff!important;color:#111!important}
- body.monthly-report-print #monthlyAccompPrint ul{list-style:disc!important}
-}
-#monthlyAccompPrint{display:none}
 </style>
 </head>
 <body>
@@ -431,23 +423,6 @@ body.night-theme .empty{color:#a8b8ce}
         <div class="card admin-card" id="admin-password-settings">
           <h3 style="margin:0">Settings</h3>
           <div class="panel" style="margin:14px 0 22px;padding:16px;border:1px solid #dce7f3;border-radius:12px;background:#f7faff">
-            <h4 style="margin:0 0 6px;color:#123c68">Monthly Accomplishment Report</h4>
-            <p class="sub" style="margin:0 0 12px">Select a month to automatically calculate Hospital Referrals and Inquiries. ECG Services and Home Visit Check-ups are editable monthly entries.</p>
-            <div class="entry-grid" style="grid-template-columns:repeat(auto-fit,minmax(190px,1fr))">
-              <div class="field"><label for="accompMonth">Report Month</label><input id="accompMonth" type="month"></div>
-              <div class="field"><label for="accompHospital">Hospital Referrals (auto)</label><input id="accompHospital" type="number" min="0" readonly></div>
-              <div class="field"><label for="accompEcg">ECG Services</label><input id="accompEcg" type="number" min="0" step="1" value="0"></div>
-              <div class="field"><label for="accompHomevisit">Home Visit Check-ups</label><input id="accompHomevisit" type="number" min="0" step="1" value="0"></div>
-              <div class="field"><label for="accompInquiries">Inquiries (auto)</label><input id="accompInquiries" type="number" min="0" readonly></div>
-            </div>
-            <div class="entry-actions" style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap;align-items:center">
-              <button class="btn btn-primary" type="button" onclick="saveMonthlyAccomplishment()">Save Monthly Report</button>
-              <button class="btn btn-muted" type="button" onclick="printMonthlyAccomplishment()">Generate / Export Accomplishment PDF</button>
-              <span class="entry-message" id="accompMessage" role="status" aria-live="polite"></span>
-            </div>
-            <p class="help" style="margin:8px 0 0">Saved reports are retained in this browser on this device. Automatic totals are calculated from the selected month's dashboard records.</p>
-          </div>
-          <div class="panel" style="margin:14px 0 22px;padding:16px;border:1px solid #dce7f3;border-radius:12px;background:#f7faff">
             <h4 style="margin:0 0 6px;color:#123c68">Dashboard PDF Export</h4>
             <p class="sub" style="margin:0 0 12px">Save or print the current dashboard report as a PDF file.</p>
             <button class="btn btn-primary" id="settingsExportPdfBtn" type="button" onclick="printAdminDashboard()"><span aria-hidden="true">⇩</span> Save / Export Dashboard to PDF</button>
@@ -456,33 +431,6 @@ body.night-theme .empty{color:#a8b8ce}
           <form onsubmit="changePassword(event)"><div class="field"><label>Current Password</label><input id="currentPassword" type="password" autocomplete="current-password" required></div><div class="field"><label>New Password</label><input id="newPassword" type="password" minlength="8" autocomplete="new-password" required></div><div class="field"><label>Confirm New Password</label><input id="confirmPassword" type="password" minlength="8" autocomplete="new-password" required></div><button class="btn btn-primary" type="submit" id="changePasswordBtn">Update Password</button></form><p class="help" id="passwordMessage" role="status"></p>
         </div>
       </div>
-    </div>
-  </section>
-  <section id="monthlyAccompPrint" aria-hidden="true">
-    <div style="text-align:center;font-family:Arial,sans-serif;color:#111">
-      <div style="font-size:13px;font-weight:700">Republic of the Philippines<br>Province of Rizal<br>City of Antipolo</div>
-      <h1 style="font-size:24px;color:#16834a;margin:18px 0 2px">CITY HEALTH OFFICE</h1>
-      <div style="font-size:12px;color:#b42332;font-weight:700">Hotline : 09165344707 / 86894518 / 86970362 / 86964097</div>
-      <hr style="border:0;border-top:2px solid #173f70;margin:10px 0 18px">
-      <h2 style="font-size:19px;margin:0">ACCOMPLISHMENT REPORT</h2>
-      <h3 id="monthlyAccompPrintMonth" style="font-size:16px;margin:5px 0 24px"></h3>
-    </div>
-    <div style="font-family:Arial,sans-serif;color:#111;font-size:13px;line-height:1.55">
-      <h3 style="margin:0 0 5px">Antipolo Patient Navigation and Referral Unit</h3>
-      <strong>Services:</strong>
-      <ul style="margin-top:4px;padding-left:22px">
-        <li><strong>Patient transfer assistance</strong> - Assist Patient that needs to be transferred whether from hospital to another hospital or from house to hospital transfer.</li>
-        <li><strong>Coordinating with the Department of Health (DOH) Calabarzon for a Patient Navigation and Referral System (PNRS)</strong> is a crucial step in enhancing the healthcare services in the region, ensuring seamless care for patients, especially in cases that require specialized treatment, emergency care, or follow-up services.</li>
-        <li><strong>Ambulance Services:</strong> Offering emergency transport for patients requiring urgent medical attention to hospitals or health facilities.</li>
-        <li><strong>Answering phone calls</strong> regarding question and queries about different services of the City Health Office (Animal Bite, TB Dots, Sanitation Division, Dental, OPD-Related, Hospital Schedules, Social Hygiene Clinic, Vaccine Availability, Etc.).</li>
-      </ul>
-      <div style="margin-top:28px;font-size:15px;font-weight:700;line-height:2.8">
-        <div>Hospital Referrals : <span id="monthlyPrintHospital"></span> patients</div>
-        <div>ECG Services : <span id="monthlyPrintEcg"></span> patients</div>
-        <div>Home Visit Check-ups : <span id="monthlyPrintHomevisit"></span> Patients</div>
-        <div>Inquiries ( Calls &amp; Sms Text, Viber, Social Media) : <span id="monthlyPrintInquiries"></span></div>
-      </div>
-      <div style="margin-top:85px">Submitted by:<br><br><br><strong>ERWIN R. ALINCASTRE, RN</strong><br>NURSE I<br><br>Noted By:<br><br><strong>CONCEPCION GARCIA LAT, MD, MHM</strong><br>City Health Office</div>
     </div>
   </section>
   <footer>© 2026 • Developed &amp; Maintained by Erwin R. Alincastre</footer>
@@ -761,46 +709,6 @@ function setTheme(mode){
  try{localStorage.setItem("antipolo-pnru-theme",night?"night":"day");}catch(e){}
 }
 function toggleTheme(){setTheme(document.body.classList.contains("night-theme")?"day":"night");}
-const ACCOMP_STORAGE_KEY="antipolo-pnru-monthly-accomplishments-v1";
-function currentAccompKey(){return $("accompMonth")?.value||new Date().toISOString().slice(0,7);}
-function getAccompStore(){try{return JSON.parse(localStorage.getItem(ACCOMP_STORAGE_KEY)||"{}");}catch(e){return {};}}
-function saveAccompStore(data){localStorage.setItem(ACCOMP_STORAGE_KEY,JSON.stringify(data));}
-function monthlyAccompAutoTotals(key){
- const hospitalCount=rawHospitals.filter(x=>inRange(x)&&monthKey(x.date)===key&&String(x.hospital||"").trim()).length;
- const inquiryCount=rawInquiries.filter(x=>inRange(x)&&monthKey(x.date)===key&&String(x.query||"").trim()).length;
- return {hospitalCount,inquiryCount};
-}
-function refreshMonthlyAccomplishment(loadSaved=true){
- const key=currentAccompKey();if(!key)return;
- const auto=monthlyAccompAutoTotals(key),saved=getAccompStore()[key]||{};
- $("accompHospital").value=auto.hospitalCount;$("accompInquiries").value=auto.inquiryCount;
- if(loadSaved){$("accompEcg").value=Number(saved.ecg)||0;$("accompHomevisit").value=Number(saved.homevisit)||0;}
- if($("accompMessage"))$("accompMessage").textContent=`${monthLabel(key)} · Auto totals refreshed`;
-}
-function initMonthlyAccomplishment(){
- const month=$("accompMonth");if(!month)return;
- if(!month.value)month.value=new Date().toISOString().slice(0,7);
- month.addEventListener("change",()=>refreshMonthlyAccomplishment(true));
- refreshMonthlyAccomplishment(true);
-}
-function saveMonthlyAccomplishment(){
- const key=currentAccompKey(),ecg=Number($("accompEcg").value),homevisit=Number($("accompHomevisit").value);
- if(!key||!Number.isInteger(ecg)||ecg<0||!Number.isInteger(homevisit)||homevisit<0){$("accompMessage").textContent="Please enter valid non-negative whole numbers.";return;}
- const store=getAccompStore(),auto=monthlyAccompAutoTotals(key);
- store[key]={ecg,homevisit,updatedAt:new Date().toISOString()};
- try{saveAccompStore(store);$("accompHospital").value=auto.hospitalCount;$("accompInquiries").value=auto.inquiryCount;$("accompMessage").textContent=`${monthLabel(key)} report saved on this device.`;showSaveToast("Monthly Report Saved",monthLabel(key)+" accomplishment values saved.",false);}
- catch(e){$("accompMessage").textContent="Unable to save. Check browser storage settings.";}
-}
-function printMonthlyAccomplishment(){
- const key=currentAccompKey();if(!key)return;
- const store=getAccompStore(),saved=store[key]||{},auto=monthlyAccompAutoTotals(key);
- const ecg=Number($("accompEcg").value)||0,homevisit=Number($("accompHomevisit").value)||0;
- $("monthlyAccompPrintMonth").textContent="For the Month of "+monthLabel(key);
- $("monthlyPrintHospital").textContent=number(auto.hospitalCount);$("monthlyPrintEcg").textContent=number(ecg);$("monthlyPrintHomevisit").textContent=number(homevisit);$("monthlyPrintInquiries").textContent=number(auto.inquiryCount);
- document.body.classList.add("monthly-report-print");window.print();setTimeout(()=>document.body.classList.remove("monthly-report-print"),500);
-}
-window.addEventListener("afterprint",()=>document.body.classList.remove("monthly-report-print"));
-
 function printAdminDashboard(){
  const now=new Date();const el=$("printReportDate");if(el)el.textContent="Generated: "+now.toLocaleString("en-PH");
  $("printHospitalBreakdown").innerHTML=$("hospitalBreakdown").innerHTML;
@@ -874,7 +782,7 @@ let dashboardRequestInFlight=false;
 function setConnectionStatus(message,state){$("dataStatus").textContent=message;const line=$("dataStatus").closest(".statusline");line.classList.remove("online","connecting","error");line.classList.add(state);$("statusDot").classList.toggle("off",state!=="online");}
 function applyData(data){
  if(!data||!data.success)throw new Error((data&&data.message)||"Apps Script returned an invalid data response.");
- rawPatients=data.patientAssistance||[];rawHospitals=data.hospitalTally||[];rawInquiries=data.inquiries||[];hospitalDirectory=data.hospitalDirectory||[];homevisitDoneTotal=Number(data.homevisitDoneTotal)||0;fillMonths();renderDashboard();renderHospitalDirectory();refreshMonthlyAccomplishment(false);
+ rawPatients=data.patientAssistance||[];rawHospitals=data.hospitalTally||[];rawInquiries=data.inquiries||[];hospitalDirectory=data.hospitalDirectory||[];homevisitDoneTotal=Number(data.homevisitDoneTotal)||0;fillMonths();renderDashboard();renderHospitalDirectory();
  dashboardHasConnected=true;
  setConnectionStatus("System Online","online");$("lastUpdated").textContent="Updated "+new Date().toLocaleTimeString("en-PH");
 }
@@ -905,7 +813,5 @@ window.addEventListener("keydown",e=>{if(e.key==="Escape")closeHospitalModal();}
 window.addEventListener("resize",()=>{if($("publicView").style.display!=="none"&&rawPatients.length)renderDashboard();});
 try{setTheme(localStorage.getItem("antipolo-pnru-theme")||"day");}catch(e){setTheme("day");}
 renderDashboard();loadDashboard();if(adminToken)showAdmin();setInterval(()=>loadDashboard(),30000);
-
-initMonthlyAccomplishment();
 </script>
 </body></html>

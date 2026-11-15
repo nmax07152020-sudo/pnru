@@ -10,60 +10,51 @@ module.exports = async function handler(req, res) {
   if (!gasUrl || !apiSecret) {
     return res.status(503).json({
       success: false,
-      message: "Admin API is not configured. Set GAS_WEB_APP_URL and GAS_API_SECRET in Vercel."
+      message: "Admin API is not configured. Check GAS_WEB_APP_URL and GAS_API_SECRET in Vercel Production."
     });
   }
 
   try {
     const body = req.body && typeof req.body === "object" ? req.body : {};
     const action = String(body.action || "");
-    const allowed = ["login", "changePassword", "logout"];
-    if (!allowed.includes(action)) {
+    if (!["login", "changePassword", "logout"].includes(action)) {
       return res.status(400).json({ success: false, message: "Unsupported admin action." });
     }
 
     const payload = { ...body, apiSecret };
-    let upstream = await fetch(gasUrl, {
+    const upstream = await fetch(gasUrl, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", "Accept": "application/json" },
       body: JSON.stringify(payload),
-      redirect: "manual"
+      redirect: "follow",
+      cache: "no-store"
     });
-
-    // Apps Script ContentService commonly responds with a 302 redirect to
-    // a one-time script.googleusercontent.com URL containing the JSON body.
-    if ([301, 302, 303, 307, 308].includes(upstream.status)) {
-      const location = upstream.headers.get("location");
-      if (!location) {
-        return res.status(502).json({
-          success: false,
-          message: "Apps Script redirected the admin request without a response URL. Check the Web App deployment."
-        });
-      }
-      upstream = await fetch(new URL(location, gasUrl).toString(), {
-        method: "GET",
-        redirect: "follow"
-      });
-    }
 
     const text = await upstream.text();
     let result;
     try {
       result = JSON.parse(text);
     } catch {
-      const looksLikeHtml = /<\\s*!doctype|<\\s*html|accounts\\.google\\.com|ServiceLogin/i.test(text);
-      return res.status(502).json({
-        success: false,
-        message: looksLikeHtml
-          ? "Apps Script returned an HTML page instead of JSON. Confirm the Web App is deployed as Execute as: Me and Who has access: Anyone, then deploy a New version."
-          : "Apps Script returned a non-JSON response (HTTP " + upstream.status + "). Check the latest Web App deployment and doPost()."
-      });
+      const snippet = text.replace(/<script[\s\S]*?<\/script>/gi, "")
+        .replace(/<style[\s\S]*?<\/style>/gi, "")
+        .replace(/<[^>]+>/g, " ")
+        .replace(/\s+/g, " ").trim().slice(0, 240);
+      let message;
+      if (upstream.status === 401 || /unauthorized|sign in|authentication/i.test(snippet)) {
+        message = "Google Apps Script returned HTTP 401. Check the Web App deployment: Execute as Me, Who has access Anyone, then deploy a New version. Also confirm GAS_WEB_APP_URL is the current /exec URL (not /dev).";
+      } else if (/accounts\\.google\\.com|ServiceLogin/i.test(text)) {
+        message = "Google redirected the admin API to a sign-in page. The Web App must be deployed with Who has access: Anyone and Execute as: Me.";
+      } else {
+        message = "Apps Script returned non-JSON (HTTP " + upstream.status + "). Response preview: " + (snippet || "empty response") + ". Check doPost(e) in the deployed version.";
+      }
+      return res.status(502).json({ success: false, message });
     }
+
     return res.status(upstream.ok ? 200 : 502).json(result);
   } catch (error) {
     return res.status(502).json({
       success: false,
-      message: "Could not reach the Apps Script admin service."
+      message: "Could not reach Apps Script. Verify the /exec URL and Vercel environment variables."
     });
   }
-}
+};

@@ -57,6 +57,29 @@ footer{text-align:center;color:#8b99ab;font-size:11px;padding:22px 10px 8px}.emp
 @media(max-width:780px){.dashboard-overview-grid{grid-template-columns:1fr}.profile-panel .profile-grid{grid-template-columns:1fr 1fr}.gender-chart-compact{height:160px;min-height:160px}}
 @media(max-width:520px){.profile-panel .profile-grid{grid-template-columns:1fr}.profile-panel .profile-section .chart-wrap{height:145px;min-height:145px}}
 
+
+
+/* V6 visual polish: duplicate panel removal, combined outcomes, inline SVG icons */
+.kpis{grid-template-columns:repeat(2,minmax(0,1fr))}
+.kpi{position:relative;overflow:hidden;min-height:112px}
+.kpi-icon{width:42px;height:42px;display:grid;place-items:center;border-radius:14px;background:rgba(255,255,255,.78);color:#2776c7}
+.kpi-icon svg{width:27px;height:27px;display:block}
+.outcome-kpi .kpi-icon{color:#169b78}
+.outcome-values{display:flex;align-items:center;gap:30px;margin-top:9px}
+.outcome-values>div{display:flex;flex-direction:column;gap:2px}
+.outcome-values .kpi-value{font-size:27px;line-height:1.15}
+.outcome-label{font-size:11px;color:#65758b;display:flex;align-items:center;gap:6px}
+.outcome-dot{width:8px;height:8px;border-radius:50%;display:inline-block}
+.coordinated-dot{background:#20a486}.refused-dot{background:#e47789}
+.kpi:not(.outcome-kpi) .kpi-icon svg{color:inherit}
+.hospital-modal-compact{width:min(1180px,100%);padding:20px}
+.hospital-modal-compact .table-wrap{max-height:72vh;overflow:auto}
+.hospital-table{min-width:780px}
+.hospital-table td:nth-child(2){width:30%}
+.hospital-bar-track{height:9px;min-width:100px;border-radius:20px;background:#edf2f8;overflow:hidden}
+.hospital-bar-fill{height:100%;border-radius:20px;background:linear-gradient(90deg,#2878c8,#6bb8ec)}
+@media(max-width:620px){.kpis{grid-template-columns:1fr 1fr}.outcome-values{gap:16px}.outcome-values .kpi-value{font-size:22px}.kpi-icon{width:34px;height:34px}.hospital-modal-compact{padding:13px}}
+
 </style>
 </head>
 <body>
@@ -83,9 +106,15 @@ footer{text-align:center;color:#8b99ab;font-size:11px;padding:22px 10px 8px}.emp
     </div>
     <div class="statusline"><span class="dot off" id="statusDot"></span><span id="dataStatus">Waiting for Google Sheets connection</span><span id="lastUpdated" style="margin-left:auto"></span></div>
     <div class="kpis">
-      <article class="card kpi" style="--tint:#eaf4ff"><div class="kpi-label">Total Hospital Entries</div><div class="kpi-value" id="hospitalTotalTop">—</div><div class="kpi-note">All receiving hospitals</div><span class="kpi-icon">🏥</span></article>
-      <article class="card kpi" style="--tint:#e9f8f2"><div class="kpi-label">Coordinated</div><div class="kpi-value" id="coordTotal">—</div><div class="kpi-note">Successful coordination</div><span class="kpi-icon">✓</span></article>
-      <article class="card kpi" style="--tint:#fff0f3"><div class="kpi-label">Refused</div><div class="kpi-value" id="refusedTotal">—</div><div class="kpi-note">Referral declined</div><span class="kpi-icon">↩</span></article>
+      <article class="card kpi" style="--tint:#eaf4ff"><div class="kpi-label">Total Hospital Entries</div><div class="kpi-value" id="hospitalTotalTop">—</div><div class="kpi-note">All receiving hospitals</div><span class="kpi-icon" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M18 7h12v9h9v12h-9v9H18v-9H9V16h9z" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/><path d="M7 42h34" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg></span></article>
+      <article class="card kpi outcome-kpi" style="--tint:#eef8f4">
+        <div class="kpi-label">Referral Outcomes</div>
+        <div class="outcome-values">
+          <div><span class="outcome-label"><i class="outcome-dot coordinated-dot"></i>Coordinated</span><strong class="kpi-value" id="coordTotal">—</strong></div>
+          <div><span class="outcome-label"><i class="outcome-dot refused-dot"></i>Refused</span><strong class="kpi-value" id="refusedTotal">—</strong></div>
+        </div>
+        <span class="kpi-icon" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M10 25l9 9L38 14" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 8h32v32H8z" fill="none" stroke="currentColor" stroke-width="2.5" opacity=".35"/></svg></span>
+      </article>
     </div>
     <div class="grid2 dashboard-overview-grid">
       <section class="card panel compact-panel">
@@ -109,20 +138,6 @@ footer{text-align:center;color:#8b99ab;font-size:11px;padding:22px 10px 8px}.emp
       </section>
     </div>
     <section class="card panel" style="margin-bottom:15px">
-      <div class="panel-head"><div><h3>Client Profile Overview</h3><div class="sub">Classification and age distribution</div></div><span class="pill">Pedia / Adult · Age Groups</span></div>
-      <div class="profile-grid">
-        <div class="profile-section">
-          <h4>Client Classification</h4>
-          <div class="chart-wrap"><canvas id="classChart"></canvas></div>
-          <div class="legend"><span class="key"><i class="swatch" style="background:#23a58a"></i>Pedia</span><span class="key"><i class="swatch" style="background:#e5a13a"></i>Adult</span></div>
-        </div>
-        <div class="profile-section">
-          <h4>Age Group Distribution</h4>
-          <div class="age-list" id="ageGroups"><div class="empty">No data loaded</div></div>
-        </div>
-      </div>
-    </section>
-    <section class="card panel" style="margin-bottom:15px">
       <div class="hospital-shortcut">
         <div><h3>Hospital Referral Tally Board</h3><p>View referral totals and coordinated / refused outcomes for each receiving hospital</p></div>
         <button class="btn btn-primary" type="button" onclick="openHospitalModal()">View Hospital Summary</button>
@@ -143,16 +158,15 @@ footer{text-align:center;color:#8b99ab;font-size:11px;padding:22px 10px 8px}.emp
   <footer>Antipolo City Health Office · Patient Navigation and Referral Unit</footer>
 </main>
 <div id="hospitalModal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="hospitalModalTitle" onclick="if(event.target===this)closeHospitalModal()">
-  <div class="card modal-card">
+  <div class="card modal-card hospital-modal-compact">
     <div class="modal-head">
-      <div><h3 id="hospitalModalTitle" style="margin:0">Hospital Referral Tally Board</h3><p class="sub">Per-hospital totals with Column G remarks: Coordinated and Refused</p></div>
+      <div><h3 id="hospitalModalTitle" style="margin:0">Hospital Referral Tally Board</h3><p class="sub">Per-hospital Coordinated, Refused and total referrals</p></div>
       <button class="btn btn-muted" type="button" onclick="closeHospitalModal()">Close ✕</button>
     </div>
-    <div class="modal-chart"><canvas id="hospitalChart"></canvas></div>
     <div class="table-wrap">
-      <table class="mini-table">
-        <thead><tr><th>Receiving Hospital</th><th style="text-align:right">Coordinated</th><th style="text-align:right">Refused</th><th style="text-align:right">Total Referrals</th></tr></thead>
-        <tbody id="hospitalBreakdown"><tr><td colspan="4" class="empty">No hospital records for this period</td></tr></tbody>
+      <table class="mini-table hospital-table">
+        <thead><tr><th>Receiving Hospital</th><th>Referral Volume</th><th style="text-align:right">Coordinated</th><th style="text-align:right">Refused</th><th style="text-align:right">Total</th></tr></thead>
+        <tbody id="hospitalBreakdown"><tr><td colspan="5" class="empty">No hospital records for this period</td></tr></tbody>
       </table>
     </div>
   </div>
@@ -264,8 +278,8 @@ function renderDashboard(){
   if(/refused/i.test(remark))hospitals[n].refused++;
  });
  const hospitalRows=Object.entries(hospitals).sort((a,b)=>b[1].total-a[1].total||a[0].localeCompare(b[0]));
- $("hospitalBreakdown").innerHTML=hospitalRows.map(([n,v])=>`<tr><td>${escapeHtml(n)}</td><td style="text-align:right"><span class="status-badge status-coord">${number(v.coordinated)}</span></td><td style="text-align:right"><span class="status-badge status-refused">${number(v.refused)}</span></td><td style="text-align:right;font-weight:750">${number(v.total)}</td></tr>`).join("")||'<tr><td colspan="4" class="empty">No hospital records for this period</td></tr>';
- if($("hospitalModal").style.display==="flex")drawMultiColorBars("hospitalChart",hospitalRows.map(x=>x[0]),hospitalRows.map(x=>x[1].total));
+ const hospitalMax=Math.max(1,...hospitalRows.map(x=>x[1].total));
+ $("hospitalBreakdown").innerHTML=hospitalRows.map(([n,v])=>`<tr><td>${escapeHtml(n)}</td><td><div class="hospital-bar-track" role="img" aria-label="${number(v.total)} referrals"><div class="hospital-bar-fill" style="width:${(v.total/hospitalMax*100).toFixed(1)}%"></div></div></td><td style="text-align:right"><span class="status-badge status-coord">${number(v.coordinated)}</span></td><td style="text-align:right"><span class="status-badge status-refused">${number(v.refused)}</span></td><td style="text-align:right;font-weight:750">${number(v.total)}</td></tr>`).join("")||'<tr><td colspan="5" class="empty">No hospital records for this period</td></tr>';
 
  const units={};p.forEach(x=>{const n=String(x.dispatchUnit||"").trim();if(n)units[n]=(units[n]||0)+1;});
  const unitRows=Object.entries(units).sort((a,b)=>b[1]-a[1]||a[0].localeCompare(b[0]));
@@ -275,17 +289,7 @@ function renderDashboard(){
 }
 function openHospitalModal(){
  $("hospitalModal").style.display="flex";
- const {h}=filtered(), hospitals={};
- h.forEach(x=>{
-  const n=String(x.hospital||"").trim();if(!n)return;
-  if(!hospitals[n])hospitals[n]={total:0,coordinated:0,refused:0};
-  hospitals[n].total++;
-  const remark=String(x.remarks||"");
-  if(/coordinated/i.test(remark))hospitals[n].coordinated++;
-  if(/refused/i.test(remark))hospitals[n].refused++;
- });
- const rows=Object.entries(hospitals).sort((a,b)=>b[1].total-a[1].total||a[0].localeCompare(b[0]));
- drawMultiColorBars("hospitalChart",rows.map(x=>x[0]),rows.map(x=>x[1].total));
+ $("hospitalModal").querySelector(".modal-card").scrollTop=0;
 }
 function closeHospitalModal(){$("hospitalModal").style.display="none";}
 

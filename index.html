@@ -107,6 +107,9 @@ footer{text-align:center;color:#8b99ab;font-size:11px;padding:22px 10px 8px}.emp
 .admin-main>.welcome>button{margin-left:auto;align-self:flex-start;flex:0 0 auto}
 @media(max-width:520px){.admin-main>.welcome>button{margin-left:auto}}
 
+
+/* TEST 8: admin data-entry workspaces */
+.entry-card{max-width:none;padding:22px;margin:0 0 18px}.entry-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 16px}.entry-field{display:grid;gap:7px;margin:10px 0;min-width:0}.entry-field label{font-size:12px;font-weight:750;color:#40536d}.entry-field input,.entry-field select,.entry-field textarea{width:100%;min-width:0;padding:11px 12px;border:1px solid #dce5ef;border-radius:10px;background:#fff;color:var(--ink);font:inherit;font-size:13px}.entry-field textarea{min-height:82px;resize:vertical}.entry-field.full{grid-column:1/-1}.entry-actions{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:16px}.entry-message{font-size:12px;color:var(--muted);min-height:18px}.entry-message.success{color:#16804a}.entry-message.error{color:#c62828}.entry-note{padding:11px 13px;background:#f2f7fd;border:1px solid #e1ebf6;border-radius:10px;color:#52647b;font-size:11px;line-height:1.5;margin:12px 0}.sidebar-link{width:100%;display:flex;align-items:center;gap:10px;text-align:left;border:1px solid transparent;background:transparent;color:#34516f;border-radius:9px;padding:11px 12px;font-size:13px;font-weight:750;cursor:pointer;margin:4px 0}.sidebar-link:hover,.sidebar-link.active{background:#eaf3fc;border-color:#d6e2ef;color:#0b4c91}.admin-panel{display:none}.admin-panel.visible{display:block}@media(max-width:760px){.entry-grid{grid-template-columns:1fr}.entry-field.full{grid-column:auto}.admin-sidebar{display:flex;flex-wrap:wrap}.sidebar-heading{width:100%}.sidebar-link{flex:1 1 190px;width:auto}}
 </style>
 </head>
 <body>
@@ -183,6 +186,8 @@ footer{text-align:center;color:#8b99ab;font-size:11px;padding:22px 10px 8px}.emp
         <div class="sidebar-heading">ADMIN MENU</div>
         <button class="sidebar-link active" id="sidebarDashboardLink" type="button" onclick="showAdminPanel('admin-dashboard-content',this)"><span>▦</span> Dashboard</button>
         <button class="sidebar-link" id="sidebarHospitalLink" type="button" onclick="showAdminPanel('hospital-directory',this)"><span>🏥</span> Hospital Directory</button>
+        <button class="sidebar-link" id="sidebarPatientEntryLink" type="button" onclick="showAdminPanel('patient-assistance-entry',this)"><span>📝</span> Patient/Client Assistance</button>
+        <button class="sidebar-link" id="sidebarTallyEntryLink" type="button" onclick="showAdminPanel('hospital-tally-entry',this)"><span>📋</span> Hospital Referral Tally Board</button>
         <button class="sidebar-link" id="sidebarSettingsLink" type="button" onclick="showAdminPanel('admin-password-settings',this)"><span>⚙</span> Settings / Change Password</button>
       </aside>
       <div class="admin-main">
@@ -191,6 +196,15 @@ footer{text-align:center;color:#8b99ab;font-size:11px;padding:22px 10px 8px}.emp
         <section class="card admin-card directory-card" id="hospital-directory">
           <div class="panel-head"><div><h3>Hospital Directory</h3><div class="sub">Hospital names and contact numbers from the Hospital Directory sheet</div></div><span class="pill" id="directoryCount">Loading…</span></div>
           <div class="table-wrap"><table class="mini-table directory-table"><thead><tr><th>Hospital Name</th><th>Contact Number</th></tr></thead><tbody id="hospitalDirectoryBody"><tr><td colspan="2" class="empty">Loading hospital directory…</td></tr></tbody></table></div>
+        </section>
+        <section class="card entry-card admin-panel" id="patient-assistance-entry">
+          <div class="panel-head"><div><h3>Patient / Client Assistance Entry Form</h3><div class="sub">New records are appended after the last used row in PatientClient Assistance.</div></div><span class="pill">Columns A, B, C, D, E, F, G, H, I, J, L, M, N, P, S, T, U, V</span></div>
+          <div class="entry-note">The form follows the worksheet column order and dropdown choices. Columns K, O, Q and R are intentionally left blank as requested.</div>
+          <form id="patientEntryForm" onsubmit="submitSheetEntry(event,'patient')"><div class="entry-grid" id="patientEntryFields"></div><div class="entry-actions"><button class="btn btn-primary" type="submit" id="savePatientEntryBtn">Save Patient Entry</button><button class="btn btn-muted" type="reset" onclick="clearEntryMessage('patientEntryMessage')">Clear Form</button><span class="entry-message" id="patientEntryMessage" role="status"></span></div></form>
+        </section>
+        <section class="card entry-card admin-panel" id="hospital-tally-entry">
+          <div class="panel-head"><div><h3>Hospital Referral Tally Board Entry Form</h3><div class="sub">New records are appended after the last used row in Hospital Referral Tally Board.</div></div><span class="pill">Columns A–G</span></div>
+          <form id="hospitalTallyForm" onsubmit="submitSheetEntry(event,'hospital')"><div class="entry-grid" id="hospitalEntryFields"></div><div class="entry-actions"><button class="btn btn-primary" type="submit" id="saveHospitalEntryBtn">Save Hospital Referral Entry</button><button class="btn btn-muted" type="reset" onclick="clearEntryMessage('hospitalEntryMessage')">Clear Form</button><span class="entry-message" id="hospitalEntryMessage" role="status"></span></div></form>
         </section>
         <div class="card admin-card" id="admin-password-settings"><h3 style="margin:0">Change Password</h3><p class="sub">Update the administrator password.</p>
           <form onsubmit="changePassword(event)"><div class="field"><label>Current Password</label><input id="currentPassword" type="password" autocomplete="current-password" required></div><div class="field"><label>New Password</label><input id="newPassword" type="password" minlength="8" autocomplete="new-password" required></div><div class="field"><label>Confirm New Password</label><input id="confirmPassword" type="password" minlength="8" autocomplete="new-password" required></div><button class="btn btn-primary" type="submit" id="changePasswordBtn">Update Password</button></form><p class="help" id="passwordMessage" role="status"></p>
@@ -298,6 +312,65 @@ function drawMultiColorBars(id,labels,values){
 }
 
 
+const PATIENT_ENTRY_FIELDS=[
+ {col:"A",label:"ON DUTY",type:"select",options:["E. Alincastre","R. Orlain","A. Ortega","J. Mislang","R. Ledesma","P. Oliveros"]},
+ {col:"B",label:"DATE (mm/dd/yy)",type:"date",required:true},
+ {col:"C",label:"TIME OF REFERRAL",type:"time"},
+ {col:"D",label:"INFORMANT / REFERRING UNIT",type:"text"},
+ {col:"E",label:"TYPE OF ASSISTANCE",type:"select",options:["Hospital Referral","Transfer of Hospital","Ambulance Assistance","Hospital Refferal & Ambu Assistance"]},
+ {col:"F",label:"PATIENT'S NAME (Surname, First Name, Middle Name, Suffix)",type:"text",required:true,full:true},
+ {col:"G",label:"AGE",type:"number",min:0},
+ {col:"H",label:"GENDER",type:"select",options:["Male","Female"]},
+ {col:"I",label:"Classification",type:"select",options:["Pedia","Adult"]},
+ {col:"J",label:"ADDRESS: House/Lot and Blk No.",type:"text"},
+ {col:"L",label:"BARANGAY",type:"select",options:["Bagong Nayon","Beverly Hills","Calawis","Cupang","Dalig","Dela Paz (Pob.)","Inarawan","Mambugan","Mayamot","Muntindilaw","San Isidro (Pob.)","San Jose (Pob.)","San Juan","San Luis","San Roque (Pob.)","Santa Cruz"]},
+ {col:"M",label:"CONTACT NUMBER",type:"tel"},
+ {col:"N",label:"CHIEF COMPLAIN",type:"textarea",full:true},
+ {col:"P",label:"DIAGNOSIS",type:"textarea",full:true},
+ {col:"S",label:"VITAL SIGNS",type:"textarea",full:true},
+ {col:"T",label:"STATUS",type:"select",options:["On - Going","Done"]},
+ {col:"U",label:"STATUS CHART / ACTIONS TAKEN",type:"textarea",full:true},
+ {col:"V",label:"DISPATCHING UNIT / BRGY",type:"select",options:["City Health Office","CDRRMO","Bagong Nayon","Beverly Hills","Calawis","Cupang","Dalig","Dela Paz","Inarawan","Mambugan","Mayamot","Muntindilaw","San Isidro","San Jose","San Juan","San Luis","San Roque","Santa Cruz","Self Conduct"]}
+];
+const HOSPITAL_OPTIONS=["RPHS Annex 1 Padilla","RPHS Annex 2 Dalig","ACHS Cabading","ACHS Annex 4 Mambugan","Assumption Specialty Hospital & Medical Center Inc.","Clinica Antipolo Hospital & Wellness Center, Inc.","Antipolo Doctors Hospital","Soriano-Leyble Medical and Maternity Hospital","Fatima Medical Center Antipolo","Cornel Medical Center, Antipolo","Metro Antipolo Hospital and Medical Center","Amang Rodriguez Memorial Medical Center","Quirino Memorial Medical Center","Rizal Medical Center - DOH","Lung Center of the Philippines","Philippine Heart Center","The National Kidney and Transplant Institute","East Avenue Medical Center","Philippine Children's Medical Center","National Children's Hospital","National Center For Mental Health","Jose R. Reyes Memorial Medical Center","San Lazaro Hospital","Dr. Jose Fabella Memorial Hospital","Philippine General Hospital","Jose N. Rodriguez Memorial Hospital and Sanitarium (DJNRMHS)","DOH Calabarzon","GAT Andres Bonifacio Medical Center","RPHS MORONG","Pasig City General Hospital","Tondo Medical Center","Quezon City General Hospital","Marikina Valley","Manila East Medical Center","Ospital ng Makati","Rizal Provincial Hospital System - Taytay","Rizal Provincial Hospital System - Morong","Rizal Provincial Hospital - Binangonan"];
+const HOSPITAL_ENTRY_FIELDS=[
+ {col:"A",label:"Hospital",type:"select",options:HOSPITAL_OPTIONS,required:true,full:true},
+ {col:"B",label:"Date",type:"date",required:true},
+ {col:"C",label:"Time",type:"time"},
+ {col:"D",label:"Diagnosis",type:"textarea",full:true},
+ {col:"E",label:"Reason",type:"textarea",full:true},
+ {col:"F",label:"Informant",type:"text"},
+ {col:"G",label:"Remarks",type:"select",options:["REFUSED","COORDINATED","CONDUCTED","CANNOT BE CONTACTED","ON-GOING","QUERRIES"],required:true}
+];
+function renderEntryFields(containerId,fields,prefix){
+ const container=$(containerId);if(!container||container.dataset.ready==="1")return;
+ container.innerHTML=fields.map(f=>{const id=prefix+f.col;let control="";const required=f.required?" required":"";
+  if(f.type==="select")control=`<select id="${id}" data-col="${f.col}"${required}><option value="">Select ${escapeHtml(f.label)}</option>${f.options.map(o=>`<option value="${escapeHtml(o)}">${escapeHtml(o)}</option>`).join("")}</select>`;
+  else if(f.type==="textarea")control=`<textarea id="${id}" data-col="${f.col}" placeholder="Enter ${escapeHtml(f.label.toLowerCase())}"></textarea>`;
+  else control=`<input id="${id}" data-col="${f.col}" type="${f.type}"${f.min!==undefined?` min="${f.min}"`:""}${required} ${f.type==="text"?`maxlength="500"`:""}>`;
+  return `<div class="entry-field${f.full?" full":""}"><label for="${id}">${escapeHtml(f.col+" · "+f.label)}${f.required?" *":""}</label>${control}</div>`;
+ }).join("");container.dataset.ready="1";
+}
+function setDefaultEntryDates(){const now=new Date(),date=now.getFullYear()+"-"+String(now.getMonth()+1).padStart(2,"0")+"-"+String(now.getDate()).padStart(2,"0"),time=String(now.getHours()).padStart(2,"0")+":"+String(now.getMinutes()).padStart(2,"0");["patient-B","hospital-B"].forEach(id=>{if($(id)&&!$(id).value)$(id).value=date;});["patient-C","hospital-C"].forEach(id=>{if($(id)&&!$(id).value)$(id).value=time;});}
+function clearEntryMessage(id){const el=$(id);if(el){el.textContent="";el.className="entry-message";}}
+function collectEntryValues(prefix,fields){const out={};fields.forEach(f=>{const el=$(prefix+f.col);out[f.col]=el?String(el.value||"").trim():"";});return out;}
+async function submitSheetEntry(event,kind){
+ event.preventDefault();if(!adminToken){alert("Admin session expired. Please sign in again.");openLogin();return;}
+ const patient=kind==="patient",fields=patient?PATIENT_ENTRY_FIELDS:HOSPITAL_ENTRY_FIELDS,prefix=patient?"patient-":"hospital-",form=$(patient?"patientEntryForm":"hospitalTallyForm"),button=$(patient?"savePatientEntryBtn":"saveHospitalEntryBtn"),message=$(patient?"patientEntryMessage":"hospitalEntryMessage"),action=patient?"savePatientAssistance":"saveHospitalTally";
+ if(!form.checkValidity()){form.reportValidity();return;}
+ const values=collectEntryValues(prefix,fields);button.disabled=true;button.textContent="Saving…";message.className="entry-message";message.textContent="Saving to Google Sheets…";
+ try{
+  const response=await fetch("/api/admin",{method:"POST",headers:{"Content-Type":"application/json"},credentials:"same-origin",body:JSON.stringify({action,token:adminToken,values})});
+  const result=await response.json();if(!response.ok||!result.success)throw new Error(result.message||"Unable to save record.");
+  message.className="entry-message success";message.textContent=`Saved successfully to row ${number(result.row)}.`;
+  form.reset();setDefaultEntryDates();loadDashboard();if(patient){message.textContent+=` Patient record added to Patient/Client Assistance.`;}else{message.textContent+=` Referral tally record added.`;}
+ }catch(err){message.className="entry-message error";message.textContent=err.message||"Save failed. Please try again.";}
+ finally{button.disabled=false;button.textContent=patient?"Save Patient Entry":"Save Hospital Referral Entry";}
+}
+renderEntryFields("patientEntryFields",PATIENT_ENTRY_FIELDS,"patient-");
+renderEntryFields("hospitalEntryFields",HOSPITAL_ENTRY_FIELDS,"hospital-");
+setDefaultEntryDates();
+
 function renderDashboard(){
  const {p,h,q}=filtered();
  const male=p.filter(x=>/^m/i.test(String(x.gender||"").trim())).length;
@@ -354,13 +427,12 @@ function showAdmin(){
 }
 function showAdminPanel(id,button){
  const isDashboard=id==="admin-dashboard-content";
- const isDirectory=id==="hospital-directory";
- const isSettings=id==="admin-password-settings";
  $("adminDashboardMount").style.display=isDashboard?"block":"none";
- $("hospital-directory").style.display=isDirectory?"block":"none";
- $("admin-password-settings").classList.toggle("visible",isSettings);
+ ["hospital-directory","patient-assistance-entry","hospital-tally-entry","admin-password-settings"].forEach(pid=>{const el=$(pid);if(el)el.classList.toggle("visible",pid===id);});
  document.querySelectorAll(".sidebar-link").forEach(b=>b.classList.toggle("active",b===button));
  if(isDashboard){setTimeout(()=>{if(rawPatients.length||rawHospitals.length)renderDashboard();},50);}
+ if(id==="patient-assistance-entry")setDefaultEntryDates();
+ if(id==="hospital-tally-entry")setDefaultEntryDates();
 }
 function logoutAdmin(){showPublic();window.scrollTo({top:0,behavior:"smooth"});}
 function showPublic(){

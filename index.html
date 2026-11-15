@@ -81,7 +81,7 @@ footer{text-align:center;color:#8b99ab;font-size:11px;padding:22px 10px 8px}.emp
 @media(max-width:620px){.kpis{grid-template-columns:1fr 1fr}.outcome-values{gap:16px}.outcome-values .kpi-value{font-size:22px}.kpi-icon{width:34px;height:34px}.hospital-modal-compact{padding:13px}}
 
 
-.admin-view{display:none}.admin-menu-wrap{margin:0 0 18px;position:relative;z-index:20}.admin-menu-toggle{display:inline-flex;align-items:center;gap:9px;border:1px solid #d6e2ef;background:#eaf1f9;color:#123c68;border-radius:11px;padding:11px 15px;font-size:13px;font-weight:800;cursor:pointer}.hamburger-icon{font-size:18px;line-height:1}.admin-nav{display:none;gap:8px;flex-wrap:wrap;margin:9px 0 0;padding:10px;background:#eaf1f9;border:1px solid #dce7f3;border-radius:13px;box-shadow:0 12px 30px #173c6410}.admin-nav.open{display:flex}.admin-nav-link{border:1px solid transparent;background:transparent;color:#34516f;border-radius:9px;padding:9px 12px;font-size:12px;font-weight:700;cursor:pointer}.admin-nav-link:hover,.admin-nav-link.active{background:#fff;border-color:#d6e2ef;color:#0b4c91;box-shadow:0 3px 10px #173c6410}.admin-nav-divider{width:1px;background:#cad8e8;margin:3px 4px}.password-nav-link{color:#0b4c91}.admin-card{margin-bottom:20px}.admin-card .alert{display:none}#admin-password-settings{display:none}#admin-password-settings.visible{display:block}html{scroll-behavior:smooth}section[id^="nav-"]{scroll-margin-top:82px}#admin-password-settings{scroll-margin-top:82px}.dot.off{background:#dc3545!important}.statusline.connecting,.statusline.error{color:#c62828}.statusline.connecting .dot,.statusline.error .dot{background:#dc3545!important}.statusline.online{color:#16804a}.statusline.online .dot{background:#18a558!important}
+.admin-view{display:none}.admin-menu-wrap{margin:0 0 18px;position:relative;z-index:30;display:flex;justify-content:flex-start;align-items:flex-start}.admin-menu-toggle{display:inline-flex;align-items:center;gap:9px;border:1px solid #d6e2ef;background:#eaf1f9;color:#123c68;border-radius:11px;padding:11px 15px;font-size:13px;font-weight:800;cursor:pointer}.hamburger-icon{font-size:18px;line-height:1}.admin-nav{display:none;position:absolute;top:calc(100% + 8px);left:0;width:230px;max-width:calc(100vw - 48px);gap:6px;flex-direction:column;margin:0;padding:9px;background:#fff;border:1px solid #dce7f3;border-radius:13px;box-shadow:0 14px 34px #173c6420}.admin-nav.open{display:flex}.admin-nav-link{width:100%;text-align:left;border:1px solid transparent;background:transparent;color:#34516f;border-radius:9px;padding:11px 12px;font-size:13px;font-weight:700;cursor:pointer}.admin-nav-link:hover,.admin-nav-link.active{background:#eaf3fc;border-color:#d6e2ef;color:#0b4c91}.admin-nav-divider{display:none}.password-nav-link{color:#0b4c91}.admin-card{margin-bottom:20px}.admin-card .alert{display:none}#admin-password-settings{display:none}#admin-password-settings.visible{display:block}html{scroll-behavior:smooth}section[id^="nav-"]{scroll-margin-top:82px}#admin-password-settings{scroll-margin-top:82px}.dot.off{background:#dc3545!important}.statusline.connecting,.statusline.error{color:#c62828}.statusline.connecting .dot,.statusline.error .dot{background:#dc3545!important}.statusline.online{color:#16804a}.statusline.online .dot{background:#18a558!important}
 @media(min-width:900px){.admin-nav.open{align-items:center}}
 @media(max-width:600px){.admin-nav.open{display:grid;grid-template-columns:1fr 1fr;gap:6px}.admin-nav-link{padding:10px 8px;text-align:left}.admin-nav-divider{display:none}.admin-menu-toggle{width:100%;justify-content:center}.brand-logo{width:42px;height:42px}}
 
@@ -154,17 +154,11 @@ footer{text-align:center;color:#8b99ab;font-size:11px;padding:22px 10px 8px}.emp
     </section>
   </section>
   <section id="adminView" class="admin-view">
-    <div class="welcome"><div><div class="eyebrow">Administration</div><h2>Admin Dashboard</h2><p>Public dashboard sections are available below for quick navigation.</p></div><button class="btn btn-muted" onclick="logoutAdmin()">↪ Logout</button></div>
+    <div class="welcome"><div><div class="eyebrow">Administration</div><h2>Admin Dashboard</h2><p>Manage your administrator account and dashboard settings.</p></div><button class="btn btn-muted" onclick="logoutAdmin()">↪ Logout</button></div>
     <div class="admin-menu-wrap">
       <button class="admin-menu-toggle" id="adminMenuToggle" type="button" aria-expanded="false" aria-controls="adminNavigation" onclick="toggleAdminMenu()"><span class="hamburger-icon">☰</span><span>Navigation</span></button>
-      <nav class="admin-nav" id="adminNavigation" aria-label="Admin dashboard navigation">
-        <button class="admin-nav-link active" onclick="adminGo('nav-overview',this)">Overview</button>
-        <button class="admin-nav-link" onclick="adminGo('nav-referral-kpis',this)">Referral Summary</button>
-        <button class="admin-nav-link" onclick="adminGo('nav-client-profile',this)">Client Profile</button>
-        <button class="admin-nav-link" onclick="adminGo('nav-hospital-tally',this)">Hospital Referral Tally</button>
-        <button class="admin-nav-link" onclick="adminGo('nav-ambulance',this)">Ambulance Transport / Transfer</button>
-        <span class="admin-nav-divider"></span>
-        <button class="admin-nav-link password-nav-link" onclick="adminGo('admin-password-settings',this)">⚙ Change Password</button>
+      <nav class="admin-nav" id="adminNavigation" aria-label="Admin settings menu">
+        <button class="admin-nav-link password-nav-link" onclick="adminGo('admin-password-settings',this)">⚙ Settings / Change Password</button>
       </nav>
     </div>
     <div class="card admin-card" id="admin-password-settings"><h3 style="margin:0">Change Password</h3><p class="sub">Update the administrator password.</p>

@@ -147,6 +147,7 @@ footer{text-align:center;color:#8b99ab;font-size:11px;padding:22px 10px 8px}.emp
     <div class="statusline"><span class="dot off" id="statusDot"></span><span id="dataStatus">Waiting for Google Sheets connection</span><span id="lastUpdated" style="margin-left:auto"></span></div>
     <div class="kpis" id="nav-referral-kpis">
       <article class="card kpi" style="--tint:#eaf4ff"><div class="kpi-label">Total Hospital Entries</div><div class="kpi-value" id="hospitalTotalTop">—</div><div class="kpi-note">All receiving hospitals</div><span class="kpi-icon" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M18 7h12v9h9v12h-9v9H18v-9H9V16h9z" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/><path d="M7 42h34" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg></span></article>
+      <article class="card kpi" style="--tint:#eaf8f1"><div class="kpi-label">Total Done Home Visits</div><div class="kpi-value" id="homevisitDoneTotalTop">—</div><div class="kpi-note">Homevisit · Column M = Done Visit</div><span class="kpi-icon" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M6 22 24 7l18 15v19H6z" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/><path d="M18 41V27h12v14M17 19h14M24 12v14" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span></article>
       <article class="card kpi inquiry-kpi" style="--tint:#eaf8f4"><div class="kpi-label">Inquiries (Calls, Text SMS, Social Media at Viber)</div><div class="kpi-value" id="inquiriesTotalTop">—</div><div class="kpi-note">Overall total entries</div><span class="kpi-icon" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M8 10h32v23H21l-9 7v-7H8z" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/><path d="M15 19h18M15 25h12" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg></span></article>
       <article class="card kpi outcome-kpi" style="--tint:#eef8f4">
         <div class="kpi-label">Referral Outcomes</div>
@@ -246,7 +247,7 @@ footer{text-align:center;color:#8b99ab;font-size:11px;padding:22px 10px 8px}.emp
 */
 const GAS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxTs7_jSzhArOe1HnW8C6jlT0Fgbx-kHOipb-dzmxwu1yR8ALVEy1ZDlNtNuAY6CNc/exec";
 const START_DATE = new Date(2026,0,1);
-let rawPatients=[], rawHospitals=[], rawInquiries=[], hospitalDirectory=[], selectedMonth="all";
+let rawPatients=[], rawHospitals=[], rawInquiries=[], hospitalDirectory=[], homevisitDoneTotal=0, selectedMonth="all";
 const ADMIN_SESSION_KEY="antipolo_patient_navigation_admin_session";
 let adminToken=(()=>{try{return sessionStorage.getItem(ADMIN_SESSION_KEY)||"";}catch(e){return "";}})();
 const $=id=>document.getElementById(id);
@@ -394,6 +395,7 @@ function renderDashboard(){
  const coordinated=h.filter(x=>/coordinated/i.test(String(x.remarks||""))).length;
  const refused=h.filter(x=>/refused/i.test(String(x.remarks||""))).length;
  $("hospitalTotalTop").textContent=number(h.filter(x=>String(x.hospital||"").trim()).length);
+ $("homevisitDoneTotalTop").textContent=number(homevisitDoneTotal);
  $("inquiriesTotalTop").textContent=number(rawInquiries.filter(x=>String(x.query||"").trim()).length);
  $("coordTotal").textContent=number(coordinated);$("refusedTotal").textContent=number(refused);
  $("maleLegend").textContent=number(male);$("femaleLegend").textContent=number(female);
@@ -494,7 +496,7 @@ function changePassword(e){
 function setConnectionStatus(message,state){$("dataStatus").textContent=message;const line=$("dataStatus").closest(".statusline");line.classList.remove("online","connecting","error");line.classList.add(state);$("statusDot").classList.toggle("off",state!=="online");}
 function applyData(data){
  if(!data||!data.success)throw new Error((data&&data.message)||"Apps Script returned an invalid data response.");
- rawPatients=data.patientAssistance||[];rawHospitals=data.hospitalTally||[];rawInquiries=data.inquiries||[];hospitalDirectory=data.hospitalDirectory||[];fillMonths();renderDashboard();renderHospitalDirectory();
+ rawPatients=data.patientAssistance||[];rawHospitals=data.hospitalTally||[];rawInquiries=data.inquiries||[];hospitalDirectory=data.hospitalDirectory||[];homevisitDoneTotal=Number(data.homevisitDoneTotal)||0;fillMonths();renderDashboard();renderHospitalDirectory();
  setConnectionStatus("System Online","online");$("lastUpdated").textContent="Updated "+new Date().toLocaleTimeString("en-PH");
 }
 

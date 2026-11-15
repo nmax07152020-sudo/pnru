@@ -120,6 +120,24 @@ footer{text-align:center;color:#8b99ab;font-size:11px;padding:22px 10px 8px}.emp
 .admin-only-ranking{display:none!important}.admin-mode .admin-only-ranking{display:block!important}
 .record-toolbar{display:flex;gap:10px;align-items:center;margin:12px 0}.record-toolbar input{flex:1;max-width:460px}.records-table{min-width:780px}.records-table td{vertical-align:middle}.record-edit-btn{padding:7px 11px;font-size:11px}
 @media(max-width:600px){.record-toolbar{align-items:stretch;flex-direction:column}.record-toolbar input{max-width:none}}
+
+/* V6 TEST 14 refinements: admin barangay bars and balanced laptop KPI row */
+@media(min-width:1100px){.kpis#nav-referral-kpis{grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;align-items:stretch}}
+@media(min-width:621px) and (max-width:1099px){.kpis#nav-referral-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}}
+#nav-referral-kpis .kpi{height:100%;min-height:126px;display:flex;flex-direction:column;justify-content:flex-start;padding:17px 18px}
+#nav-referral-kpis .kpi-label{min-height:34px;max-width:calc(100% - 48px);display:flex;align-items:flex-start}
+#nav-referral-kpis .kpi-value{margin-top:8px}
+#nav-referral-kpis .outcome-values{margin-top:5px;gap:clamp(14px,2vw,30px)}
+#nav-referral-kpis .outcome-values .kpi-value{margin-top:2px}
+@media(max-width:620px){#nav-referral-kpis .kpi{min-height:118px;padding:14px}#nav-referral-kpis .kpi-label{min-height:32px;font-size:11px}}
+.barangay-ranking-chart{display:grid;gap:13px;padding:2px 2px 4px}
+.barangay-rank-row{display:grid;gap:6px;min-width:0}
+.barangay-rank-label{display:grid;grid-template-columns:25px minmax(0,1fr) auto;align-items:center;gap:9px;font-size:12px}
+.barangay-rank-number{width:23px;height:23px;border-radius:7px;background:#f1f3f5;color:#596579;display:grid;place-items:center;font-size:10px;font-weight:800}
+.barangay-rank-count{font-weight:800;color:#334155;font-variant-numeric:tabular-nums}
+.barangay-rank-track{height:11px;background:#f0f2f5;border-radius:20px;overflow:hidden;margin-left:34px}
+.barangay-rank-fill{height:100%;border-radius:20px;min-width:2px;transition:width .35s ease}
+
 </style>
 </head>
 <body>
@@ -163,8 +181,8 @@ footer{text-align:center;color:#8b99ab;font-size:11px;padding:22px 10px 8px}.emp
       </article>
     </div>
     <section class="card panel admin-only-ranking" id="adminBarangayRankingPanel" style="margin-bottom:15px">
-      <div class="panel-head"><div><h3>Barangay Patient Ranking</h3><div class="sub">Patient / Client Assistance · Column L · January 2026 onwards</div></div><span class="pill" id="barangayRankingTotal">0 patients</span></div>
-      <div class="table-wrap"><table class="mini-table"><thead><tr><th>Rank</th><th>Barangay</th><th style="text-align:right">Patient Records</th></tr></thead><tbody id="barangayRankingBody"><tr><td colspan="3" class="empty">Loading barangay ranking…</td></tr></tbody></table></div>
+      <div class="panel-head"><div><h3>Barangay Patient Ranking</h3></div><span class="pill" id="barangayRankingTotal">0 patients</span></div>
+      <div class="barangay-ranking-chart" id="barangayRankingBody"><div class="empty">Loading barangay ranking…</div></div>
     </section>
     <div class="grid2 dashboard-overview-grid" id="nav-client-profile">
       <section class="card panel compact-panel">
@@ -463,8 +481,10 @@ function renderDashboard(){
  $("transportTotal").textContent="Overall: "+number(unitRows.reduce((s,x)=>s+x[1],0));
  const barangays={};p.forEach(x=>{const n=String(x.barangay||"").trim();if(n)barangays[n]=(barangays[n]||0)+1;});
  const barangayRows=Object.entries(barangays).sort((a,b)=>b[1]-a[1]||a[0].localeCompare(b[0]));
+ const barangayMax=Math.max(1,...barangayRows.map(x=>x[1]));
+ const barangayColors=["#16a085","#e67e22","#8e5bb7","#d65f83","#b08b2e","#438f83","#c45d3d","#64748b"];
  $("barangayRankingTotal").textContent=number(barangayRows.reduce((sum,x)=>sum+x[1],0))+" patients";
- $("barangayRankingBody").innerHTML=barangayRows.map(([name,count],i)=>`<tr><td><strong>${i+1}</strong></td><td>${escapeHtml(name)}</td><td style="text-align:right;font-weight:800">${number(count)}</td></tr>`).join("")||'<tr><td colspan="3" class="empty">No barangay records in Column L from January 2026 onwards</td></tr>';
+ $("barangayRankingBody").innerHTML=barangayRows.map(([name,count],i)=>`<div class="barangay-rank-row"><div class="barangay-rank-label"><span class="barangay-rank-number">${i+1}</span><strong>${escapeHtml(name)}</strong><span class="barangay-rank-count">${number(count)}</span></div><div class="barangay-rank-track"><div class="barangay-rank-fill" style="width:${(count/barangayMax*100).toFixed(1)}%;background:${barangayColors[i%barangayColors.length]}"></div></div></div>`).join("")||'<div class="empty">No barangay records in Column L from January 2026 onwards</div>';
 }
 async function loadPatientRecords(){
  if(!adminToken)return;

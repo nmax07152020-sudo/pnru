@@ -12,14 +12,14 @@
 .brand{display:flex;align-items:center;gap:14px;min-width:0}.brand-logo{width:52px;height:52px;object-fit:contain;border-radius:50%;background:#fff;padding:3px;flex:none;box-shadow:0 2px 8px #001a3a55}.seal{width:48px;height:48px;border:1px solid #ffffff75;border-radius:14px;display:grid;place-items:center;background:#ffffff18;font-size:23px;flex:none}.brand h1{font-size:clamp(15px,2vw,21px);margin:0;line-height:1.25;font-weight:750}.brand p{margin:4px 0 0;color:#c9ddf5;font-size:12px;letter-spacing:.08em;text-transform:uppercase}.top-actions{display:flex;gap:10px;align-items:center}.btn{border:0;border-radius:10px;padding:10px 15px;font-weight:650;cursor:pointer;font-size:13px;transition:.2s}.btn-light{background:#ffffff18;color:white;border:1px solid #ffffff55}.btn-light:hover{background:#ffffff30}.btn-primary{background:var(--blue);color:#fff}.btn-primary:hover{background:#0b4c91}.btn-muted{background:#edf2f8;color:#31445e}.btn:disabled{opacity:.55;cursor:not-allowed}
 .wrap{max-width:1440px;margin:auto;padding:24px clamp(14px,3vw,38px) 40px}.welcome{display:flex;justify-content:space-between;align-items:flex-end;gap:18px;margin:5px 0 22px;flex-wrap:wrap}.eyebrow{font-size:11px;text-transform:uppercase;letter-spacing:.13em;color:var(--blue);font-weight:800}.welcome h2{margin:6px 0 5px;font-size:clamp(23px,3vw,31px);letter-spacing:-.04em}.welcome p{margin:0;color:var(--muted);font-size:13px}.filters{display:flex;gap:9px;align-items:center;flex-wrap:wrap}.select,.date-input{background:white;border:1px solid var(--line);border-radius:10px;padding:10px 12px;color:var(--ink);font:inherit;font-size:13px;min-height:40px}
 .statusline{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:12px;margin:-7px 0 17px}.dot{width:8px;height:8px;border-radius:50%;background:var(--green);display:inline-block}.dot.off{background:var(--orange)}
-.kpis{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-bottom:16px}.card{background:#fff;border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow)}.kpi{padding:17px 18px;position:relative;overflow:hidden}.kpi:after{content:"";position:absolute;width:80px;height:80px;border-radius:50%;right:-24px;top:-25px;background:var(--tint,#eaf4ff)}.kpi-label{color:var(--muted);font-size:12px;font-weight:650;position:relative;z-index:1}.kpi-value{font-size:clamp(25px,3vw,34px);font-weight:800;letter-spacing:-.04em;margin:9px 0 3px;position:relative;z-index:1}.kpi-note{font-size:11px;color:var(--muted);position:relative;z-index:1}.kpi-icon{position:absolute;right:15px;bottom:15px;font-size:22px;z-index:1}
+.kpis{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-bottom:16px}.card{background:#fff;border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow)}.kpi{padding:17px 18px;position:relative;overflow:hidden;min-height:142px}.kpi .kpi-value{margin-top:12px}.kpi-label{max-width:calc(100% - 42px);line-height:1.35}.kpi:after{content:"";position:absolute;width:80px;height:80px;border-radius:50%;right:-24px;top:-25px;background:var(--tint,#eaf4ff)}.kpi-label{color:var(--muted);font-size:12px;font-weight:650;position:relative;z-index:1}.kpi-value{font-size:clamp(25px,3vw,34px);font-weight:800;letter-spacing:-.04em;margin:9px 0 3px;position:relative;z-index:1}.kpi-note{font-size:11px;color:var(--muted);position:relative;z-index:1}.kpi-icon{position:absolute;right:15px;bottom:15px;font-size:22px;z-index:1}
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:15px;margin-bottom:15px}.panel{padding:19px 20px;min-width:0}.panel-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:16px}.panel h3{margin:0;font-size:15px}.sub{color:var(--muted);font-size:11px;margin-top:5px}.chart-wrap{height:230px;position:relative}.chart-wrap canvas{width:100%;height:100%}.legend{display:flex;gap:15px;flex-wrap:wrap;margin-top:8px;color:var(--muted);font-size:11px}.key{display:inline-flex;align-items:center;gap:6px}.swatch{width:9px;height:9px;border-radius:3px;display:inline-block}
 .age-list{display:grid;gap:13px;margin-top:8px}.age-row{display:grid;grid-template-columns:78px 1fr 42px;align-items:center;gap:10px;font-size:12px}.track{height:9px;border-radius:20px;background:#edf2f8;overflow:hidden}.fill{height:100%;border-radius:20px;background:linear-gradient(90deg,#2b83d4,#6bb6f1);width:0}.age-num{text-align:right;font-weight:750}
 .table-wrap{overflow:auto}.mini-table{width:100%;border-collapse:collapse;font-size:12px}.mini-table th{text-align:left;color:var(--muted);font-weight:700;background:#f8fafd;padding:10px}.mini-table td{padding:11px 10px;border-top:1px solid var(--line)}.pill{padding:4px 8px;border-radius:20px;background:#eaf4ff;color:#1762a9;font-size:10px;font-weight:750}
 .admin-view{display:none}.admin-card{max-width:580px;padding:24px}.field{display:grid;gap:7px;margin:15px 0}.field label{font-size:12px;font-weight:700;color:#40536d}.field input{width:100%;padding:12px;border:1px solid #dce5ef;border-radius:10px;font:inherit;font-size:14px}.help{font-size:11px;color:var(--muted);line-height:1.5}.alert{padding:11px 13px;border-radius:10px;background:#fff7e8;color:#875a15;font-size:12px;line-height:1.5;margin:12px 0}
 footer{text-align:center;color:#8b99ab;font-size:11px;padding:22px 10px 8px}.empty{padding:30px;text-align:center;color:var(--muted);font-size:13px}
 @media(max-width:900px){.kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.grid2{grid-template-columns:1fr}}
-@media(max-width:520px){.topbar{align-items:flex-start;padding:14px}.seal{width:40px;height:40px}.brand p{font-size:9px}.top-actions .btn{padding:9px 10px;font-size:11px}.wrap{padding-top:18px}.kpis{gap:9px}.kpi{padding:14px}.kpi-value{font-size:26px}.panel{padding:15px}.filters{width:100%}.filters>*{flex:1}.welcome{align-items:flex-start}}
+@media(max-width:520px){.kpi{min-height:118px}.topbar{align-items:flex-start;padding:14px}.seal{width:40px;height:40px}.brand p{font-size:9px}.top-actions .btn{padding:9px 10px;font-size:11px}.wrap{padding-top:18px}.kpis{gap:9px}.kpi{padding:14px}.kpi-value{font-size:26px}.panel{padding:15px}.filters{width:100%}.filters>*{flex:1}.welcome{align-items:flex-start}}
 
 /* Compact combined profile panel and hospital details modal */
 .profile-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px;align-items:start}
@@ -147,7 +147,7 @@ footer{text-align:center;color:#8b99ab;font-size:11px;padding:22px 10px 8px}.emp
     <div class="statusline"><span class="dot off" id="statusDot"></span><span id="dataStatus">Waiting for Google Sheets connection</span><span id="lastUpdated" style="margin-left:auto"></span></div>
     <div class="kpis" id="nav-referral-kpis">
       <article class="card kpi" style="--tint:#eaf4ff"><div class="kpi-label">Total Hospital Entries</div><div class="kpi-value" id="hospitalTotalTop">—</div><div class="kpi-note">All receiving hospitals</div><span class="kpi-icon" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M18 7h12v9h9v12h-9v9H18v-9H9V16h9z" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/><path d="M7 42h34" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg></span></article>
-      <article class="card kpi" style="--tint:#eaf8f1"><div class="kpi-label">Total Done Home Visits</div><div class="kpi-value" id="homevisitDoneTotalTop">—</div><div class="kpi-note">Homevisit · Column M = Done Visit</div><span class="kpi-icon" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M6 22 24 7l18 15v19H6z" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/><path d="M18 41V27h12v14M17 19h14M24 12v14" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span></article>
+      <article class="card kpi" style="--tint:#eaf8f1"><div class="kpi-label">Total Done Home Visits</div><div class="kpi-value" id="homevisitDoneTotalTop">—</div><span class="kpi-icon" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M6 22 24 7l18 15v19H6z" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/><path d="M18 41V27h12v14M17 19h14M24 12v14" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span></article>
       <article class="card kpi inquiry-kpi" style="--tint:#eaf8f4"><div class="kpi-label">Inquiries (Calls, Text SMS, Social Media at Viber)</div><div class="kpi-value" id="inquiriesTotalTop">—</div><div class="kpi-note">Overall total entries</div><span class="kpi-icon" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M8 10h32v23H21l-9 7v-7H8z" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/><path d="M15 19h18M15 25h12" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg></span></article>
       <article class="card kpi outcome-kpi" style="--tint:#eef8f4">
         <div class="kpi-label">Referral Outcomes</div>
@@ -198,6 +198,7 @@ footer{text-align:center;color:#8b99ab;font-size:11px;padding:22px 10px 8px}.emp
         <button class="sidebar-link" id="sidebarHospitalLink" type="button" onclick="showAdminPanel('hospital-directory',this)"><span>🏥</span> Hospital Directory</button>
         <button class="sidebar-link" id="sidebarPatientEntryLink" type="button" onclick="showAdminPanel('patient-assistance-entry',this)"><span>📝</span> Patient/Client Assistance</button>
         <button class="sidebar-link" id="sidebarTallyEntryLink" type="button" onclick="showAdminPanel('hospital-tally-entry',this)"><span>📋</span> Hospital Referral Tally Board</button>
+        <button class="sidebar-link" id="sidebarHomevisitLink" type="button" onclick="showAdminPanel('homevisit-entry',this)"><span>🏠</span> Home Visit Form</button>
         <button class="sidebar-link" id="sidebarSettingsLink" type="button" onclick="showAdminPanel('admin-password-settings',this)"><span>⚙</span> Settings / Change Password</button>
         <div class="sidebar-menu-divider" aria-hidden="true"></div>
         <button class="sidebar-link sidebar-logout" id="sidebarLogoutLink" type="button" onclick="logoutAdmin()"><span>↪</span> Logout</button>
@@ -215,6 +216,10 @@ footer{text-align:center;color:#8b99ab;font-size:11px;padding:22px 10px 8px}.emp
         <section class="card entry-card admin-panel" id="hospital-tally-entry">
           <div class="panel-head"><div><h3>Hospital Referral Tally Board Entry Form</h3><div class="sub">Encode a new hospital referral tally record.</div></div></div>
           <form id="hospitalTallyForm" onsubmit="submitSheetEntry(event,'hospital')"><div class="entry-grid" id="hospitalEntryFields"></div><div class="entry-actions"><button class="btn btn-primary" type="submit" id="saveHospitalEntryBtn">Save Hospital Referral Entry</button><button class="btn btn-muted" type="reset" onclick="clearEntryMessage('hospitalEntryMessage')">Clear Form</button><span class="entry-message" id="hospitalEntryMessage" role="status"></span></div></form>
+        </section>
+        <section class="card entry-card admin-panel" id="homevisit-entry">
+          <div class="panel-head"><div><h3>Home Visit Form</h3><div class="sub">Record home visits for bedridden and ambulatory patients. Saves to the Homevisit tab.</div></div></div>
+          <form id="homevisitForm" onsubmit="submitSheetEntry(event,'homevisit')"><div class="entry-grid" id="homevisitEntryFields"></div><div class="entry-actions"><button class="btn btn-primary" type="submit" id="saveHomevisitEntryBtn">Save Home Visit</button><button class="btn btn-muted" type="reset" onclick="clearEntryMessage('homevisitEntryMessage')">Clear Form</button><span class="entry-message" id="homevisitEntryMessage" role="status"></span></div></form>
         </section>
         <div class="card admin-card" id="admin-password-settings"><h3 style="margin:0">Change Password</h3><p class="sub">Update the administrator password.</p>
           <form onsubmit="changePassword(event)"><div class="field"><label>Current Password</label><input id="currentPassword" type="password" autocomplete="current-password" required></div><div class="field"><label>New Password</label><input id="newPassword" type="password" minlength="8" autocomplete="new-password" required></div><div class="field"><label>Confirm New Password</label><input id="confirmPassword" type="password" minlength="8" autocomplete="new-password" required></div><button class="btn btn-primary" type="submit" id="changePasswordBtn">Update Password</button></form><p class="help" id="passwordMessage" role="status"></p>
@@ -342,6 +347,21 @@ const PATIENT_ENTRY_FIELDS=[
  {col:"U",label:"STATUS CHART / ACTIONS TAKEN",type:"textarea",full:true},
  {col:"V",label:"DISPATCHING UNIT / BRGY",type:"select",options:["City Health Office","CDRRMO","Bagong Nayon","Beverly Hills","Calawis","Cupang","Dalig","Dela Paz","Inarawan","Mambugan","Mayamot","Muntindilaw","San Isidro","San Jose","San Juan","San Luis","San Roque","Santa Cruz","Self Conduct"]}
 ];
+const HOMEVISIT_ENTRY_FIELDS=[
+ {col:"A",label:"Date & Time",type:"datetime-local",required:true},
+ {col:"B",label:"Full Name",type:"text",required:true,full:true},
+ {col:"C",label:"Age",type:"number",min:0},
+ {col:"D",label:"Gender",type:"select",options:["Male","Female"]},
+ {col:"E",label:"Address",type:"text",full:true},
+ {col:"F",label:"Barangay",type:"text"},
+ {col:"G",label:"Contact Number",type:"tel"},
+ {col:"H",label:"Contact Person",type:"text"},
+ {col:"I",label:"Medical Diagnosis",type:"textarea",full:true},
+ {col:"J",label:"Chief Complain",type:"textarea",full:true},
+ {col:"K",label:"LastCheckup",type:"date"},
+ {col:"L",label:"Status",type:"select",options:["Bedridden","Ambulatory"],required:true},
+ {col:"M",label:"Remarks",type:"select",options:["Done Visit","New"],required:true}
+];
 const HOSPITAL_OPTIONS=["RPHS Annex 1 Padilla","RPHS Annex 2 Dalig","ACHS Cabading","ACHS Annex 4 Mambugan","Assumption Specialty Hospital & Medical Center Inc.","Clinica Antipolo Hospital & Wellness Center, Inc.","Antipolo Doctors Hospital","Soriano-Leyble Medical and Maternity Hospital","Fatima Medical Center Antipolo","Cornel Medical Center, Antipolo","Metro Antipolo Hospital and Medical Center","Amang Rodriguez Memorial Medical Center","Quirino Memorial Medical Center","Rizal Medical Center - DOH","Lung Center of the Philippines","Philippine Heart Center","The National Kidney and Transplant Institute","East Avenue Medical Center","Philippine Children's Medical Center","National Children's Hospital","National Center For Mental Health","Jose R. Reyes Memorial Medical Center","San Lazaro Hospital","Dr. Jose Fabella Memorial Hospital","Philippine General Hospital","Jose N. Rodriguez Memorial Hospital and Sanitarium (DJNRMHS)","DOH Calabarzon","GAT Andres Bonifacio Medical Center","RPHS MORONG","Pasig City General Hospital","Tondo Medical Center","Quezon City General Hospital","Marikina Valley","Manila East Medical Center","Ospital ng Makati","Rizal Provincial Hospital System - Taytay","Rizal Provincial Hospital System - Morong","Rizal Provincial Hospital - Binangonan"];
 const HOSPITAL_ENTRY_FIELDS=[
  {col:"A",label:"Hospital",type:"select",options:HOSPITAL_OPTIONS,required:true,full:true},
@@ -362,25 +382,28 @@ function renderEntryFields(containerId,fields,prefix){
   return `<div class="entry-field${f.full?" full":""}${f.type==="vitals"?" vitals-field":""}"><label${f.type!=="vitals"?` for="${id}"`:""}>${escapeHtml(f.label)}${f.required?" *":""}</label>${control}</div>`;
  }).join("");container.dataset.ready="1";
 }
-function setDefaultEntryDates(){const now=new Date(),date=now.getFullYear()+"-"+String(now.getMonth()+1).padStart(2,"0")+"-"+String(now.getDate()).padStart(2,"0"),time=String(now.getHours()).padStart(2,"0")+":"+String(now.getMinutes()).padStart(2,"0");["patient-B","hospital-B"].forEach(id=>{if($(id)&&!$(id).value)$(id).value=date;});["patient-C","hospital-C"].forEach(id=>{if($(id)&&!$(id).value)$(id).value=time;});}
+function setDefaultEntryDates(){const now=new Date(),date=now.getFullYear()+"-"+String(now.getMonth()+1).padStart(2,"0")+"-"+String(now.getDate()).padStart(2,"0"),time=String(now.getHours()).padStart(2,"0")+":"+String(now.getMinutes()).padStart(2,"0"),dateTime=date+"T"+time;["patient-B","hospital-B"].forEach(id=>{if($(id)&&!$(id).value)$(id).value=date;});["patient-C","hospital-C"].forEach(id=>{if($(id)&&!$(id).value)$(id).value=time;});if($("homevisit-A")&&!$("homevisit-A").value)$("homevisit-A").value=dateTime;}
 function clearEntryMessage(id){const el=$(id);if(el){el.textContent="";el.className="entry-message";}}
 function collectEntryValues(prefix,fields){const out={};fields.forEach(f=>{if(f.type==="vitals"){out[f.col]=["BP","T","HR","RR","O2SAT","GCS"].map(v=>{const value=String($(prefix+f.col+"-"+v)?.value||"").trim();return value?`${v} - ${value}`:v;}).join("\n");}else{const el=$(prefix+f.col);out[f.col]=el?String(el.value||"").trim():"";}});return out;}
 async function submitSheetEntry(event,kind){
  event.preventDefault();if(!adminToken){alert("Admin session expired. Please sign in again.");openLogin();return;}
- const patient=kind==="patient",fields=patient?PATIENT_ENTRY_FIELDS:HOSPITAL_ENTRY_FIELDS,prefix=patient?"patient-":"hospital-",form=$(patient?"patientEntryForm":"hospitalTallyForm"),button=$(patient?"savePatientEntryBtn":"saveHospitalEntryBtn"),message=$(patient?"patientEntryMessage":"hospitalEntryMessage"),action=patient?"savePatientAssistance":"saveHospitalTally";
+ const configs={patient:{fields:PATIENT_ENTRY_FIELDS,prefix:"patient-",form:"patientEntryForm",button:"savePatientEntryBtn",message:"patientEntryMessage",action:"savePatientAssistance",title:"Patient/Client Assistance",success:"Patient assistance record added successfully.",buttonText:"Save Patient Entry"},hospital:{fields:HOSPITAL_ENTRY_FIELDS,prefix:"hospital-",form:"hospitalTallyForm",button:"saveHospitalEntryBtn",message:"hospitalEntryMessage",action:"saveHospitalTally",title:"Hospital Referral Tally Board",success:"Referral tally record added successfully.",buttonText:"Save Hospital Referral Entry"},homevisit:{fields:HOMEVISIT_ENTRY_FIELDS,prefix:"homevisit-",form:"homevisitForm",button:"saveHomevisitEntryBtn",message:"homevisitEntryMessage",action:"saveHomevisit",title:"Home Visit",success:"Home visit record added successfully.",buttonText:"Save Home Visit"}};
+ const cfg=configs[kind];if(!cfg)return;const form=$(cfg.form),button=$(cfg.button),message=$(cfg.message);
  if(!form.checkValidity()){form.reportValidity();return;}
- const values=collectEntryValues(prefix,fields);button.disabled=true;button.textContent="Saving…";message.className="entry-message";message.textContent="Saving to Google Sheets…";
+ const values=collectEntryValues(cfg.prefix,cfg.fields);button.disabled=true;button.textContent="Saving…";message.className="entry-message";message.textContent="Saving to Google Sheets…";
  try{
-  const response=await fetch("/api/admin",{method:"POST",headers:{"Content-Type":"application/json"},credentials:"same-origin",body:JSON.stringify({action,token:adminToken,values})});
+  const response=await fetch("/api/admin",{method:"POST",headers:{"Content-Type":"application/json"},credentials:"same-origin",body:JSON.stringify({action:cfg.action,token:adminToken,values})});
   const result=await response.json();if(!response.ok||!result.success)throw new Error(result.message||"Unable to save record.");
-  message.className="entry-message";message.textContent="";
+  message.className="entry-message";message.textContent="Saved successfully to row "+result.row+".";
   form.reset();setDefaultEntryDates();loadDashboard();
-  showSaveToast(patient?"Patient/Client Assistance":"Hospital Referral Tally Board",patient?"Patient assistance record added successfully.":"Referral tally record added successfully.",false);
+  showSaveToast(cfg.title,cfg.success+" Saved in row "+result.row+".",false);
  }catch(err){message.className="entry-message";message.textContent="";showSaveToast("Unable to save record",err.message||"Save failed. Please try again.",true);}
- finally{button.disabled=false;button.textContent=patient?"Save Patient Entry":"Save Hospital Referral Entry";}
+ finally{button.disabled=false;button.textContent=cfg.buttonText;}
 }
+
 renderEntryFields("patientEntryFields",PATIENT_ENTRY_FIELDS,"patient-");
 renderEntryFields("hospitalEntryFields",HOSPITAL_ENTRY_FIELDS,"hospital-");
+renderEntryFields("homevisitEntryFields",HOMEVISIT_ENTRY_FIELDS,"homevisit-");
 setDefaultEntryDates();
 
 function showSaveToast(title,text,isError){const overlay=$("saveToast"),icon=$("saveToastIcon");$("saveToastTitle").textContent=title;$("saveToastText").textContent=text;icon.classList.toggle("error",!!isError);icon.innerHTML=isError?'<svg viewBox="0 0 24 24"><path d="M12 8v5m0 4h.01M10.3 3.8 2.9 17.2A2 2 0 0 0 4.6 20h14.8a2 2 0 0 0 1.7-2.8L13.7 3.8a2 2 0 0 0-3.4 0Z"/></svg>':'<svg viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></svg>';overlay.classList.add("show");}
@@ -444,11 +467,11 @@ function showAdmin(){
 function showAdminPanel(id,button){
  const isDashboard=id==="admin-dashboard-content";
  $("adminDashboardMount").style.display=isDashboard?"block":"none";
- ["hospital-directory","patient-assistance-entry","hospital-tally-entry","admin-password-settings"].forEach(pid=>{const el=$(pid);if(el)el.classList.toggle("visible",pid===id);});
+ ["hospital-directory","patient-assistance-entry","hospital-tally-entry","homevisit-entry","admin-password-settings"].forEach(pid=>{const el=$(pid);if(el)el.classList.toggle("visible",pid===id);});
  document.querySelectorAll(".sidebar-link").forEach(b=>b.classList.toggle("active",b===button));
  if(isDashboard){setTimeout(()=>{if(rawPatients.length||rawHospitals.length)renderDashboard();},50);}
  if(id==="patient-assistance-entry")setDefaultEntryDates();
- if(id==="hospital-tally-entry")setDefaultEntryDates();
+ if(id==="hospital-tally-entry"||id==="homevisit-entry")setDefaultEntryDates();
 }
 function logoutAdmin(){showPublic();window.scrollTo({top:0,behavior:"smooth"});}
 function showPublic(){

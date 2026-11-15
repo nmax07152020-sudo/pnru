@@ -130,13 +130,14 @@ footer{text-align:center;color:#8b99ab;font-size:11px;padding:22px 10px 8px}.emp
 #nav-referral-kpis .outcome-values{margin-top:5px;gap:clamp(14px,2vw,30px)}
 #nav-referral-kpis .outcome-values .kpi-value{margin-top:2px}
 @media(max-width:620px){#nav-referral-kpis .kpi{min-height:118px;padding:14px}#nav-referral-kpis .kpi-label{min-height:32px;font-size:11px}}
-.barangay-ranking-chart{display:grid;gap:13px;padding:2px 2px 4px}
-.barangay-rank-row{display:grid;gap:6px;min-width:0}
-.barangay-rank-label{display:grid;grid-template-columns:25px minmax(0,1fr) auto;align-items:center;gap:9px;font-size:12px}
-.barangay-rank-number{width:23px;height:23px;border-radius:7px;background:#f1f3f5;color:#596579;display:grid;place-items:center;font-size:10px;font-weight:800}
-.barangay-rank-count{font-weight:800;color:#334155;font-variant-numeric:tabular-nums}
-.barangay-rank-track{height:11px;background:#f0f2f5;border-radius:20px;overflow:hidden;margin-left:34px}
-.barangay-rank-fill{height:100%;border-radius:20px;min-width:2px;transition:width .35s ease}
+.barangay-ranking-chart{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));grid-auto-rows:clamp(48px,6vw,76px);gap:7px;padding:3px 2px 5px}
+.barangay-tile{grid-column:span var(--tile-span,2);min-width:0;min-height:0;border-radius:11px;padding:10px 12px;color:#fff;display:flex;flex-direction:column;justify-content:space-between;overflow:hidden;box-shadow:inset 0 0 0 1px rgba(255,255,255,.14);position:relative}
+.barangay-tile::after{content:"";position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.14),transparent 58%);pointer-events:none}
+.barangay-tile-name{font-size:clamp(10px,1vw,13px);font-weight:750;line-height:1.2;overflow-wrap:anywhere;position:relative;z-index:1}
+.barangay-tile-meta{display:flex;align-items:baseline;gap:5px;position:relative;z-index:1}
+.barangay-tile-count{font-size:clamp(15px,1.5vw,21px);font-weight:850;font-variant-numeric:tabular-nums}
+.barangay-tile-rank{font-size:10px;opacity:.85;font-weight:700}
+@media(max-width:620px){.barangay-ranking-chart{grid-template-columns:repeat(6,minmax(0,1fr));grid-auto-rows:65px;gap:6px}.barangay-tile{padding:8px}.barangay-tile-name{font-size:10px}}
 
 </style>
 </head>
@@ -486,8 +487,8 @@ function renderDashboard(){
  const barangays={};p.forEach(x=>{const n=String(x.barangay||"").trim();if(n)barangays[n]=(barangays[n]||0)+1;});
  const barangayRows=Object.entries(barangays).sort((a,b)=>b[1]-a[1]||a[0].localeCompare(b[0]));
  const barangayMax=Math.max(1,...barangayRows.map(x=>x[1]));
- const barangayColors=["#16a085","#e67e22","#8e5bb7","#d65f83","#b08b2e","#438f83","#c45d3d","#64748b"];
- const rankingHtml=barangayRows.map(([name,count],i)=>`<div class="barangay-rank-row"><div class="barangay-rank-label"><span class="barangay-rank-number">${i+1}</span><strong>${escapeHtml(name)}</strong><span class="barangay-rank-count">${number(count)}</span></div><div class="barangay-rank-track"><div class="barangay-rank-fill" style="width:${(count/barangayMax*100).toFixed(1)}%;background:${barangayColors[i%barangayColors.length]}"></div></div></div>`).join("")||'<div class="empty">No barangay records in Column L from January 2026 onwards</div>';
+ const barangayColors=["#147d92","#2563a6","#16866b","#7554a6","#b66a28","#b34e72","#477a9c","#64748b","#8b7a28","#3d8a80"];
+ const rankingHtml=barangayRows.map(([name,count],i)=>{const span=Math.max(1,Math.min(12,Math.round((count/barangayMax)*7)));return `<div class="barangay-tile" style="--tile-span:${span};background:${barangayColors[i%barangayColors.length]}" title="${escapeHtml(name)}: ${number(count)} patients"><span class="barangay-tile-name">${escapeHtml(name)}</span><span class="barangay-tile-meta"><strong class="barangay-tile-count">${number(count)}</strong><span class="barangay-tile-rank">#${i+1}</span></span></div>`;}).join("")||'<div class="empty" style="grid-column:1/-1">No barangay records in Column L from January 2026 onwards</div>';
  const rankingTotal=number(barangayRows.reduce((sum,x)=>sum+x[1],0))+" patients";
  ["barangayRankingTotal","publicBarangayRankingTotal"].forEach(id=>{const el=$(id);if(el)el.textContent=rankingTotal;});
  ["barangayRankingBody","publicBarangayRankingBody"].forEach(id=>{const el=$(id);if(el)el.innerHTML=rankingHtml;});

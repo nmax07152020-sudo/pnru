@@ -215,8 +215,12 @@ body.night-theme .empty{color:#a8b8ce}
 @media print{
  @page{size:A4 portrait;margin:12mm}
  .print-cover-page{display:flex!important;visibility:visible!important;flex-direction:column;box-sizing:border-box;min-height:273mm;page-break-after:always;break-after:page;padding:3mm 1mm 0;color:#24364b;font-family:Arial,sans-serif}
+ @page{size:A4 portrait;margin:0}
+ #adminDashboardMount #publicView{padding:12mm!important}
+ .print-cover-page{min-height:273mm;padding:3mm 1mm 0}
  .print-cover-brand{font-size:10px;font-weight:800;letter-spacing:2px;color:#28639a;text-align:center;margin:0 0 8px}
- .print-cover-page h1{text-align:center;font-size:25px;line-height:1.15;color:#123c68;margin:0 0 12px}
+ .print-cover-page h1{text-align:center;font-size:25px;line-height:1.15;color:#123c68;margin:0 0 5px}
+ .print-cover-hotline{text-align:center;font-size:10px;line-height:1.4;color:#164f83;font-weight:700;margin:0 0 10px}
  .print-cover-rule{height:3px;background:#2d75b7;width:78px;margin:0 auto 13px;border-radius:3px}
  .print-cover-page h2{font-size:12px;color:#164f83;margin:9px 0 3px;border-left:3px solid #4b91ca;padding-left:7px}
  .print-cover-page p{font-size:9.4px;line-height:1.38;margin:0 0 2px;text-align:justify}
@@ -266,6 +270,7 @@ body.night-theme .empty{color:#a8b8ce}
     <section class="print-cover-page" aria-label="Patient Navigation and Referral Unit introduction">
       <div class="print-cover-brand">ANTIPOLO CITY HEALTH OFFICE</div>
       <h1>Patient Navigation<br>&amp; Referral Unit</h1>
+      <div class="print-cover-hotline"><strong>Hotline Numbers:</strong> 0916-534-4707&nbsp;&nbsp; | &nbsp;&nbsp;8697-0362&nbsp;&nbsp; | &nbsp;&nbsp;8689-4518</div>
       <div class="print-cover-rule"></div>
       <h2>Mission</h2>
       <p>Providing individualized assistance so that they may have access to timely and appropriate interventions without unnecessary delays or duplication of services.</p>

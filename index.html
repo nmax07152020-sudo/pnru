@@ -388,7 +388,6 @@ body.night-theme .empty{color:#a8b8ce}
       <aside class="admin-sidebar" id="adminSidebar" aria-label="Admin navigation">
         <div class="sidebar-heading">ADMIN MENU</div>
         <button class="sidebar-link active" id="sidebarDashboardLink" type="button" onclick="showAdminPanel('admin-dashboard-content',this)"><span>▦</span> Dashboard</button>
-        <button class="sidebar-link sidebar-export-pdf" id="sidebarExportPdfLink" type="button" onclick="printAdminDashboard()"><span>⇩</span> Save / Export Dashboard to PDF</button>
         <button class="sidebar-link" id="sidebarHospitalLink" type="button" onclick="showAdminPanel('hospital-directory',this)"><span>🏥</span> Hospital Directory</button>
         <button class="sidebar-link" id="sidebarPatientEntryLink" type="button" onclick="showAdminPanel('patient-assistance-entry',this)"><span>📝</span> Patient/Client Assistance</button>
         <button class="sidebar-link" id="sidebarPatientRecordsLink" type="button" onclick="showAdminPanel('patient-records',this)"><span>📁</span> Patient Records</button>
@@ -421,7 +420,14 @@ body.night-theme .empty{color:#a8b8ce}
           <div class="panel-head"><div><h3>Home Visit Form</h3><div class="sub">Record home visits for bedridden and ambulatory patients. Saves to the Homevisit tab.</div></div></div>
           <form id="homevisitForm" onsubmit="submitSheetEntry(event,'homevisit')"><div class="entry-grid" id="homevisitEntryFields"></div><div class="entry-actions"><button class="btn btn-primary" type="submit" id="saveHomevisitEntryBtn">Save Home Visit</button><button class="btn btn-muted" type="reset" onclick="clearEntryMessage('homevisitEntryMessage')">Clear Form</button><span class="entry-message" id="homevisitEntryMessage" role="status"></span></div></form>
         </section>
-        <div class="card admin-card" id="admin-password-settings"><h3 style="margin:0">Change Password</h3><p class="sub">Update the administrator password.</p>
+        <div class="card admin-card" id="admin-password-settings">
+          <h3 style="margin:0">Settings</h3>
+          <div class="panel" style="margin:14px 0 22px;padding:16px;border:1px solid #dce7f3;border-radius:12px;background:#f7faff">
+            <h4 style="margin:0 0 6px;color:#123c68">Dashboard PDF Export</h4>
+            <p class="sub" style="margin:0 0 12px">Save or print the current dashboard report as a PDF file.</p>
+            <button class="btn btn-primary" id="settingsExportPdfBtn" type="button" onclick="printAdminDashboard()"><span aria-hidden="true">⇩</span> Save / Export Dashboard to PDF</button>
+          </div>
+          <h3 style="margin:0">Change Password</h3><p class="sub">Update the administrator password.</p>
           <form onsubmit="changePassword(event)"><div class="field"><label>Current Password</label><input id="currentPassword" type="password" autocomplete="current-password" required></div><div class="field"><label>New Password</label><input id="newPassword" type="password" minlength="8" autocomplete="new-password" required></div><div class="field"><label>Confirm New Password</label><input id="confirmPassword" type="password" minlength="8" autocomplete="new-password" required></div><button class="btn btn-primary" type="submit" id="changePasswordBtn">Update Password</button></form><p class="help" id="passwordMessage" role="status"></p>
         </div>
       </div>

@@ -139,6 +139,44 @@ footer{text-align:center;color:#8b99ab;font-size:11px;padding:22px 10px 8px}.emp
 .barangay-tile-rank{font-size:10px;opacity:.85;font-weight:700}
 @media(max-width:620px){.barangay-ranking-chart{grid-template-columns:repeat(6,minmax(0,1fr));grid-auto-rows:65px;gap:6px}.barangay-tile{padding:8px}.barangay-tile-name{font-size:10px}}
 
+
+/* TEST 17: dashboard PDF export, single admin ranking panel, responsive hamburger navigation */
+.admin-report-toolbar{display:none;align-items:center;gap:12px;margin:0 0 16px;padding:12px 14px;background:#f0f6fd;border:1px solid #dce9f7;border-radius:12px;color:#52647b;font-size:12px}
+.admin-mode .admin-report-toolbar{display:flex}
+.print-report-title{display:none}
+.admin-mobile-menu-toggle{display:none}
+/* Admin dashboard embeds the public dashboard; show the ranking only once. */
+.admin-mode #adminDashboardMount #publicBarangayRankingPanel{display:none!important}
+@media(max-width:760px){
+ .admin-mobile-menu-toggle{display:flex;align-items:center;gap:10px;width:100%;border:1px solid #d6e2ef;background:#eaf1f9;color:#123c68;border-radius:11px;padding:12px 15px;font-size:13px;font-weight:800;cursor:pointer}
+ .admin-sidebar{display:none!important;position:relative;top:auto;min-height:0;flex-direction:column;flex-wrap:nowrap;gap:4px;padding:10px}
+ .admin-sidebar.mobile-open{display:flex!important}
+ .admin-sidebar .sidebar-link{width:100%;flex:0 0 auto;margin:0}
+}
+@media print{
+ @page{size:A4 portrait;margin:12mm}
+ html,body{background:#fff!important;color:#111!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+ body *{visibility:hidden!important}
+ #adminView,#adminView *{visibility:visible!important}
+ #adminView{display:block!important}
+ #adminView .admin-shell{display:block!important;min-height:0!important}
+ #adminView .admin-sidebar,#adminView .admin-mobile-menu-toggle,#adminView .admin-main>section:not(#adminDashboardMount),.admin-report-toolbar,.topbar,footer{display:none!important}
+ #adminDashboardMount{display:block!important}
+ #adminDashboardMount #publicView{display:block!important;padding:0!important;margin:0!important}
+ #adminDashboardMount #publicView>.welcome{display:none!important}
+ #adminDashboardMount #publicBarangayRankingPanel{display:none!important}
+ .print-report-title{display:block!important;text-align:center;margin:0 0 18px;padding-bottom:12px;border-bottom:2px solid #173f70}
+ .print-report-title h1{font-size:21px;margin:0 0 5px;color:#123c68}
+ .print-report-title h2{font-size:15px;margin:0;color:#31445e}
+ .print-report-title p{font-size:12px;margin:8px 0 2px;font-weight:700;text-transform:uppercase;letter-spacing:.08em}
+ .print-report-date{font-size:10px;color:#555}
+ #adminDashboardMount .card{box-shadow:none!important;break-inside:avoid;border:1px solid #d8e0e9!important}
+ #adminDashboardMount .kpis{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+ #adminDashboardMount .dashboard-overview-grid{grid-template-columns:1fr 1fr!important}
+ #adminDashboardMount #nav-ambulance,#adminDashboardMount #nav-hospital-tally{break-inside:avoid}
+ #adminDashboardMount .chart-wrap{break-inside:avoid}
+ #adminDashboardMount canvas{max-width:100%!important}
+}
 </style>
 </head>
 <body>
@@ -164,6 +202,8 @@ footer{text-align:center;color:#8b99ab;font-size:11px;padding:22px 10px 8px}.emp
 <main class="wrap">
   <div id="publicViewHome"></div>
   <section id="publicView">
+    <div class="admin-report-toolbar"><button class="btn btn-primary" type="button" onclick="printAdminDashboard()">⇩ Save / Export Dashboard to PDF</button><span>Print the current dashboard totals and charts for reporting</span></div>
+    <div class="print-report-title"><h1>Antipolo City Health Office</h1><h2>Patient Navigation and Referral Unit</h2><p>Dashboard Report</p><div class="print-report-date" id="printReportDate"></div></div>
     <div class="welcome" id="nav-overview"><div><h2>Patient Navigation Overview</h2><p>Referral assistance and hospital coordination statistics</p></div>
 
     </div>
@@ -223,7 +263,8 @@ footer{text-align:center;color:#8b99ab;font-size:11px;padding:22px 10px 8px}.emp
   </section>
   <section id="adminView" class="admin-view">
     <div class="admin-shell">
-      <aside class="admin-sidebar" aria-label="Admin navigation">
+      <button class="admin-mobile-menu-toggle" type="button" aria-expanded="false" aria-controls="adminSidebar" onclick="toggleAdminSidebar()"><span>☰</span> Admin Menu</button>
+      <aside class="admin-sidebar" id="adminSidebar" aria-label="Admin navigation">
         <div class="sidebar-heading">ADMIN MENU</div>
         <button class="sidebar-link active" id="sidebarDashboardLink" type="button" onclick="showAdminPanel('admin-dashboard-content',this)"><span>▦</span> Dashboard</button>
         <button class="sidebar-link" id="sidebarHospitalLink" type="button" onclick="showAdminPanel('hospital-directory',this)"><span>🏥</span> Hospital Directory</button>
@@ -529,6 +570,14 @@ function closeHospitalModal(){$("hospitalModal").style.display="none";}
 function resetFilter(){selectedMonth="all";$("monthFilter").value="all";renderDashboard();}
 function openLogin(){$("loginOverlay").style.display="flex";$("loginMessage").textContent="";$("adminLoginPassword").focus();}
 function closeLogin(){$("loginOverlay").style.display="none";}
+function toggleAdminSidebar(){
+ const menu=$("adminSidebar"),button=document.querySelector(".admin-mobile-menu-toggle");
+ if(!menu||!button)return;const open=menu.classList.toggle("mobile-open");button.setAttribute("aria-expanded",open?"true":"false");
+}
+function printAdminDashboard(){
+ const now=new Date();const el=$("printReportDate");if(el)el.textContent="Generated: "+now.toLocaleString();
+ window.print();
+}
 function showAdmin(){
  document.body.classList.add("admin-mode");
  const dashboard=$("publicView");
@@ -543,6 +592,7 @@ function showAdminPanel(id,button){
  $("adminDashboardMount").style.display=isDashboard?"block":"none";
  ["hospital-directory","patient-records","patient-assistance-entry","hospital-tally-entry","homevisit-entry","admin-password-settings"].forEach(pid=>{const el=$(pid);if(el)el.classList.toggle("visible",pid===id);});
  document.querySelectorAll(".sidebar-link").forEach(b=>b.classList.toggle("active",b===button));
+ const mobileMenu=$("adminSidebar");if(mobileMenu)mobileMenu.classList.remove("mobile-open");const mobileToggle=document.querySelector(".admin-mobile-menu-toggle");if(mobileToggle)mobileToggle.setAttribute("aria-expanded","false");
  if(isDashboard){setTimeout(()=>{if(rawPatients.length||rawHospitals.length)renderDashboard();},50);}
  if(id==="patient-records")loadPatientRecords();
  if(id==="patient-assistance-entry")setDefaultEntryDates();

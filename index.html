@@ -116,6 +116,10 @@ footer{text-align:center;color:#8b99ab;font-size:11px;padding:22px 10px 8px}.emp
 .admin-main>.welcome{display:none!important}.entry-field.vitals-field{grid-column:1/-1}.vitals-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.vital-input{display:grid;gap:5px}.vital-input label{font-size:11px;font-weight:800;color:#52647b}.vital-input input{width:100%;min-width:0;padding:11px 12px;border:1px solid #dce5ef;border-radius:10px;font:inherit;font-size:13px}.toast-overlay{display:none;position:fixed;inset:0;z-index:100;background:#071d3d88;align-items:center;justify-content:center;padding:18px}.toast-overlay.show{display:flex}.toast-card{width:min(390px,100%);background:#fff;border:1px solid #dce7f3;border-radius:18px;box-shadow:0 24px 70px #061a3540;padding:24px;text-align:center}.toast-icon{width:54px;height:54px;border-radius:50%;display:grid;place-items:center;margin:0 auto 12px;background:#e8f7f0;color:#16804a}.toast-icon.error{background:#fff0f1;color:#c62828}.toast-icon svg{width:29px;height:29px;fill:none;stroke:currentColor;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}.toast-card h3{margin:0 0 6px;font-size:18px}.toast-card p{margin:0 0 18px;color:#64748b;font-size:13px;line-height:1.5}.toast-card .btn{min-width:100px}
 @media(max-width:600px){.hotline-row{gap:7px 10px}.hotline-row strong{width:100%}.vitals-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 
+
+.admin-only-ranking{display:none!important}.admin-mode .admin-only-ranking{display:block!important}
+.record-toolbar{display:flex;gap:10px;align-items:center;margin:12px 0}.record-toolbar input{flex:1;max-width:460px}.records-table{min-width:780px}.records-table td{vertical-align:middle}.record-edit-btn{padding:7px 11px;font-size:11px}
+@media(max-width:600px){.record-toolbar{align-items:stretch;flex-direction:column}.record-toolbar input{max-width:none}}
 </style>
 </head>
 <body>
@@ -142,7 +146,7 @@ footer{text-align:center;color:#8b99ab;font-size:11px;padding:22px 10px 8px}.emp
   <div id="publicViewHome"></div>
   <section id="publicView">
     <div class="welcome" id="nav-overview"><div><h2>Patient Navigation Overview</h2><p>Referral assistance and hospital coordination statistics</p></div>
-      <div class="filters"><select id="monthFilter" class="select" onchange="renderDashboard()"><option value="all">All months · Jan 2026 onwards</option></select><button class="btn btn-muted" onclick="resetFilter()">Reset Filter</button></div>
+
     </div>
     <div class="statusline"><span class="dot off" id="statusDot"></span><span id="dataStatus">Waiting for Google Sheets connection</span><span id="lastUpdated" style="margin-left:auto"></span></div>
     <div class="kpis" id="nav-referral-kpis">
@@ -158,6 +162,10 @@ footer{text-align:center;color:#8b99ab;font-size:11px;padding:22px 10px 8px}.emp
         <span class="kpi-icon" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M10 25l9 9L38 14" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 8h32v32H8z" fill="none" stroke="currentColor" stroke-width="2.5" opacity=".35"/></svg></span>
       </article>
     </div>
+    <section class="card panel admin-only-ranking" id="adminBarangayRankingPanel" style="margin-bottom:15px">
+      <div class="panel-head"><div><h3>Barangay Patient Ranking</h3><div class="sub">Patient / Client Assistance · Column L · January 2026 onwards</div></div><span class="pill" id="barangayRankingTotal">0 patients</span></div>
+      <div class="table-wrap"><table class="mini-table"><thead><tr><th>Rank</th><th>Barangay</th><th style="text-align:right">Patient Records</th></tr></thead><tbody id="barangayRankingBody"><tr><td colspan="3" class="empty">Loading barangay ranking…</td></tr></tbody></table></div>
+    </section>
     <div class="grid2 dashboard-overview-grid" id="nav-client-profile">
       <section class="card panel compact-panel">
         <div class="panel-head"><div><h3>Gender Distribution</h3><div class="sub">Client distribution</div></div><span class="pill">Male / Female</span></div>
@@ -197,6 +205,7 @@ footer{text-align:center;color:#8b99ab;font-size:11px;padding:22px 10px 8px}.emp
         <button class="sidebar-link active" id="sidebarDashboardLink" type="button" onclick="showAdminPanel('admin-dashboard-content',this)"><span>▦</span> Dashboard</button>
         <button class="sidebar-link" id="sidebarHospitalLink" type="button" onclick="showAdminPanel('hospital-directory',this)"><span>🏥</span> Hospital Directory</button>
         <button class="sidebar-link" id="sidebarPatientEntryLink" type="button" onclick="showAdminPanel('patient-assistance-entry',this)"><span>📝</span> Patient/Client Assistance</button>
+        <button class="sidebar-link" id="sidebarPatientRecordsLink" type="button" onclick="showAdminPanel('patient-records',this)"><span>📁</span> Patient Records</button>
         <button class="sidebar-link" id="sidebarTallyEntryLink" type="button" onclick="showAdminPanel('hospital-tally-entry',this)"><span>📋</span> Hospital Referral Tally Board</button>
         <button class="sidebar-link" id="sidebarHomevisitLink" type="button" onclick="showAdminPanel('homevisit-entry',this)"><span>🏠</span> Home Visit Form</button>
         <button class="sidebar-link" id="sidebarSettingsLink" type="button" onclick="showAdminPanel('admin-password-settings',this)"><span>⚙</span> Settings / Change Password</button>
@@ -209,9 +218,14 @@ footer{text-align:center;color:#8b99ab;font-size:11px;padding:22px 10px 8px}.emp
           <div class="panel-head"><div><h3>Hospital Directory</h3><div class="sub">Hospital names and contact numbers from the Hospital Directory sheet</div></div><span class="pill" id="directoryCount">Loading…</span></div>
           <div class="table-wrap"><table class="mini-table directory-table"><thead><tr><th>Hospital Name</th><th>Contact Number</th></tr></thead><tbody id="hospitalDirectoryBody"><tr><td colspan="2" class="empty">Loading hospital directory…</td></tr></tbody></table></div>
         </section>
+        <section class="card admin-card admin-panel" id="patient-records">
+          <div class="panel-head"><div><h3>Patient Records</h3><div class="sub">Patient / Client Assistance · Records from January 2026 onwards</div></div><span class="pill" id="patientRecordsCount">Loading…</span></div>
+          <div class="record-toolbar"><input class="select" id="patientRecordSearch" type="search" placeholder="Search patient name or barangay…" oninput="renderPatientRecords()"><button class="btn btn-muted" type="button" onclick="loadPatientRecords()">Refresh</button></div>
+          <div class="table-wrap"><table class="mini-table records-table"><thead><tr><th>Date</th><th>Patient Name</th><th>Barangay</th><th>Contact</th><th>Type of Assistance</th><th>Status</th><th>Action</th></tr></thead><tbody id="patientRecordsBody"><tr><td colspan="7" class="empty">Open Patient Records to load data.</td></tr></tbody></table></div>
+        </section>
         <section class="card entry-card admin-panel" id="patient-assistance-entry">
           <div class="panel-head"><div><h3>Patient / Client Assistance Entry Form</h3><div class="sub">Encode a new patient assistance record.</div></div></div>
-          <form id="patientEntryForm" onsubmit="submitSheetEntry(event,'patient')"><div class="entry-grid" id="patientEntryFields"></div><div class="entry-actions"><button class="btn btn-primary" type="submit" id="savePatientEntryBtn">Save Patient Entry</button><button class="btn btn-muted" type="reset" onclick="clearEntryMessage('patientEntryMessage')">Clear Form</button><span class="entry-message" id="patientEntryMessage" role="status"></span></div></form>
+          <form id="patientEntryForm" onsubmit="submitSheetEntry(event,'patient')"><div class="entry-grid" id="patientEntryFields"></div><div class="entry-actions"><button class="btn btn-primary" type="submit" id="savePatientEntryBtn">Save Patient Entry</button><button class="btn btn-muted" type="reset" onclick="resetPatientEntryMode()">Clear Form</button><button class="btn btn-muted" type="button" id="cancelPatientEditBtn" onclick="resetPatientEntryMode();showAdminPanel('patient-records',$('sidebarPatientRecordsLink'))" style="display:none">Cancel Edit</button><span class="entry-message" id="patientEntryMessage" role="status"></span></div></form>
         </section>
         <section class="card entry-card admin-panel" id="hospital-tally-entry">
           <div class="panel-head"><div><h3>Hospital Referral Tally Board Entry Form</h3><div class="sub">Encode a new hospital referral tally record.</div></div></div>
@@ -252,7 +266,7 @@ footer{text-align:center;color:#8b99ab;font-size:11px;padding:22px 10px 8px}.emp
 */
 const GAS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxTs7_jSzhArOe1HnW8C6jlT0Fgbx-kHOipb-dzmxwu1yR8ALVEy1ZDlNtNuAY6CNc/exec";
 const START_DATE = new Date(2026,0,1);
-let rawPatients=[], rawHospitals=[], rawInquiries=[], hospitalDirectory=[], homevisitDoneTotal=0, selectedMonth="all";
+let rawPatients=[], rawHospitals=[], rawInquiries=[], hospitalDirectory=[], homevisitDoneTotal=0, selectedMonth="all", patientRecords=[];
 const ADMIN_SESSION_KEY="antipolo_patient_navigation_admin_session";
 let adminToken=(()=>{try{return sessionStorage.getItem(ADMIN_SESSION_KEY)||"";}catch(e){return "";}})();
 const $=id=>document.getElementById(id);
@@ -279,6 +293,7 @@ function filtered(){
  };
 }
 function fillMonths(){
+ if(!$("monthFilter"))return;
  const keys=[...new Set([...rawPatients,...rawHospitals,...rawInquiries].filter(inRange).map(x=>monthKey(x.date)).filter(Boolean))].sort();
  $("monthFilter").innerHTML='<option value="all">All months · Jan 2026 onwards</option>'+keys.map(k=>`<option value="${k}">${monthLabel(k)}</option>`).join("");
  $("monthFilter").value=selectedMonth;
@@ -392,10 +407,11 @@ async function submitSheetEntry(event,kind){
  if(!form.checkValidity()){form.reportValidity();return;}
  const values=collectEntryValues(cfg.prefix,cfg.fields);button.disabled=true;button.textContent="Saving…";message.className="entry-message";message.textContent="Saving to Google Sheets…";
  try{
-  const response=await fetch("/api/admin",{method:"POST",headers:{"Content-Type":"application/json"},credentials:"same-origin",body:JSON.stringify({action:cfg.action,token:adminToken,values})});
+  const requestBody=kind==="patient"&&editingPatientRow?{action:"updatePatientRecord",token:adminToken,rowNumber:editingPatientRow,values}:{action:cfg.action,token:adminToken,values};
+  const response=await fetch("/api/admin",{method:"POST",headers:{"Content-Type":"application/json"},credentials:"same-origin",body:JSON.stringify(requestBody)});
   const result=await response.json();if(!response.ok||!result.success)throw new Error(result.message||"Unable to save record.");
-  message.className="entry-message";message.textContent="Saved successfully to row "+result.row+".";
-  form.reset();setDefaultEntryDates();loadDashboard();
+  message.className="entry-message";message.textContent=(kind==="patient"&&editingPatientRow?"Updated record in row ":"Saved successfully to row ")+result.row+".";
+  if(kind==="patient"&&editingPatientRow){resetPatientEntryMode();loadPatientRecords();}form.reset();setDefaultEntryDates();loadDashboard();
   showSaveToast(cfg.title,cfg.success+" Saved in row "+result.row+".",false);
  }catch(err){message.className="entry-message";message.textContent="";showSaveToast("Unable to save record",err.message||"Save failed. Please try again.",true);}
  finally{button.disabled=false;button.textContent=cfg.buttonText;}
@@ -445,7 +461,38 @@ function renderDashboard(){
  const unitMax=Math.max(1,...unitRows.map(x=>x[1]));
  $("transportBreakdown").innerHTML=unitRows.map(([n,c])=>`<tr><td>${escapeHtml(n)}</td><td><div class="transport-bar-track" role="img" aria-label="${number(c)} entries"><div class="transport-bar-fill" style="width:${(c/unitMax*100).toFixed(1)}%"></div></div></td><td style="text-align:right;font-weight:750">${number(c)}</td></tr>`).join("")||'<tr><td colspan="3" class="empty">No dispatching unit / barangay records for this period</td></tr>';
  $("transportTotal").textContent="Overall: "+number(unitRows.reduce((s,x)=>s+x[1],0));
+ const barangays={};p.forEach(x=>{const n=String(x.barangay||"").trim();if(n)barangays[n]=(barangays[n]||0)+1;});
+ const barangayRows=Object.entries(barangays).sort((a,b)=>b[1]-a[1]||a[0].localeCompare(b[0]));
+ $("barangayRankingTotal").textContent=number(barangayRows.reduce((sum,x)=>sum+x[1],0))+" patients";
+ $("barangayRankingBody").innerHTML=barangayRows.map(([name,count],i)=>`<tr><td><strong>${i+1}</strong></td><td>${escapeHtml(name)}</td><td style="text-align:right;font-weight:800">${number(count)}</td></tr>`).join("")||'<tr><td colspan="3" class="empty">No barangay records in Column L from January 2026 onwards</td></tr>';
 }
+async function loadPatientRecords(){
+ if(!adminToken)return;
+ $("patientRecordsBody").innerHTML='<tr><td colspan="7" class="empty">Loading patient records…</td></tr>';
+ try{
+  const response=await fetch("/api/admin",{method:"POST",headers:{"Content-Type":"application/json"},credentials:"same-origin",body:JSON.stringify({action:"getPatientRecords",token:adminToken})});
+  const result=await response.json();if(!response.ok||!result.success)throw new Error(result.message||"Unable to load patient records.");
+  patientRecords=result.records||[];renderPatientRecords();
+ }catch(err){$("patientRecordsBody").innerHTML=`<tr><td colspan="7" class="empty">${escapeHtml(err.message||"Unable to load records")}</td></tr>`;}
+}
+function renderPatientRecords(){
+ const q=String($("patientRecordSearch")?.value||"").toLowerCase().trim();
+ const rows=patientRecords.filter(r=>[r.F,r.L,r.M,r.E,r.N].some(v=>String(v||"").toLowerCase().includes(q)));
+ $("patientRecordsCount").textContent=number(rows.length)+" records";
+ $("patientRecordsBody").innerHTML=rows.map(r=>`<tr><td>${escapeHtml(r.date||r.B||"")}</td><td><strong>${escapeHtml(r.F||"")}</strong></td><td>${escapeHtml(r.L||"")}</td><td>${escapeHtml(r.M||"")}</td><td>${escapeHtml(r.E||"")}</td><td>${escapeHtml(r.T||"")}</td><td><button class="btn btn-primary record-edit-btn" type="button" onclick="editPatientRecord(${Number(r.rowNumber)})">Edit</button></td></tr>`).join("")||'<tr><td colspan="7" class="empty">No patient records found from January 2026 onwards.</td></tr>';
+}
+function editPatientRecord(rowNumber){
+ const record=patientRecords.find(r=>Number(r.rowNumber)===Number(rowNumber));if(!record)return;
+ editingPatientRow=Number(rowNumber);
+ PATIENT_ENTRY_FIELDS.forEach(f=>{const el=$("patient-"+f.col);if(el)el.value=record[f.col]||"";});
+ const vital=String(record.S||"");["BP","T","HR","RR","O2SAT","GCS"].forEach(k=>{const m=vital.match(new RegExp("(?:^|\\n)"+k+"\\s*[-:]\\s*([^\\n]+)","i"));const el=$("patient-S-"+k);if(el)el.value=m?m[1].trim():"";});
+ $("savePatientEntryBtn").textContent="Update Patient Record";$("cancelPatientEditBtn").style.display="inline-flex";
+ $("patientEntryMessage").textContent="Editing sheet row "+rowNumber+". Save changes to update this record.";
+ showAdminPanel("patient-assistance-entry",$("sidebarPatientEntryLink"));
+}
+let editingPatientRow=null;
+function resetPatientEntryMode(){editingPatientRow=null;$("savePatientEntryBtn").textContent="Save Patient Entry";$("cancelPatientEditBtn").style.display="none";clearEntryMessage("patientEntryMessage");}
+
 function openHospitalModal(){
  $("hospitalModal").style.display="flex";
  $("hospitalModal").querySelector(".modal-card").scrollTop=0;
@@ -467,9 +514,10 @@ function showAdmin(){
 function showAdminPanel(id,button){
  const isDashboard=id==="admin-dashboard-content";
  $("adminDashboardMount").style.display=isDashboard?"block":"none";
- ["hospital-directory","patient-assistance-entry","hospital-tally-entry","homevisit-entry","admin-password-settings"].forEach(pid=>{const el=$(pid);if(el)el.classList.toggle("visible",pid===id);});
+ ["hospital-directory","patient-records","patient-assistance-entry","hospital-tally-entry","homevisit-entry","admin-password-settings"].forEach(pid=>{const el=$(pid);if(el)el.classList.toggle("visible",pid===id);});
  document.querySelectorAll(".sidebar-link").forEach(b=>b.classList.toggle("active",b===button));
  if(isDashboard){setTimeout(()=>{if(rawPatients.length||rawHospitals.length)renderDashboard();},50);}
+ if(id==="patient-records")loadPatientRecords();
  if(id==="patient-assistance-entry")setDefaultEntryDates();
  if(id==="hospital-tally-entry"||id==="homevisit-entry")setDefaultEntryDates();
 }

@@ -161,6 +161,7 @@ footer{text-align:center;color:#8b99ab;font-size:11px;padding:22px 10px 8px}.emp
  #adminView{display:block!important}
  #adminView .admin-shell{display:block!important;min-height:0!important}
  #adminView .admin-sidebar,#adminView .admin-mobile-menu-toggle,#adminView .admin-main>section:not(#adminDashboardMount),.admin-report-toolbar,.topbar,footer{display:none!important}
+ #admin-password-settings{display:none!important}
  #adminDashboardMount{display:block!important}
  #adminDashboardMount #publicView{display:block!important;padding:0!important;margin:0!important}
  #adminDashboardMount #publicView>.welcome{display:none!important}
@@ -480,9 +481,12 @@ function inRange(row){const d=parseDate(row.date);return d&&d>=START_DATE&&!isNa
 function monthKey(v){let d=parseDate(v);return d?`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}`:"";}
 function monthLabel(key){let [y,m]=key.split("-").map(Number);return new Date(y,m-1,1).toLocaleDateString("en-PH",{month:"long",year:"numeric"});}
 function filtered(){
+ const hospitalRows=rawHospitals.filter(x=>String(x.hospital||"").trim());
  return {
   p:rawPatients.filter(inRange).filter(x=>selectedMonth==="all"||monthKey(x.date)===selectedMonth),
-  h:rawHospitals.filter(inRange).filter(x=>selectedMonth==="all"||monthKey(x.date)===selectedMonth),
+  // Overall view includes named hospital tally entries even if an old row has a blank/unreadable date.
+  // Month-specific views include only dated entries in the selected month (from Jan 2026 onward).
+  h:hospitalRows.filter(x=>selectedMonth==="all"?(!x.date||inRange(x)):(inRange(x)&&monthKey(x.date)===selectedMonth)),
   q:rawInquiries.filter(inRange).filter(x=>selectedMonth==="all"||monthKey(x.date)===selectedMonth)
  };
 }
@@ -640,14 +644,15 @@ decorateAdminFormLabels();
 function showSaveToast(title,text,isError){const overlay=$("saveToast"),icon=$("saveToastIcon");$("saveToastTitle").textContent=title;$("saveToastText").textContent=text;icon.classList.toggle("error",!!isError);icon.innerHTML=isError?'<svg viewBox="0 0 24 24"><path d="M12 8v5m0 4h.01M10.3 3.8 2.9 17.2A2 2 0 0 0 4.6 20h14.8a2 2 0 0 0 1.7-2.8L13.7 3.8a2 2 0 0 0-3.4 0Z"/></svg>':'<svg viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></svg>';overlay.classList.add("show");}
 function closeSaveToast(){$("saveToast").classList.remove("show");}
 
+function outcomeKey(value){return String(value||"").toUpperCase().replace(/[^A-Z]/g,"");}
 function renderDashboard(){
  const {p,h,q}=filtered();
  const male=p.filter(x=>/^m/i.test(String(x.gender||"").trim())).length;
  const female=p.filter(x=>/^f/i.test(String(x.gender||"").trim())).length;
  const pedia=p.filter(x=>/pedia/i.test(String(x.classification||""))).length;
  const adult=p.filter(x=>/adult/i.test(String(x.classification||""))).length;
- const coordinated=h.filter(x=>/coordinated/i.test(String(x.remarks||""))).length;
- const refused=h.filter(x=>/refused/i.test(String(x.remarks||""))).length;
+ const coordinated=h.filter(x=>outcomeKey(x.remarks).includes("COORDINATED")).length;
+ const refused=h.filter(x=>outcomeKey(x.remarks).includes("REFUSED")).length;
  $("hospitalTotalTop").textContent=number(h.filter(x=>String(x.hospital||"").trim()).length);
  $("homevisitDoneTotalTop").textContent=number(homevisitDoneTotal);
  $("inquiriesTotalTop").textContent=number(rawInquiries.filter(x=>String(x.query||"").trim()).length);
@@ -663,9 +668,9 @@ function renderDashboard(){
   const n=String(x.hospital||"").trim();if(!n)return;
   if(!hospitals[n])hospitals[n]={total:0,coordinated:0,refused:0};
   hospitals[n].total++;
-  const remark=String(x.remarks||"");
-  if(/coordinated/i.test(remark))hospitals[n].coordinated++;
-  if(/refused/i.test(remark))hospitals[n].refused++;
+  const remark=outcomeKey(x.remarks);
+  if(remark.includes("COORDINATED"))hospitals[n].coordinated++;
+  if(remark.includes("REFUSED"))hospitals[n].refused++;
  });
  const hospitalRows=Object.entries(hospitals).sort((a,b)=>b[1].total-a[1].total||a[0].localeCompare(b[0]));
  const hospitalMax=Math.max(1,...hospitalRows.map(x=>x[1].total));
@@ -802,6 +807,11 @@ function changePassword(e){
 }
 let dashboardHasConnected=false;
 let dashboardRequestInFlight=false;
+let dashboardRefreshQueued=false;
+function finishDashboardRequest(){
+ dashboardRequestInFlight=false;
+ if(dashboardRefreshQueued){dashboardRefreshQueued=false;loadDashboard();}
+}
 function setConnectionStatus(message,state){$("dataStatus").textContent=message;const line=$("dataStatus").closest(".statusline");line.classList.remove("online","connecting","error");line.classList.add(state);$("statusDot").classList.toggle("off",state!=="online");}
 function applyData(data){
  if(!data||!data.success)throw new Error((data&&data.message)||"Apps Script returned an invalid data response.");
@@ -819,18 +829,18 @@ function renderHospitalDirectory(){
 function loadDashboard(){
  // Show Connecting only before the first successful connection. Scheduled refreshes
  // run silently so the Online indicator does not flicker every 30 seconds.
- if(dashboardRequestInFlight)return;
+ if(dashboardRequestInFlight){dashboardRefreshQueued=true;return;}
  if(!dashboardHasConnected)setConnectionStatus("Connecting…","connecting");
  dashboardRequestInFlight=true;
  if(window.google&&google.script&&google.script.run){
-  google.script.run.withSuccessHandler(data=>{try{applyData(data);}catch(e){setConnectionStatus("Data error: "+e.message,"error");}finally{dashboardRequestInFlight=false;}}).withFailureHandler(err=>{dashboardRequestInFlight=false;setConnectionStatus("Connection error: "+(err.message||err),"error");}).getDashboardData();
+  google.script.run.withSuccessHandler(data=>{try{applyData(data);}catch(e){setConnectionStatus("Data error: "+e.message,"error");}finally{finishDashboardRequest();}}).withFailureHandler(err=>{setConnectionStatus("Connection error: "+(err.message||err),"error");finishDashboardRequest();}).getDashboardData();
   return;
  }
  if(!GAS_WEB_APP_URL){dashboardRequestInFlight=false;setConnectionStatus("Connection error: Apps Script URL is not configured.","error");return;}
  const cb="gasCallback_"+Date.now(),script=document.createElement("script");
- window[cb]=data=>{try{applyData(data);}catch(e){setConnectionStatus("Data error: "+e.message,"error");}finally{dashboardRequestInFlight=false;delete window[cb];script.remove();}};
+ window[cb]=data=>{try{applyData(data);}catch(e){setConnectionStatus("Data error: "+e.message,"error");}finally{delete window[cb];script.remove();finishDashboardRequest();}};
  script.src=GAS_WEB_APP_URL+(GAS_WEB_APP_URL.includes("?")?"&":"?")+"callback="+cb+"&t="+Date.now();
- script.onerror=()=>{dashboardRequestInFlight=false;setConnectionStatus("Connection failed. Check Apps Script deployment and permissions.","error");delete window[cb];script.remove();};document.body.appendChild(script);
+ script.onerror=()=>{setConnectionStatus("Connection failed. Check Apps Script deployment and permissions.","error");delete window[cb];script.remove();finishDashboardRequest();};document.body.appendChild(script);
 }
 window.addEventListener("keydown",e=>{if(e.key==="Escape")closeHospitalModal();});
 window.addEventListener("resize",()=>{if($("publicView").style.display!=="none"&&rawPatients.length)renderDashboard();});

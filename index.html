@@ -231,6 +231,12 @@ body.night-theme .empty{color:#a8b8ce}
  #nav-ambulance .transport-table th:nth-child(1),#nav-ambulance .transport-table td:nth-child(1){width:38%}
  #nav-ambulance .transport-table th:nth-child(2),#nav-ambulance .transport-table td:nth-child(2){width:42%}
  #nav-ambulance .transport-table th:nth-child(3),#nav-ambulance .transport-table td:nth-child(3){width:20%}
+ /* TEST34: keep the complete ambulance breakdown together on its own final report page */
+ #adminDashboardMount #nav-ambulance{break-before:page!important;page-break-before:always!important;break-inside:avoid!important;page-break-inside:avoid!important;margin-top:0!important;margin-bottom:8mm!important}
+ #adminDashboardMount #nav-ambulance .table-wrap{overflow:visible!important}
+ #adminDashboardMount #nav-ambulance .transport-table{font-size:9px!important}
+ #adminDashboardMount #nav-ambulance .transport-table th,#adminDashboardMount #nav-ambulance .transport-table td{padding:5px 7px!important}
+ #adminDashboardMount #nav-ambulance .transport-table tbody tr{break-inside:avoid!important;page-break-inside:avoid!important}
  .print-cover-page{display:flex!important;visibility:visible!important;flex-direction:column;box-sizing:border-box;min-height:277mm;page-break-after:always;break-after:page;padding:0;color:#24364b;font-family:Arial,sans-serif}
  .print-cover-brand{font-size:10px;font-weight:800;letter-spacing:2px;color:#28639a;text-align:center;margin:0 0 8px}
  .print-cover-page h1{text-align:center;font-size:25px;line-height:1.15;color:#123c68;margin:0 0 5px}

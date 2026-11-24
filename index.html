@@ -407,6 +407,22 @@ body.night-theme #publicView .mini-table tbody tr:hover{background:#1a304a}
 .sidebar-download-app>span{width:18px;height:18px;display:inline-flex;align-items:center;justify-content:center;flex:none}
 .sidebar-download-app svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 .sidebar-download-app:hover{background:#eaf3fc;border-color:#d6e2ef;color:#0b4c91}
+
+/* TEST43: Admin-only OTA version check panel */
+.sidebar-check-updates>span{width:18px;height:18px;display:inline-flex;align-items:center;justify-content:center;flex:none}
+.sidebar-check-updates svg,.update-actions svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.update-version-card{padding:20px;border:1px solid #d7e6f5;border-radius:14px;background:linear-gradient(135deg,#f4f9ff,#eaf4ff);margin:14px 0}
+.update-version-label,.update-meta-label{font-size:11px;color:#62758c;font-weight:750;text-transform:uppercase;letter-spacing:.07em}
+.update-version-value{font-size:clamp(30px,5vw,42px);font-weight:850;letter-spacing:-.04em;color:#0b4c91;margin:6px 0}
+.update-meta-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:14px 0}
+.update-meta-grid>div{padding:13px;border:1px solid var(--line);border-radius:11px;background:#fff;min-width:0}
+.update-meta-value{font-size:13px;font-weight:700;color:var(--ink);margin-top:6px;overflow-wrap:anywhere}
+.update-actions{display:flex;align-items:center;gap:13px;flex-wrap:wrap;margin:16px 0}
+.update-actions .btn{display:inline-flex;align-items:center;gap:8px}
+.update-scope-note{display:block;padding-top:12px;border-top:1px solid var(--line);overflow-wrap:anywhere}
+#otaCheckStatus.success{color:#16804a}#otaCheckStatus.error{color:#c62828}
+body.night-theme .update-version-card{background:#102d4d;border-color:#244c73}body.night-theme .update-version-value{color:#8fc5ff}body.night-theme .update-meta-grid>div{background:#10243b;border-color:#29445f}body.night-theme .update-meta-value{color:#e3edf8}
+@media(max-width:520px){.update-meta-grid{grid-template-columns:1fr}.update-actions{align-items:flex-start;flex-direction:column}}
 </style>
 </head>
 <body>
@@ -546,6 +562,7 @@ body.night-theme #publicView .mini-table tbody tr:hover{background:#1a304a}
         <button class="sidebar-link" id="sidebarTallyEntryLink" type="button" onclick="showAdminPanel('hospital-tally-entry',this)"><span>📋</span> Hospital Referral Coordination Form</button>
         <button class="sidebar-link" id="sidebarHomevisitLink" type="button" onclick="showAdminPanel('homevisit-entry',this)"><span>🏠</span> Home Visit Form</button>
         <button class="sidebar-link" id="sidebarSettingsLink" type="button" onclick="showAdminPanel('admin-password-settings',this)"><span>⚙</span> Settings / Change Password</button>
+        <button class="sidebar-link sidebar-check-updates" id="sidebarCheckUpdatesLink" type="button" onclick="showAdminPanel('admin-check-updates',this)"><span aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M20 7v5h-5M4.8 9A7.5 7.5 0 0 1 18 6.5L20 12M4 17v-5h5m6.2 3A7.5 7.5 0 0 1 6 17.5L4 12"/></svg></span> Check Updates</button>
         <a class="sidebar-link sidebar-download-app" id="sidebarDownloadAppLink" href="https://raw.githubusercontent.com/nmax07152020-sudo/pnru/main/pnru.apk" download="pnru.apk" aria-label="Download PNRU Android App" title="Download PNRU Android App"><span aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3v11m0 0 4-4m-4 4-4-4M4 17v3h16v-3"/></svg></span> Download App</a>
         <div class="sidebar-menu-divider" aria-hidden="true"></div>
         <button class="sidebar-link sidebar-logout" id="sidebarLogoutLink" type="button" onclick="logoutAdmin()"><span>↪</span> Logout</button>
@@ -583,6 +600,20 @@ body.night-theme #publicView .mini-table tbody tr:hover{background:#1a304a}
           <h3 style="margin:0">Change Password</h3><p class="sub">Update the administrator password.</p>
           <form onsubmit="changePassword(event)"><div class="field"><label>Current Password</label><input id="currentPassword" type="password" autocomplete="current-password" required></div><div class="field"><label>New Password</label><input id="newPassword" type="password" minlength="8" autocomplete="new-password" required></div><div class="field"><label>Confirm New Password</label><input id="confirmPassword" type="password" minlength="8" autocomplete="new-password" required></div><button class="btn btn-primary" type="submit" id="changePasswordBtn">Update Password</button></form><p class="help" id="passwordMessage" role="status"></p>
         </div>
+        <section class="card admin-card admin-panel" id="admin-check-updates" aria-labelledby="checkUpdatesTitle">
+          <div class="panel-head"><div><h3 id="checkUpdatesTitle">Check App Updates</h3><div class="sub">Check the latest PNRU Android OTA version published in the GitHub update manifest. This only checks version information; it will not download or install updates.</div></div><span class="pill">OTA Status</span></div>
+          <div class="update-version-card">
+            <div class="update-version-label">Latest Published OTA Version</div>
+            <div class="update-version-value" id="publishedOtaVersion">Not checked yet</div>
+            <div class="sub" id="publishedOtaNotes">Tap Check Now to read the current version uploaded in latest.json.</div>
+          </div>
+          <div class="update-meta-grid">
+            <div><div class="update-meta-label">Last Checked</div><div class="update-meta-value" id="otaLastChecked">—</div></div>
+            <div><div class="update-meta-label">Manifest</div><div class="update-meta-value">GitHub · main/latest.json</div></div>
+          </div>
+          <div class="update-actions"><button class="btn btn-primary" id="checkOtaNowBtn" type="button" onclick="checkPublishedOtaVersion()"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 7v5h-5M4.8 9A7.5 7.5 0 0 1 18 6.5L20 12M4 17v-5h5m6.2 3A7.5 7.5 0 0 1 6 17.5L4 12"/></svg> Check Now</button><span id="otaCheckStatus" class="help" role="status" aria-live="polite">No update check has been performed.</span></div>
+          <div class="help update-scope-note">Version source: <code>https://raw.githubusercontent.com/nmax07152020-sudo/pnru/main/latest.json</code>. The version shown here is the version published in the OTA manifest, not necessarily the version currently installed on this device.</div>
+        </section>
       </div>
     </div>
   </section>
@@ -891,6 +922,29 @@ function printAdminDashboard(){
  $("printHospitalBreakdown").innerHTML=$("hospitalBreakdown").innerHTML;
  window.print();
 }
+const PNRU_OTA_MANIFEST_URL="https://raw.githubusercontent.com/nmax07152020-sudo/pnru/main/latest.json";
+async function checkPublishedOtaVersion(){
+ const button=$("checkOtaNowBtn"),versionEl=$("publishedOtaVersion"),notesEl=$("publishedOtaNotes"),checkedEl=$("otaLastChecked"),statusEl=$("otaCheckStatus");
+ if(button){button.disabled=true;button.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 7v5h-5M4.8 9A7.5 7.5 0 0 1 18 6.5L20 12M4 17v-5h5m6.2 3A7.5 7.5 0 0 1 6 17.5L4 12"/></svg> Checking…';}
+ if(statusEl){statusEl.className="help";statusEl.textContent="Reading the published OTA manifest…";}
+ try{
+  const response=await fetch(PNRU_OTA_MANIFEST_URL+"?t="+Date.now(),{cache:"no-store",headers:{"Accept":"application/json"}});
+  if(!response.ok)throw new Error("GitHub manifest request failed (HTTP "+response.status+").");
+  const manifest=await response.json();
+  const version=String(manifest&&manifest.version||"").trim();
+  if(!version)throw new Error("The latest.json manifest does not contain a version field.");
+  if(versionEl)versionEl.textContent="v"+version;
+  if(notesEl)notesEl.textContent=String(manifest.notes||"No release notes provided.");
+  if(checkedEl)checkedEl.textContent=new Date().toLocaleString("en-PH");
+  if(statusEl){statusEl.className="help success";statusEl.textContent="Successfully checked. This is the latest version currently published in GitHub latest.json.";}
+ }catch(error){
+  if(checkedEl)checkedEl.textContent=new Date().toLocaleString("en-PH");
+  if(statusEl){statusEl.className="help error";statusEl.textContent=error&&error.message?error.message:"Unable to read the OTA manifest.";}
+  if(versionEl&&versionEl.textContent==="Not checked yet")versionEl.textContent="Unavailable";
+ }finally{
+  if(button){button.disabled=false;button.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 7v5h-5M4.8 9A7.5 7.5 0 0 1 18 6.5L20 12M4 17v-5h5m6.2 3A7.5 7.5 0 0 1 6 17.5L4 12"/></svg> Check Now';}
+ }
+}
 function showAdmin(){
  document.body.classList.add("admin-mode");
  const dashboard=$("publicView");
@@ -903,7 +957,7 @@ function showAdmin(){
 function showAdminPanel(id,button){
  const isDashboard=id==="admin-dashboard-content";
  $("adminDashboardMount").style.display=isDashboard?"block":"none";
- ["hospital-directory","patient-records","patient-assistance-entry","hospital-tally-entry","homevisit-entry","admin-password-settings"].forEach(pid=>{const el=$(pid);if(el)el.classList.toggle("visible",pid===id);});
+ ["hospital-directory","patient-records","patient-assistance-entry","hospital-tally-entry","homevisit-entry","admin-password-settings","admin-check-updates"].forEach(pid=>{const el=$(pid);if(el)el.classList.toggle("visible",pid===id);});
  document.querySelectorAll(".sidebar-link").forEach(b=>b.classList.toggle("active",b===button));
  const mobileMenu=$("adminSidebar");if(mobileMenu)mobileMenu.classList.remove("mobile-open");const mobileToggle=document.querySelector(".admin-mobile-menu-toggle");if(mobileToggle)mobileToggle.setAttribute("aria-expanded","false");
  if(isDashboard){setTimeout(()=>{if(rawPatients.length||rawHospitals.length)renderDashboard();},50);}

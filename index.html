@@ -5,6 +5,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#0b3974">
 <title>Antipolo City Health Office | Patient Navigation and Referral Unit</title>
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png">
+<link rel="shortcut icon" href="/assets/favicon.ico">
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="PNRU">
+<meta name="application-name" content="PNRU">
 <style>
 :root{--navy:#0b3974;--blue:#1264b0;--sky:#eaf4ff;--ink:#172b4d;--muted:#718096;--line:#e5edf6;--bg:#f4f7fb;--white:#fff;--green:#15966b;--orange:#e58b24;--red:#d84d5b;--shadow:0 12px 34px rgba(24,57,99,.08)}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Arial,sans-serif;color:var(--ink)}
@@ -375,16 +384,29 @@ body.night-theme #publicView .mini-table tbody tr:hover{background:#1a304a}
 @media(max-width:600px){
  .topbar{position:relative!important;display:flex!important;flex-direction:column!important;align-items:stretch!important;padding-top:12px!important;padding-bottom:12px!important;gap:0!important}
  .topbar .top-actions{position:absolute!important;top:11px!important;right:14px!important;width:auto!important;display:flex!important;flex-direction:row!important;align-items:center!important;justify-content:flex-end!important;gap:7px!important;padding:0!important;margin:0!important;border:0!important}
- .topbar .brand-copy{padding-right:92px!important}
+ .topbar .brand-copy{padding-right:132px!important}
  .topbar .header-icon-btn{width:34px!important;height:34px!important;min-height:34px!important;flex:0 0 34px!important;border-radius:9px!important;background:#ffffff20!important;border-color:#ffffff70!important}
  .topbar .header-icon-btn svg{width:17px!important;height:17px!important}
 }
 @media(max-width:380px){
  .topbar .top-actions{top:9px!important;right:11px!important;gap:5px!important}
  .topbar .header-icon-btn{width:31px!important;height:31px!important;min-height:31px!important;flex-basis:31px!important}
- .topbar .brand-copy{padding-right:78px!important}
+ .topbar .brand-copy{padding-right:124px!important}
 }
 
+
+/* TEST42: PNRU app download navigation and app icon package */
+.topbar .download-app-link{display:inline-flex;align-items:center;justify-content:center;gap:7px;text-decoration:none;white-space:nowrap}
+.topbar .download-app-link svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.topbar .download-app-link:hover{background:#ffffff30}
+@media(max-width:600px){.topbar .download-app-link{width:34px!important;height:34px!important;min-height:34px!important;flex:0 0 34px!important;padding:0!important;gap:0!important}.topbar .download-app-link span{display:none!important}.topbar .download-app-link svg{width:17px!important;height:17px!important}}
+@media(max-width:380px){.topbar .download-app-link{width:31px!important;height:31px!important;min-height:31px!important;flex-basis:31px!important}}
+
+
+.sidebar-download-app{text-decoration:none}
+.sidebar-download-app>span{width:18px;height:18px;display:inline-flex;align-items:center;justify-content:center;flex:none}
+.sidebar-download-app svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.sidebar-download-app:hover{background:#eaf3fc;border-color:#d6e2ef;color:#0b4c91}
 </style>
 </head>
 <body>
@@ -524,6 +546,7 @@ body.night-theme #publicView .mini-table tbody tr:hover{background:#1a304a}
         <button class="sidebar-link" id="sidebarTallyEntryLink" type="button" onclick="showAdminPanel('hospital-tally-entry',this)"><span>📋</span> Hospital Referral Coordination Form</button>
         <button class="sidebar-link" id="sidebarHomevisitLink" type="button" onclick="showAdminPanel('homevisit-entry',this)"><span>🏠</span> Home Visit Form</button>
         <button class="sidebar-link" id="sidebarSettingsLink" type="button" onclick="showAdminPanel('admin-password-settings',this)"><span>⚙</span> Settings / Change Password</button>
+        <a class="sidebar-link sidebar-download-app" id="sidebarDownloadAppLink" href="https://raw.githubusercontent.com/nmax07152020-sudo/pnru/main/pnru.apk" download="pnru.apk" aria-label="Download PNRU Android App" title="Download PNRU Android App"><span aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3v11m0 0 4-4m-4 4-4-4M4 17v3h16v-3"/></svg></span> Download App</a>
         <div class="sidebar-menu-divider" aria-hidden="true"></div>
         <button class="sidebar-link sidebar-logout" id="sidebarLogoutLink" type="button" onclick="logoutAdmin()"><span>↪</span> Logout</button>
       </aside>

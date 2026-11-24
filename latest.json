@@ -1,6 +1,6 @@
 {
-    "version":  "1.0.4",
-    "url":  "https://github.com/nmax07152020-sudo/pnru/releases/download/ota-v1.0.4/ota-v1.0.4.zip",
-    "checksum":  "4aab67b1d43c2c560050d66f62523248899045ae59e421e60f17ac819b407d4c",
-    "notes":  "HTML OTA update 1.0.4"
+    "version":  "1.0.5",
+    "url":  "https://github.com/nmax07152020-sudo/pnru/releases/download/ota-v1.0.5/ota-v1.0.5.zip",
+    "checksum":  "de53c7300de87c1f8ed67a4f809122483899c667589bd384a70e95f249ec29b7",
+    "notes":  "fix hotline numbers"
 }

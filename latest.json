@@ -1,6 +1,6 @@
 {
-    "version":  "1.0.6",
-    "url":  "https://github.com/nmax07152020-sudo/pnru/releases/download/ota-v1.0.6/ota-v1.0.6.zip",
-    "checksum":  "0d5d233ff93593054c69b93e4be897f7c3a24ef3008fabc12fde2aaeaf884a10",
-    "notes":  "fix"
+    "version":  "1.0.7",
+    "url":  "https://github.com/nmax07152020-sudo/pnru/releases/download/ota-v1.0.7/ota-v1.0.7.zip",
+    "checksum":  "d5dbe5564052ceed19e1339ab09ce57beeb0e36165b2140d167ec6466125c298",
+    "notes":  "HTML OTA update 1.0.7"
 }

@@ -1,8 +1,37 @@
-// Vercel Serverless Function: secure proxy for the Apps Script admin API.
+// PNRU TEST44: secure Vercel proxy for the Google Apps Script admin API.
+// Allows the deployed website and Capacitor WebView origins; API secret remains server-side.
+const ALLOWED_ORIGINS = new Set([
+  "https://pnru.vercel.app",
+  "https://localhost",
+  "http://localhost",
+  "capacitor://localhost"
+]);
+
 module.exports = async function handler(req, res) {
+  const origin = req.headers.origin;
+  res.setHeader("Vary", "Origin");
+
+  if (origin && ALLOWED_ORIGINS.has(origin)) {
+    res.setHeader("Access-Control-Allow-Origin", origin);
+    res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
+    res.setHeader("Access-Control-Allow-Headers", "Content-Type, Accept");
+    res.setHeader("Access-Control-Max-Age", "86400");
+  }
+
+  if (req.method === "OPTIONS") {
+    if (origin && !ALLOWED_ORIGINS.has(origin)) {
+      return res.status(403).json({ success: false, message: "Origin is not allowed." });
+    }
+    return res.status(204).end();
+  }
+
   if (req.method !== "POST") {
-    res.setHeader("Allow", "POST");
+    res.setHeader("Allow", "POST, OPTIONS");
     return res.status(405).json({ success: false, message: "Method not allowed." });
+  }
+
+  if (origin && !ALLOWED_ORIGINS.has(origin)) {
+    return res.status(403).json({ success: false, message: "Origin is not allowed." });
   }
 
   const gasUrl = process.env.GAS_WEB_APP_URL;
@@ -30,19 +59,19 @@ module.exports = async function handler(req, res) {
       cache: "no-store"
     });
 
-    const text = await upstream.text();
+    const responseText = await upstream.text();
     let result;
     try {
-      result = JSON.parse(text);
+      result = JSON.parse(responseText);
     } catch {
-      const snippet = text.replace(/<script[\s\S]*?<\/script>/gi, "")
+      const snippet = responseText.replace(/<script[\s\S]*?<\/script>/gi, "")
         .replace(/<style[\s\S]*?<\/style>/gi, "")
         .replace(/<[^>]+>/g, " ")
         .replace(/\s+/g, " ").trim().slice(0, 240);
       let message;
       if (upstream.status === 401 || /unauthorized|sign in|authentication/i.test(snippet)) {
         message = "Google Apps Script returned HTTP 401. Check the Web App deployment: Execute as Me, Who has access Anyone, then deploy a New version. Also confirm GAS_WEB_APP_URL is the current /exec URL (not /dev).";
-      } else if (/accounts\\.google\\.com|ServiceLogin/i.test(text)) {
+      } else if (/accounts\.google\.com|ServiceLogin/i.test(responseText)) {
         message = "Google redirected the admin API to a sign-in page. The Web App must be deployed with Who has access: Anyone and Execute as: Me.";
       } else {
         message = "Apps Script returned non-JSON (HTTP " + upstream.status + "). Response preview: " + (snippet || "empty response") + ". Check doPost(e) in the deployed version.";

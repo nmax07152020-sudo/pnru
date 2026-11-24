@@ -1,6 +1,6 @@
 {
-    "version":  "1.0.1",
-    "url":  "https://github.com/nmax07152020-sudo/pnru/releases/download/ota-v1.0.1/ota-v1.0.1.zip",
-    "checksum":  "298fca23e1fb9f427237e36dec47229e1102d2cccf31ab522449698b27bfe244",
-    "notes":  "check updates"
+    "version":  "1.0.2",
+    "url":  "https://github.com/nmax07152020-sudo/pnru/releases/download/ota-v1.0.2/ota-v1.0.2.zip",
+    "checksum":  "5945071bdf1517cb080b3e9976b8f932b52335e65a3df03db0e6bfdf5124b2c2",
+    "notes":  "fix login"
 }

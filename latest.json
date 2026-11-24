@@ -1,1 +1,6 @@
-
+{
+    "version":  "1.0.0",
+    "url":  "https://github.com/nmax07152020-sudo/pnru/releases/download/ota-v1.0.0/ota-v1.0.0.zip",
+    "checksum":  "bf2c92fe7603eba2c9d966a9777c059d76b2a1ea5eec0031a423882102cf5964",
+    "notes":  "fix bug"
+}

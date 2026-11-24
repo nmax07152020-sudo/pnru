@@ -370,6 +370,21 @@ body.night-theme #publicView .mini-table tbody tr:hover{background:#1a304a}
  .hotline-row span{font-size:9px!important}
 }
 
+
+/* TEST41: place compact login/theme icon actions at the upper-right of the mobile header */
+@media(max-width:600px){
+ .topbar{position:relative!important;display:flex!important;flex-direction:column!important;align-items:stretch!important;padding-top:12px!important;padding-bottom:12px!important;gap:0!important}
+ .topbar .top-actions{position:absolute!important;top:11px!important;right:14px!important;width:auto!important;display:flex!important;flex-direction:row!important;align-items:center!important;justify-content:flex-end!important;gap:7px!important;padding:0!important;margin:0!important;border:0!important}
+ .topbar .brand-copy{padding-right:92px!important}
+ .topbar .header-icon-btn{width:34px!important;height:34px!important;min-height:34px!important;flex:0 0 34px!important;border-radius:9px!important;background:#ffffff20!important;border-color:#ffffff70!important}
+ .topbar .header-icon-btn svg{width:17px!important;height:17px!important}
+}
+@media(max-width:380px){
+ .topbar .top-actions{top:9px!important;right:11px!important;gap:5px!important}
+ .topbar .header-icon-btn{width:31px!important;height:31px!important;min-height:31px!important;flex-basis:31px!important}
+ .topbar .brand-copy{padding-right:78px!important}
+}
+
 </style>
 </head>
 <body>

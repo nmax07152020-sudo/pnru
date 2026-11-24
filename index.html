@@ -271,6 +271,76 @@ body.night-theme .empty{color:#a8b8ce}
 
 
 .form-label-icon{width:14px;height:14px;display:inline-block;vertical-align:-2px;margin-right:6px;flex:0 0 auto;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;color:#3978b8}.entry-field label,.field label,.vital-input label{display:flex;align-items:center;gap:2px}.entry-field label{line-height:1.35}.form-label-icon path{vector-effect:non-scaling-stroke}
+
+/* TEST37: formal, compact mobile public header; desktop layout remains unchanged */
+@media(max-width:600px){
+  .topbar{display:flex;flex-direction:column;align-items:stretch;gap:13px;padding:15px 18px 16px}
+  .brand{width:100%;align-items:center;gap:13px;min-width:0}
+  .brand-logo{width:54px;height:54px;padding:2px;border-radius:50%;flex:0 0 54px}
+  .brand-copy{flex:1;min-width:0}
+  .brand h1{font-size:17px;line-height:1.2;letter-spacing:-.02em}
+  .brand p{font-size:9px;line-height:1.35;letter-spacing:.09em;margin-top:5px}
+  .hotline-row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px 12px;margin-top:10px;font-size:11px}
+  .hotline-row strong{grid-column:1/-1;width:auto;font-size:10px;letter-spacing:.04em;text-transform:uppercase;color:#d9eaff}
+  .hotline-row span{white-space:nowrap;min-width:0;font-size:11px;gap:5px}
+  .hotline-row svg{width:12px;height:12px;flex:0 0 12px}
+  .top-actions{width:100%;display:flex;flex-direction:row;align-items:center;justify-content:flex-end;gap:9px;padding-top:11px;border-top:1px solid #ffffff35}
+  .top-actions .btn{min-height:38px;padding:9px 13px;font-size:11px;border-radius:9px}
+  .top-actions .theme-toggle{min-width:0}
+}
+@media(max-width:360px){
+  .topbar{padding-left:14px;padding-right:14px}
+  .brand-logo{width:48px;height:48px;flex-basis:48px}
+  .brand h1{font-size:15px}
+  .hotline-row{column-gap:7px;font-size:10px}
+  .hotline-row span{font-size:10px}
+  .top-actions .btn{padding:8px 10px;font-size:10px}
+}
+
+
+
+/* TEST38: refined public dashboard UI/UX and consistent inline SVG icon system */
+#publicView .panel{border:1px solid #e1eaf4;border-radius:18px;background:linear-gradient(180deg,#fff 0%,#fcfdff 100%);box-shadow:0 8px 24px rgba(20,57,99,.055)}
+#publicView .panel-head{align-items:center;padding-bottom:11px;border-bottom:1px solid #edf2f8;margin-bottom:15px}
+#publicView .panel-head h3.dashboard-heading{display:flex;align-items:center;gap:10px;font-size:14px;line-height:1.35;color:#173b68}
+#publicView .section-icon{width:34px;height:34px;flex:0 0 34px;display:inline-grid;place-items:center;border-radius:11px;background:linear-gradient(145deg,#eaf4ff,#f3f8ff);color:#1767ad;border:1px solid #dceafa}
+#publicView .section-icon svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+#publicView .kpi{border:1px solid #e2ebf5;border-radius:18px;box-shadow:0 8px 22px rgba(22,61,105,.055);background:linear-gradient(145deg,#fff 0%,#fbfdff 100%)}
+#publicView .kpi-icon{border:1px solid #e0ebf7;box-shadow:0 3px 10px rgba(23,75,126,.06);background:#f5f9ff;border-radius:13px}
+#publicView .kpi-value{color:#153c6b;font-variant-numeric:tabular-nums}
+#publicView .kpi-label{color:#64758b;font-size:12px;letter-spacing:.01em}
+#publicView .pill{border:1px solid #dceafa;background:#f1f7ff;color:#245f99;padding:5px 9px;line-height:1.25}
+#publicView .chart-wrap{border-radius:12px}
+#publicView .legend{gap:12px 16px;padding-top:4px}
+#publicView .key{font-size:11px}
+#publicView .mini-table th{font-size:10px;letter-spacing:.035em;text-transform:uppercase;color:#60748e;background:#f4f8fd}
+#publicView .mini-table td{font-size:12px;color:#263f5d}
+#publicView .mini-table tbody tr:hover{background:#f7fbff}
+#publicView .hospital-shortcut{padding:2px 0}
+#publicView .hospital-shortcut h3{display:flex;align-items:center;gap:10px;color:#173b68}
+#publicView .hospital-shortcut h3:before{content:none!important;display:none!important}
+#publicView .btn-primary{box-shadow:0 4px 10px rgba(18,100,176,.18)}
+#publicView .age-row{padding:2px 0}
+body.night-theme #publicView .panel{background:linear-gradient(180deg,#14243a,#122139);border-color:#2a405d}
+body.night-theme #publicView .panel-head{border-color:#2a405d}
+body.night-theme #publicView .panel-head h3.dashboard-heading,body.night-theme #publicView .hospital-shortcut h3{color:#e4efff}
+body.night-theme #publicView .section-icon{background:#1b3553;border-color:#34516f;color:#8fc7ff}
+body.night-theme #publicView .kpi{background:linear-gradient(145deg,#14243a,#172b45);border-color:#2a405d}
+body.night-theme #publicView .kpi-value{color:#e7f1ff}
+body.night-theme #publicView .mini-table th{background:#1b304b;color:#c5d4e8}
+body.night-theme #publicView .mini-table td{color:#d8e5f5}
+body.night-theme #publicView .mini-table tbody tr:hover{background:#1a304a}
+@media(max-width:620px){
+ #publicView .panel{padding:15px;border-radius:16px}
+ #publicView .panel-head{gap:8px;margin-bottom:12px;padding-bottom:9px}
+ #publicView .panel-head h3.dashboard-heading{font-size:13px;gap:8px}
+ #publicView .section-icon{width:30px;height:30px;flex-basis:30px;border-radius:9px}
+ #publicView .section-icon svg{width:17px;height:17px}
+ #publicView .pill{font-size:9px;padding:4px 7px}
+ #publicView .kpi{border-radius:16px;box-shadow:0 5px 16px rgba(22,61,105,.05)}
+ #publicView .legend{gap:8px 12px}
+}
+
 </style>
 </head>
 <body>
@@ -345,17 +415,17 @@ body.night-theme .empty{color:#a8b8ce}
       </article>
     </div>
     <section class="card panel admin-only-ranking" id="adminBarangayRankingPanel" style="margin-bottom:15px">
-      <div class="panel-head"><div><h3>Barangay Patient Ranking</h3></div><span class="pill" id="barangayRankingTotal">0 patients</span></div>
+      <div class="panel-head"><div><h3 class="dashboard-heading"><span class="section-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19V5m0 14h17M8 16v-5h3v5m2 0V7h3v9m2 0v-8h2v8"/></svg></span><span>Barangay Patient Ranking</span></h3></div><span class="pill" id="barangayRankingTotal">0 patients</span></div>
       <div class="barangay-ranking-chart" id="barangayRankingBody"><div class="empty">Loading barangay ranking…</div></div>
     </section>
     <div class="grid2 dashboard-overview-grid" id="nav-client-profile">
       <section class="card panel compact-panel">
-        <div class="panel-head"><div><h3>Gender Distribution</h3><div class="sub">Client distribution</div></div><span class="pill">Male / Female</span></div>
+        <div class="panel-head"><div><h3 class="dashboard-heading"><span class="section-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3"/><path d="M3.5 20v-2a5.5 5.5 0 0 1 11 0v2M17 5v6m-3-3h6M17 15v6m-3-3h6"/></svg></span><span>Gender Distribution</span></h3><div class="sub">Client distribution</div></div><span class="pill">Male / Female</span></div>
         <div class="chart-wrap gender-chart-compact"><canvas id="genderChart"></canvas></div>
         <div class="legend"><span class="key"><i class="swatch" style="background:#2677c9"></i>Male: <strong id="maleLegend">—</strong></span><span class="key"><i class="swatch" style="background:#e4779b"></i>Female: <strong id="femaleLegend">—</strong></span></div>
       </section>
       <section class="card panel compact-panel profile-panel">
-        <div class="panel-head"><div><h3>Client Profile Overview</h3><div class="sub">Classification and age distribution</div></div><span class="pill">Pedia / Adult · Age Groups</span></div>
+        <div class="panel-head"><div><h3 class="dashboard-heading"><span class="section-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="3.2"/><path d="M5 20a7 7 0 0 1 14 0M19 4h2v5h-2"/></svg></span><span>Client Profile Overview</span></h3><div class="sub">Classification and age distribution</div></div><span class="pill">Pedia / Adult · Age Groups</span></div>
         <div class="profile-grid">
           <div class="profile-section">
             <h4>Client Classification</h4>
@@ -371,23 +441,23 @@ body.night-theme .empty{color:#a8b8ce}
     </div>
     <section class="card panel" id="nav-hospital-tally" style="margin-bottom:15px">
       <div class="hospital-shortcut">
-        <div><h3>Hospital Referral Tally Board</h3><p>View referral totals and coordinated / refused outcomes for each receiving hospital</p></div>
+        <div><h3 class="dashboard-heading"><span class="section-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 21V5h16v16M2 21h20M10 9h4m-2-2v4M8 21v-5h8v5"/></svg></span><span>Hospital Referral Tally Board</span></h3><p>View referral totals and coordinated / refused outcomes for each receiving hospital</p></div>
         <button class="btn btn-primary" type="button" onclick="openHospitalModal()">View Hospital Summary</button>
       </div>
     </section>
     <section class="card panel print-hospital-tally" id="printHospitalTally" style="margin-bottom:15px">
-      <div class="panel-head"><div><h3>Hospital Referral Tally Board</h3><div class="sub">Referral totals by receiving hospital</div></div></div>
+      <div class="panel-head"><div><h3 class="dashboard-heading"><span class="section-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 21V5h16v16M2 21h20M10 9h4m-2-2v4M8 21v-5h8v5"/></svg></span><span>Hospital Referral Tally Board</span></h3><div class="sub">Referral totals by receiving hospital</div></div></div>
       <div class="table-wrap"><table class="mini-table hospital-table">
         <thead><tr><th>Receiving Hospital</th><th>Referral Volume</th><th style="text-align:right">Coordinated</th><th style="text-align:right">Refused</th><th style="text-align:right">Total</th></tr></thead>
         <tbody id="printHospitalBreakdown"><tr><td colspan="5" class="empty">No hospital records for this period</td></tr></tbody>
       </table></div>
     </section>
     <section class="card panel compact-transport" id="nav-ambulance" style="margin-bottom:15px">
-      <div class="panel-head"><div><h3>Ambulance Transport / Transfer by Dispatching Unit / Barangay</h3><div class="sub">Compact table with proportional bar graph</div></div><span class="pill" id="transportTotal">Overall: —</span></div>
+      <div class="panel-head"><div><h3 class="dashboard-heading"><span class="section-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h11v10H3zM14 11h4l3 3v3h-7M7 17h.01M18 17h.01M8 10h3m-1.5-1.5v3"/></svg></span><span>Ambulance Transport / Transfer by Dispatching Unit / Barangay</span></h3><div class="sub">Compact table with proportional bar graph</div></div><span class="pill" id="transportTotal">Overall: —</span></div>
       <div class="table-wrap"><table class="mini-table transport-table"><thead><tr><th>Dispatching Unit / Barangay</th><th>Distribution</th><th style="text-align:right">Total Entries</th></tr></thead><tbody id="transportBreakdown"><tr><td colspan="3" class="empty">No dispatching unit / barangay records for this period</td></tr></tbody></table></div>
     </section>
     <section class="card panel" id="publicBarangayRankingPanel" style="margin-bottom:15px">
-      <div class="panel-head"><div><h3>Barangay Patient Ranking</h3></div><span class="pill" id="publicBarangayRankingTotal">0 patients</span></div>
+      <div class="panel-head"><div><h3 class="dashboard-heading"><span class="section-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19V5m0 14h17M8 16v-5h3v5m2 0V7h3v9m2 0v-8h2v8"/></svg></span><span>Barangay Patient Ranking</span></h3></div><span class="pill" id="publicBarangayRankingTotal">0 patients</span></div>
       <div class="barangay-ranking-chart" id="publicBarangayRankingBody"><div class="empty">Loading barangay ranking…</div></div>
     </section>
     <section class="print-signature-page" aria-label="Report preparation and approval">
